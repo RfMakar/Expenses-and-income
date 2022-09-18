@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Виджет переключатель |Расход|Доход|
 class ButtonsExpensesIncome extends StatelessWidget {
   const ButtonsExpensesIncome({
     Key? key,

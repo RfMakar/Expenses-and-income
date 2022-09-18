@@ -72,7 +72,7 @@ class InfoWidget extends StatelessWidget {
           child: Wrap(
             children: [
               toggleButtonsDayMonthYear(model, context),
-              buttonsDateHistory(model, context),
+              sumBudget(model, context),
               ButtonsExpensesIncome(
                 isSelected: model.isSelectedBudget,
                 onPressed: model.onPressedButExpensesIncome,
@@ -115,7 +115,7 @@ class InfoWidget extends StatelessWidget {
     );
   }
 
-  Widget buttonsDateHistory(ModelScreenHome model, BuildContext context) {
+  Widget sumBudget(ModelScreenHome model, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
