@@ -18,7 +18,6 @@ class ButtonsExpensesIncome extends StatelessWidget {
       children: [
         ToggleButtons(
           constraints: BoxConstraints(minHeight: 30, minWidth: widthToggle),
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
           isSelected: isSelected,
           onPressed: onPressed,
           children: const [

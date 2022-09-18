@@ -90,7 +90,6 @@ class MyThemeApp {
 
   MyThemeApp.light(Color colorTheme) {
     themeLight = ThemeData(
-
       colorScheme: const ColorScheme.light().copyWith(primary: colorTheme),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -124,6 +123,9 @@ class MyThemeApp {
           ),
         ),
       ),
+      toggleButtonsTheme: const ToggleButtonsThemeData(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
     );
   }
   MyThemeApp.dark(Color colorTheme) {
@@ -138,9 +140,8 @@ class MyThemeApp {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         ),
       ),
       cardTheme: CardTheme(
@@ -167,6 +168,9 @@ class MyThemeApp {
             topRight: Radius.circular(8),
           ),
         ),
+      ),
+      toggleButtonsTheme: const ToggleButtonsThemeData(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
     );
   }

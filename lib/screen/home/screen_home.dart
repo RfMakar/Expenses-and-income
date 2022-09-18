@@ -97,7 +97,6 @@ class InfoWidget extends StatelessWidget {
         ),
         ToggleButtons(
           constraints: BoxConstraints(minHeight: 30, minWidth: widthToggle),
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
           isSelected: model.isSelectedDate,
           onPressed: (index) => model.onPressedToggleButtons(index),
           children: [
