@@ -19,23 +19,21 @@ class ScreenSelectionSubcategory extends StatelessWidget {
       create: (context) =>
           ModelScreenSeletionSubcategory(category, isSelectedBudget),
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ScreenNewSubcategory(
+                        category: category,
+                        isSelectedBudget: isSelectedBudget,
+                      )),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
         appBar: AppBar(
           title: Text(category.name),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScreenNewSubcategory(
-                            category: category,
-                            isSelectedBudget: isSelectedBudget,
-                          )),
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ],
         ),
         body: const SubCategoryListWidget(),
       ),

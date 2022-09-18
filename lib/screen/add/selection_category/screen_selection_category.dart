@@ -15,21 +15,19 @@ class ScreenSelectionCategory extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ModelScreenSeletionCategory(isSelectedBudget),
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ScreenNewCategory(isSelectedBudget: isSelectedBudget)),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
         appBar: AppBar(
           title: const Text('Категории'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScreenNewCategory(
-                          isSelectedBudget: isSelectedBudget)),
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ],
         ),
         body: const CategoryListWidget(),
       ),
