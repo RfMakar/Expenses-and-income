@@ -29,7 +29,7 @@ class InfoApp extends StatelessWidget {
         const Divider(),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [Text('О приложение')]),
+            children: const [Text('О приложении')]),
         const ListTile(
           title: Text('Версия'),
           trailing: Text('1.0.5'),
