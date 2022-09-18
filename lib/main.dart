@@ -126,6 +126,10 @@ class MyThemeApp {
       toggleButtonsTheme: const ToggleButtonsThemeData(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: Colors.white,
+        backgroundColor: colorTheme,
+      ),
     );
   }
   MyThemeApp.dark(Color colorTheme) {
@@ -171,6 +175,10 @@ class MyThemeApp {
       ),
       toggleButtonsTheme: const ToggleButtonsThemeData(
         borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
       ),
     );
   }
