@@ -96,10 +96,6 @@ class DataApp extends StatelessWidget {
               onTap: () => onTapListTileDel(context, model.deleteAllIncome),
             ),
             ListTile(
-              title: const Text('Удалить списки'),
-              onTap: () => onTapListTileDel(context, model.deleteAllLists),
-            ),
-            ListTile(
               title: const Text('Удалить все данные'),
               onTap: () => onTapListTileDel(context, model.deleteAllBD),
             ),

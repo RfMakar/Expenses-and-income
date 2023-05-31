@@ -1,3 +1,4 @@
+import 'package:budget/screen2/home/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/model_main.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,7 +35,7 @@ class MaterialAppMain extends StatelessWidget {
                     MyThemeApp.dark(const Color.fromRGBO(130, 54, 140, 1))
                         .themeLight,
                 themeMode: snapshot.data! ? ThemeMode.dark : ThemeMode.light,
-                home: const HomeMain(),
+                home: const ScreenHome(),
               );
             }),
       ),
@@ -42,47 +43,47 @@ class MaterialAppMain extends StatelessWidget {
   }
 }
 
-class HomeMain extends StatelessWidget {
-  const HomeMain({Key? key}) : super(key: key);
+// class HomeMain extends StatelessWidget {
+//   const HomeMain({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ModelHomeMain(),
-      child: Consumer<ModelHomeMain>(
-        builder: (context, model, _) => Scaffold(
-          appBar: AppBar(
-            title: Text(model.titleAppBar()),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Главная',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: 'Добавить',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                label: 'Список',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Настройки',
-              ),
-            ],
-            currentIndex: model.selectedIndex,
-            onTap: model.onItemTapped,
-          ),
-          body: model.getWidgetOptions(),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//       create: (context) => ModelHomeMain(),
+//       child: Consumer<ModelHomeMain>(
+//         builder: (context, model, _) => Scaffold(
+//           appBar: AppBar(
+//             title: Text(model.titleAppBar()),
+//           ),
+//           bottomNavigationBar: BottomNavigationBar(
+//             type: BottomNavigationBarType.fixed,
+//             items: const [
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.home),
+//                 label: 'Главная',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.add),
+//                 label: 'Добавить',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.list),
+//                 label: 'Список',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.settings),
+//                 label: 'Настройки',
+//               ),
+//             ],
+//             currentIndex: model.selectedIndex,
+//             onTap: model.onItemTapped,
+//           ),
+//           body: model.getWidgetOptions(),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class MyThemeApp {
   late ThemeData themeLight;
@@ -90,6 +91,7 @@ class MyThemeApp {
 
   MyThemeApp.light(Color colorTheme) {
     themeLight = ThemeData(
+      useMaterial3: true,
       colorScheme: const ColorScheme.light().copyWith(primary: colorTheme),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -126,14 +128,15 @@ class MyThemeApp {
       toggleButtonsTheme: const ToggleButtonsThemeData(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        foregroundColor: Colors.white,
-        backgroundColor: colorTheme,
-      ),
+      // floatingActionButtonTheme: FloatingActionButtonThemeData(
+      //   foregroundColor: Colors.white,
+      //   backgroundColor: colorTheme,
+      // ),
     );
   }
   MyThemeApp.dark(Color colorTheme) {
     themeLight = ThemeData(
+      useMaterial3: true,
       colorScheme: const ColorScheme.dark().copyWith(primary: Colors.white),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(

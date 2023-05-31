@@ -17,7 +17,7 @@ class ButtonsExpensesIncome extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ToggleButtons(
-          constraints: BoxConstraints(minHeight: 30, minWidth: widthToggle),
+          constraints: BoxConstraints(maxHeight: 30, maxWidth: widthToggle),
           isSelected: isSelected,
           onPressed: onPressed,
           children: const [

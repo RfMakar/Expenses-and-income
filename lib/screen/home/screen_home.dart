@@ -12,11 +12,20 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ModelScreenHome(),
-      child: Stack(
-        children: const [
-          GroupListWidget(),
-          InfoWidget(),
-        ],
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: const Text('budget'),
+        ),
+        body: Stack(
+          children: const [
+            GroupListWidget(),
+            InfoWidget(),
+          ],
+        ),
       ),
     );
   }
@@ -86,7 +95,7 @@ class InfoWidget extends StatelessWidget {
 
   Widget toggleButtonsDayMonthYear(
       ModelScreenHome model, BuildContext context) {
-    final widthToggle = MediaQuery.of(context).size.width * (0.7 / 3.0);
+    final widthToggle = MediaQuery.of(context).size.width * (0.6 / 3.0);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -96,7 +105,7 @@ class InfoWidget extends StatelessWidget {
           icon: const Icon(Icons.navigate_before),
         ),
         ToggleButtons(
-          constraints: BoxConstraints(minHeight: 30, minWidth: widthToggle),
+          constraints: BoxConstraints(maxHeight: 30, maxWidth: widthToggle),
           isSelected: model.isSelectedDate,
           onPressed: (index) => model.onPressedToggleButtons(index),
           children: [
