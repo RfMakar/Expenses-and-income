@@ -3,7 +3,6 @@ import 'package:budget/screen2/add_category/screen_add_categoty.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/sub_category/screen_sub_category.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenHome extends StatelessWidget {

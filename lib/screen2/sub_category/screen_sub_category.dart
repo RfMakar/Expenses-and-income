@@ -36,46 +36,51 @@ class ScreenSubCategory extends StatelessWidget {
         ],
       ),
       body: ListView(
+        children: [],
+      ),
+    );
+  }
+}
+
+class WidgetCategory extends StatelessWidget {
+  const WidgetCategory({super.key, required this.category});
+  final Category category;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 90,
+      width: double.infinity,
+      color: Color(int.parse(category.color)),
+      child: Column(
         children: [
-          Container(
-            height: 90,
-            width: double.infinity,
-            color: Color(int.parse(category.color)),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      category.name,
-                      style: const TextStyle(
-                          fontSize: 22, color: ColorApp.colorText),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: IconButton(
-                          onPressed: () async {},
-                          icon: Icon(
-                            Icons.add,
-                            color: Color(int.parse(category.color)),
-                          )),
-                    )
-                  ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category.name,
+                style: const TextStyle(fontSize: 22, color: ColorApp.colorText),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      category.percentToString(),
-                      style: const TextStyle(
-                          fontSize: 22, color: ColorApp.colorText),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                child: IconButton(
+                    onPressed: () async {},
+                    icon: Icon(
+                      Icons.add,
+                      color: Color(int.parse(category.color)),
+                    )),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                category.percentToString(),
+                style: const TextStyle(fontSize: 22, color: ColorApp.colorText),
+              ),
+            ],
           ),
         ],
       ),
