@@ -1,8 +1,6 @@
 import 'package:budget/screen2/home/screen_home.dart';
 import 'package:flutter/material.dart';
-import 'package:budget/model_main.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MaterialAppMain());
@@ -13,77 +11,21 @@ class MaterialAppMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ModelMaterialAppMain(),
-      child: Consumer<ModelMaterialAppMain>(
-        builder: (context, model, _) => FutureBuilder<bool>(
-            future: model.getBoolDarckTheme(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return MaterialApp(
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [Locale('ru', '')],
-                theme: MyThemeApp.light(const Color.fromRGBO(130, 54, 140, 1))
-                    .themeLight,
-                darkTheme:
-                    MyThemeApp.dark(const Color.fromRGBO(130, 54, 140, 1))
-                        .themeLight,
-                themeMode: snapshot.data! ? ThemeMode.dark : ThemeMode.light,
-                home: const ScreenHome(),
-              );
-            }),
-      ),
+    return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ru', '')],
+      theme: MyThemeApp.light(const Color.fromRGBO(130, 54, 140, 1)).themeLight,
+      darkTheme:
+          MyThemeApp.dark(const Color.fromRGBO(130, 54, 140, 1)).themeLight,
+      themeMode: ThemeMode.light,
+      home: const ScreenHome(),
     );
   }
 }
-
-// class HomeMain extends StatelessWidget {
-//   const HomeMain({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider(
-//       create: (context) => ModelHomeMain(),
-//       child: Consumer<ModelHomeMain>(
-//         builder: (context, model, _) => Scaffold(
-//           appBar: AppBar(
-//             title: Text(model.titleAppBar()),
-//           ),
-//           bottomNavigationBar: BottomNavigationBar(
-//             type: BottomNavigationBarType.fixed,
-//             items: const [
-//               BottomNavigationBarItem(
-//                 icon: Icon(Icons.home),
-//                 label: 'Главная',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(Icons.add),
-//                 label: 'Добавить',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(Icons.list),
-//                 label: 'Список',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(Icons.settings),
-//                 label: 'Настройки',
-//               ),
-//             ],
-//             currentIndex: model.selectedIndex,
-//             onTap: model.onItemTapped,
-//           ),
-//           body: model.getWidgetOptions(),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class MyThemeApp {
   late ThemeData themeLight;

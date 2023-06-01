@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:budget/model/finance.dart';
+import 'package:budget/repository/db_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
+import 'package:budget/screen2/const/db_table.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddCategory extends ChangeNotifier {
@@ -9,26 +12,28 @@ class ProviderScreenAddCategory extends ChangeNotifier {
   }
   final List<bool> isSelectedBudget;
   late Color color;
-  final List<String> listSubCategory = [
-    'Rhjcc,',
-    'sdsdsd',
-    'dsdsd',
-    'Rhjcc,',
-    'sdsdsd',
-    'dsdsd',
-    'Rhjcc,',
-    'sdsdsd',
-    'dsdsd',
-    'Rhjcc,',
-    'sdsdsd',
-    'dsdsd',
-  ];
+  final List<String> listSubCategory = [];
+  final texEdConCategory = TextEditingController();
 
   String titleAppBar() => isSelectedBudget[0] ? 'Расход' : 'Доход';
 
   void onPressedButtonColor(Color onColorChanged) {
     color = onColorChanged;
     notifyListeners();
+  }
+
+  void onPressedAddNewCategoy() async {
+    for (var subCat in listSubCategory) {
+      final finance = Finance(
+        date: DateTime.now().toString(),
+        category: texEdConCategory.text.trim(),
+        subcategory: subCat,
+        value: 0,
+        comment: '',
+        color: color.value.toString(),
+      );
+      await DBFinance.insert(DBTable.expenses, finance);
+    }
   }
 
   void loadColor() {

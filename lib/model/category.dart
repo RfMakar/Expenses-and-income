@@ -1,36 +1,25 @@
 class Category {
   final String name;
-  String? subname;
-  final int color;
+  final double value;
+  final String color;
+  final double percent;
 
   Category({
     required this.name,
+    required this.value,
     required this.color,
+    required this.percent,
   });
 
-  Category.sub({
-    required this.name,
-    required this.subname,
-    required this.color,
-  });
+  //Чтение БД
+  factory Category.fromMap(Map<String, dynamic> json) => Category(
+        name: json['name'],
+        value: json['value'],
+        color: json['color'],
+        percent: json['percent'],
+      );
 
-  factory Category.clonesub(Category category) => Category.sub(
-      name: category.name, subname: category.subname, color: category.color);
-
-  factory Category.fromMapCategory(Map<String, dynamic> json) =>
-      Category(name: json['name'], color: json['color']);
-
-  //Для записи в БД
-  Map<String, dynamic> toMapCategory() {
-    return {'name': name, 'color': color};
-  }
-
-  factory Category.fromMapSubCategory(Map<String, dynamic> json) =>
-      Category.sub(
-          name: json['name'], subname: json['subname'], color: json['color']);
-
-  //Для записи в БД
-  Map<String, dynamic> toMapSubCategory() {
-    return {'name': name, 'subname': subname, 'color': color};
+  String percentToString() {
+    return '$percent %';
   }
 }
