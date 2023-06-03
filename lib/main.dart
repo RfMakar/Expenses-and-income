@@ -1,3 +1,4 @@
+import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/home/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,7 +35,7 @@ class MyThemeApp {
   MyThemeApp.light(Color colorTheme) {
     themeLight = ThemeData(
       useMaterial3: true,
-      colorScheme: const ColorScheme.light().copyWith(primary: colorTheme),
+
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -54,7 +55,7 @@ class MyThemeApp {
           borderRadius: BorderRadius.circular(15),
         ),
       ),
-      appBarTheme: const AppBarTheme(centerTitle: true),
+      appBarTheme: AppBarTheme(centerTitle: true, backgroundColor: colorTheme),
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateProperty.all(colorTheme),
         checkColor: MaterialStateProperty.all(Colors.white),
@@ -68,8 +69,15 @@ class MyThemeApp {
         ),
       ),
       toggleButtonsTheme: const ToggleButtonsThemeData(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+        fillColor: Colors.white,
+        color: Colors.white,
+        textStyle: TextStyle(fontSize: 16),
+        //borderColor: Colors.white,
       ),
+
       // floatingActionButtonTheme: FloatingActionButtonThemeData(
       //   foregroundColor: Colors.white,
       //   backgroundColor: colorTheme,
