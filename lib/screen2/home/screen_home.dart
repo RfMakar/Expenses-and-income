@@ -2,7 +2,7 @@ import 'package:budget/model/category.dart';
 import 'package:budget/screen2/add_category/screen_add_categoty.dart';
 import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
-import 'package:budget/screen2/sub_category/screen_sub_category.dart';
+import 'package:budget/screen2/category/screen_category.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -17,20 +17,20 @@ class ScreenHome extends StatelessWidget {
       builder: (context, child) => Consumer<ProviderScreenHome>(
         builder: (context, provider, _) {
           return Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ScreenAddCategory(
-                        isSelectedBudget: provider.isSelectedBudget,
-                      ),
-                    ),
-                  );
-                  provider.sceenUpdate();
-                },
-                child: const Icon(Icons.add),
-              ),
+              // floatingActionButton: FloatingActionButton(
+              //   onPressed: () async {
+              //     await Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => ScreenAddCategory(
+              //           isSelectedBudget: provider.isSelectedBudget,
+              //         ),
+              //       ),
+              //     );
+              //     provider.sceenUpdate();
+              //   },
+              //   child: const Icon(Icons.add),
+              // ),
               appBar: AppBar(
                 backgroundColor: ColorApp.colorApp,
                 leading: IconButton(
@@ -43,26 +43,68 @@ class ScreenHome extends StatelessWidget {
                   IconButton(
                       onPressed: () {},
                       icon: const Icon(
-                        Icons.list_alt_outlined,
+                        Icons.history,
                         color: ColorApp.colorIcon,
                       ))
                 ],
-                title: Column(
-                  children: const [
+                title: const Column(
+                  children: [
                     Text(
                       'Итого',
                       style: TextStyle(color: ColorApp.colorText),
                     ),
                     Text(
                       '- 20 343 р',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: ColorApp.colorText),
                     ),
                   ],
                 ),
               ),
               body: ListView(
-                children: const [
+                children: [
                   WidgetInfo(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: ColorApp.colorApp,
+                      // borderRadius: BorderRadius.only(
+                      //   topLeft: Radius.circular(8),
+                      //   topRight: Radius.circular(8),
+                      // ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(width: 40),
+                        const Text(
+                          'Категории',
+                          style: TextStyle(
+                              color: ColorApp.colorText, fontSize: 16),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.add,
+                            color: ColorApp.colorIcon,
+                          ),
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScreenAddCategory(
+                                  isSelectedBudget: provider.isSelectedBudget,
+                                ),
+                              ),
+                            );
+                            provider.sceenUpdate();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   WidgetListCategory(),
                 ],
               ));
@@ -208,7 +250,7 @@ class WidgetCardCategory extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ScreenSubCategory(category: category),
+            builder: (context) => ScreenCategory(category: category),
           ),
         );
         // showModalBottomSheet(

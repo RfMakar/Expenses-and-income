@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Category {
   final String name;
   final double value;
@@ -21,5 +23,9 @@ class Category {
 
   String percentToString() {
     return '$percent %';
+  }
+
+  Color colorCategory() {
+    return Color(int.parse(color));
   }
 }
