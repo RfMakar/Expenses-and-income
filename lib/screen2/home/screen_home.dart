@@ -42,56 +42,7 @@ class ScreenHome extends StatelessWidget {
               ),
               body: ListView(
                 children: [
-                  SwitchExpensesIncome(
-                    onPressedCallBack: provider.onPressedSwitchExpInc,
-                  ),
-                  SwitchDate(
-                    onPressedCallBack: provider.onPressedSwitchDate,
-                    titleValue: '20 000',
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 40,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: ColorApp.colorApp,
-                      // borderRadius: BorderRadius.only(
-                      //   topLeft: Radius.circular(8),
-                      //   topRight: Radius.circular(8),
-                      // ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(width: 40),
-                        const Text(
-                          'Категории',
-                          style: TextStyle(
-                              color: ColorApp.colorText, fontSize: 16),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.add,
-                            color: ColorApp.colorIcon,
-                          ),
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ScreenAddCategory(
-                                  isSelectedBudget:
-                                      provider.isSelectedSwitchExpInc,
-                                ),
-                              ),
-                            );
-                            provider.screenUpdate();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  const WidgetInfo(),
                   const WidgetListCategory(),
                 ],
               ));
@@ -106,50 +57,33 @@ class WidgetInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        toggleButtonsDayMonthYear(context),
-        const SizedBox(
-          height: 10,
+    final provider = Provider.of<ProviderScreenHome>(context);
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
         ),
-        const Text(
-          '+ 23 000,0 р',
-          style: TextStyle(fontSize: 22),
-        ),
-      ],
-    );
-  }
-
-  Widget toggleButtonsDayMonthYear(BuildContext context) {
-    final widthToggle = MediaQuery.of(context).size.width * (0.6 / 3.0);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          splashRadius: 10,
-          onPressed: () {},
-          icon: const Icon(
-            Icons.navigate_before,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue,
+            blurRadius: 1,
+            offset: Offset(1, 1), // Shadow position
           ),
-        ),
-        ToggleButtons(
-          constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
-          isSelected: [true, false, false],
-          onPressed: (index) {},
-          children: [
-            Center(child: Text('01')),
-            Center(child: Text('Июнь')),
-            Center(child: Text('2023')),
-          ],
-        ),
-        IconButton(
-          splashRadius: 10,
-          onPressed: () {},
-          icon: const Icon(
-            Icons.navigate_next,
+        ],
+      ),
+      child: Column(
+        children: [
+          SwitchExpensesIncome(
+            onPressedCallBack: provider.onPressedSwitchExpInc,
           ),
-        ),
-      ],
+          SwitchDate(
+            onPressedCallBack: provider.onPressedSwitchDate,
+            titleValue: '20 000',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -160,27 +94,52 @@ class WidgetListCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenHome>(context);
-    return FutureBuilder<List<Category>>(
-      future: provider.getListFinance(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: snapshot.data!.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
-          itemBuilder: (context, index) {
-            final category = snapshot.data![index];
-            return WidgetCardCategory(category: category);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(width: 40),
+            const Text('Категории', style: TextStyle(fontSize: 16)),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScreenAddCategory(
+                      isSelectedBudget: provider.isSelectedSwitchExpInc,
+                    ),
+                  ),
+                );
+                provider.screenUpdate();
+              },
+            ),
+          ],
+        ),
+        FutureBuilder<List<Category>>(
+          future: provider.getListFinance(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3),
+              itemBuilder: (context, index) {
+                final category = snapshot.data![index];
+                return WidgetCardCategory(category: category);
+              },
+            );
           },
-        );
-      },
+        ),
+      ],
     );
   }
 }
