@@ -4,16 +4,30 @@ import 'package:budget/screen2/const/db_table.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
-  var isSelectedBudget = [true, false];
-  void sceenUpdate() {
+  var isSelectedSwitchExpInc = [true, false];
+  var isSelectedSwitchDate = [false, true, false];
+  var dateTime = DateTime.now();
+  void screenUpdate() {
     notifyListeners();
   }
 
+  //Переключает расход/доход
+  void onPressedSwitchExpInc(List<bool> list) {
+    print(list);
+  }
+
+  //Переключает дату
+  void onPressedSwitchDate(List<bool> list, DateTime dateTime) {
+    print(list);
+    print(dateTime);
+  }
+
   Future<List<Category>> getListFinance() {
-    if (isSelectedBudget[0]) {
-      return DBFinance.getListCategory(DBTable.expenses);
-    } else {
-      return DBFinance.getListCategory(DBTable.income);
-    }
+    return DBFinance.getListCategory(DBTable.expenses);
+    // if (isSelectedSwitchExpInc[0]) {
+    //   return DBFinance.getListCategory(DBTable.expenses);
+    // } else {
+    //   return DBFinance.getListCategory(DBTable.income);
+    // }
   }
 }

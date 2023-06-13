@@ -1,8 +1,11 @@
 import 'package:budget/model/category.dart';
 import 'package:budget/screen2/add_category/screen_add_categoty.dart';
+import 'package:budget/screen2/add_finance/screen_add_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/category/screen_category.dart';
+import 'package:budget/screen2/widget/switch_date.dart';
+import 'package:budget/screen2/widget/switch_expence_income.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -17,52 +20,35 @@ class ScreenHome extends StatelessWidget {
       builder: (context, child) => Consumer<ProviderScreenHome>(
         builder: (context, provider, _) {
           return Scaffold(
-              // floatingActionButton: FloatingActionButton(
-              //   onPressed: () async {
-              //     await Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => ScreenAddCategory(
-              //           isSelectedBudget: provider.isSelectedBudget,
-              //         ),
-              //       ),
-              //     );
-              //     provider.sceenUpdate();
-              //   },
-              //   child: const Icon(Icons.add),
-              // ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenAddFinance(),
+                    ),
+                  );
+                  provider.screenUpdate();
+                },
+                child: const Icon(Icons.add),
+              ),
               appBar: AppBar(
-                backgroundColor: ColorApp.colorApp,
-                leading: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.menu,
-                      color: ColorApp.colorIcon,
-                    )),
+                leading:
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
                 actions: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.history,
-                        color: ColorApp.colorIcon,
-                      ))
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.search))
                 ],
-                title: const Column(
-                  children: [
-                    Text(
-                      'Итого',
-                      style: TextStyle(color: ColorApp.colorText),
-                    ),
-                    Text(
-                      '- 20 343 р',
-                      style: TextStyle(color: ColorApp.colorText),
-                    ),
-                  ],
-                ),
+                title: const Text('Главная'),
               ),
               body: ListView(
                 children: [
-                  WidgetInfo(),
+                  SwitchExpensesIncome(
+                    onPressedCallBack: provider.onPressedSwitchExpInc,
+                  ),
+                  SwitchDate(
+                    onPressedCallBack: provider.onPressedSwitchDate,
+                    titleValue: '20 000',
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -95,17 +81,18 @@ class ScreenHome extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ScreenAddCategory(
-                                  isSelectedBudget: provider.isSelectedBudget,
+                                  isSelectedBudget:
+                                      provider.isSelectedSwitchExpInc,
                                 ),
                               ),
                             );
-                            provider.sceenUpdate();
+                            provider.screenUpdate();
                           },
                         ),
                       ],
                     ),
                   ),
-                  WidgetListCategory(),
+                  const WidgetListCategory(),
                 ],
               ));
         },
@@ -119,61 +106,22 @@ class WidgetInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: ColorApp.colorApp,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 1,
-            offset: Offset(2, 2), // Shadow position
-          ),
-        ],
-      ),
-      height: 160,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            toggleButtonFinanse(context),
-            toggleButtonsDayMonthYear(context),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              '+ 23 000,0 р',
-              style: TextStyle(color: ColorApp.colorText, fontSize: 22),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget toggleButtonFinanse(BuildContext context) {
-    final widthToggle = MediaQuery.of(context).size.width * (0.77 / 2.0);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        ToggleButtons(
-          constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
-          isSelected: [false, true],
-          onPressed: (index) {},
-          children: const [
-            Center(child: Text('Расходы')),
-            Center(child: Text('Доходы')),
-          ],
+        toggleButtonsDayMonthYear(context),
+        const SizedBox(
+          height: 10,
+        ),
+        const Text(
+          '+ 23 000,0 р',
+          style: TextStyle(fontSize: 22),
         ),
       ],
     );
   }
 
   Widget toggleButtonsDayMonthYear(BuildContext context) {
-    final widthToggle = MediaQuery.of(context).size.width * (0.6 / 2.0);
+    final widthToggle = MediaQuery.of(context).size.width * (0.6 / 3.0);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -182,14 +130,14 @@ class WidgetInfo extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(
             Icons.navigate_before,
-            color: ColorApp.colorIcon,
           ),
         ),
         ToggleButtons(
           constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
-          isSelected: [true, false],
+          isSelected: [true, false, false],
           onPressed: (index) {},
           children: [
+            Center(child: Text('01')),
             Center(child: Text('Июнь')),
             Center(child: Text('2023')),
           ],
@@ -199,7 +147,6 @@ class WidgetInfo extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(
             Icons.navigate_next,
-            color: ColorApp.colorIcon,
           ),
         ),
       ],
@@ -253,16 +200,9 @@ class WidgetCardCategory extends StatelessWidget {
             builder: (context) => ScreenCategory(category: category),
           ),
         );
-        // showModalBottomSheet(
-        //     context: context,
-        //     builder: (context) {
-        //       return ScreenSubCategory(
-        //         category: category,
-        //       );
-        //     });
       },
       child: Container(
-        margin: EdgeInsets.all(4),
+        margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
@@ -275,7 +215,7 @@ class WidgetCardCategory extends StatelessWidget {
             BoxShadow(
               color: Color(int.parse(category.color)),
               blurRadius: 3,
-              offset: Offset(0.5, 0.5), // Shadow position
+              offset: const Offset(0.5, 0.5), // Shadow position
             ),
           ],
         ),
@@ -286,7 +226,7 @@ class WidgetCardCategory extends StatelessWidget {
               height: 25,
               decoration: BoxDecoration(
                   color: Color(int.parse(category.color)),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(6),
                       topRight: Radius.circular(6))),
               child: Center(
@@ -299,15 +239,15 @@ class WidgetCardCategory extends StatelessWidget {
             CircularPercentIndicator(
               radius: 20.0,
               lineWidth: 2.0,
-              percent: 0.60,
+              percent: category.percent / 100,
               animation: true,
               center: Text(
                 '${category.percent} %',
-                style: TextStyle(fontSize: 8),
+                style: const TextStyle(fontSize: 8),
               ),
               progressColor: Color(int.parse(category.color)),
             ),
-            Text('2 000 00 руб'),
+            Text('${category.value} Р'),
           ],
         ),
       ),

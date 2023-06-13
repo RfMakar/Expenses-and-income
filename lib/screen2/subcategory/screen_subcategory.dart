@@ -1,31 +1,33 @@
 import 'package:budget/model/category.dart';
+import 'package:budget/model/operation.dart';
 import 'package:budget/model/subcategory.dart';
-import 'package:budget/screen2/category/provider_screen_category.dart';
 import 'package:budget/screen2/const/const_color.dart';
-import 'package:budget/screen2/subcategory/screen_subcategory.dart';
+import 'package:budget/screen2/subcategory/provider_screen_subcategory.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
-class ScreenCategory extends StatelessWidget {
-  const ScreenCategory({super.key, required this.category});
+class ScreenSubCategory extends StatelessWidget {
+  const ScreenSubCategory(
+      {super.key, required this.category, required this.subCategory});
   final Category category;
+  final SubCategory subCategory;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderScreenCategory(category),
+      create: (context) => ProviderScreenSubCategory(category, subCategory),
       builder: (context, child) {
-        return Consumer<ProviderScreenCategory>(
-          builder: (context, provider, child) {
+        return Consumer<ProviderScreenSubCategory>(
+          builder: (context, value, child) {
             return Scaffold(
               appBar: AppBar(
-                backgroundColor: category.colorCategory(),
+                backgroundColor: subCategory.colorCategory(),
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back, color: ColorApp.colorIcon),
                   onPressed: () => Navigator.pop(context),
                 ),
                 title: Text(
-                  category.name,
+                  subCategory.name,
                   style: const TextStyle(color: ColorApp.colorText),
                 ),
                 actions: [
@@ -82,9 +84,8 @@ class ScreenCategory extends StatelessWidget {
               ),
               body: ListView(
                 children: [
-                  WidgetInfo(category: category),
-                  const SizedBox(height: 20),
-                  const WidgetListSubCategory(),
+                  WidgetInfo(subCategory: subCategory),
+                  const WidgetListSubCategory()
                 ],
               ),
             );
@@ -96,13 +97,13 @@ class ScreenCategory extends StatelessWidget {
 }
 
 class WidgetInfo extends StatelessWidget {
-  const WidgetInfo({super.key, required this.category});
-  final Category category;
+  const WidgetInfo({super.key, required this.subCategory});
+  final SubCategory subCategory;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: category.colorCategory(),
+        color: subCategory.colorCategory(),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
@@ -177,9 +178,9 @@ class WidgetListSubCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenCategory>(context);
-    return FutureBuilder<List<SubCategory>>(
-      future: provider.getListSubCategory(),
+    final provider = Provider.of<ProviderScreenSubCategory>(context);
+    return FutureBuilder<List<Operation>>(
+      future: provider.getListOperationsy(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
@@ -194,14 +195,14 @@ class WidgetListSubCategory extends StatelessWidget {
               height: 40,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: provider.category.colorCategory(),
+                color: provider.subCategory.colorCategory(),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(width: 40),
                   const Text(
-                    'Подкатегории',
+                    'Операции',
                     style: TextStyle(color: ColorApp.colorText, fontSize: 16),
                   ),
                   IconButton(
@@ -219,37 +220,30 @@ class WidgetListSubCategory extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                final subCategory = snapshot.data![index];
+                final operation = snapshot.data![index];
                 return Card(
                   surfaceTintColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: subCategory.colorCategory(), width: 1),
+                    side:
+                        BorderSide(color: operation.colorCategory(), width: 1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: ListTile(
                     onTap: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ScreenSubCategory(
-                              category: provider.category,
-                              subCategory: subCategory),
-                        ),
-                      );
+                      // await Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         ScreenSubCategory(subCategory: subCategory),
+                      //   ),
+                      // );
                     },
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(subCategory.name),
-                        Text('${subCategory.value} Р'),
+                        Text(operation.date),
+                        Text('${operation.value} Р'),
                       ],
-                    ),
-                    subtitle: LinearPercentIndicator(
-                      animation: true,
-                      percent: subCategory.percent / 100.0,
-                      backgroundColor: Colors.grey,
-                      progressColor: subCategory.colorCategory(),
                     ),
                   ),
                 );

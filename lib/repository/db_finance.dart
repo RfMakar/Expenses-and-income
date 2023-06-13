@@ -1,5 +1,7 @@
 import 'package:budget/model/category.dart';
 import 'package:budget/model/finance.dart';
+import 'package:budget/model/operation.dart';
+import 'package:budget/model/subcategory.dart';
 import 'package:budget/screen2/const/db_table.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -51,6 +53,41 @@ abstract class DBFinance {
         ''');
 
     return maps.isNotEmpty ? maps.map((e) => Category.fromMap(e)).toList() : [];
+  }
+
+  //Лист Подкатегорий для screen_category
+  static Future<List<SubCategory>> getListSubCategory(
+      String table, Category category) async {
+    final Database db = await database;
+    final maps = await db.rawQuery('''
+      SELECT subcategory as name, SUM(value) as value, IFNULL( SUM(value)/(SELECT SUM(value) FROM $table)*100.0, 0.0) as percent ,color, comment
+      FROM $table
+      WHERE category = ?
+      GROUP BY subcategory, color
+      ORDER BY value DESC;
+
+
+        ''', [category.name]);
+
+    return maps.isNotEmpty
+        ? maps.map((e) => SubCategory.fromMap(e)).toList()
+        : [];
+  }
+
+  //Лист Операций для screen_SubCategory
+  static Future<List<Operation>> getListOperations(
+      String table, Category category, SubCategory subCategory) async {
+    final Database db = await database;
+    final maps = await db.rawQuery('''
+      SELECT date, value, comment, color
+      FROM $table
+      WHERE category = ? AND subcategory = ?
+      ORDER BY date DESC;
+        ''', [category.name, subCategory.name]);
+
+    return maps.isNotEmpty
+        ? maps.map((e) => Operation.fromMap(e)).toList()
+        : [];
   }
 
   //Чтение
