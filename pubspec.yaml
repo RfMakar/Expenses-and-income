@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.1.2
   path: ^1.7.0
   percent_indicator: ^4.2.3
+  form_builder_validators: ^8.6.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

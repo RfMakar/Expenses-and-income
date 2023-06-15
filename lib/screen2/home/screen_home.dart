@@ -1,7 +1,6 @@
 import 'package:budget/model/category.dart';
 import 'package:budget/screen2/add_category/screen_add_categoty.dart';
 import 'package:budget/screen2/add_finance/screen_add_finance.dart';
-import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/category/screen_category.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
@@ -41,9 +40,9 @@ class ScreenHome extends StatelessWidget {
                 title: const Text('Главная'),
               ),
               body: ListView(
-                children: [
-                  const WidgetInfo(),
-                  const WidgetListCategory(),
+                children: const [
+                  WidgetInfo(),
+                  WidgetListCategory(),
                 ],
               ));
         },
@@ -73,6 +72,7 @@ class WidgetInfo extends StatelessWidget {
           ),
         ],
       ),
+      height: 140,
       child: Column(
         children: [
           SwitchExpensesIncome(
@@ -213,40 +213,3 @@ class WidgetCardCategory extends StatelessWidget {
     );
   }
 }
-
-/*
-InkWell(
-      onTap: () {
-        showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return ScreenSubCategory(
-                category: category,
-              );
-            });
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Color(int.parse(category.color)),
-          ),
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              category.name,
-              style: const TextStyle(fontSize: 18),
-            ),
-            Text(
-              '${category.percent} %',
-              style: const TextStyle(fontSize: 16),
-            ),
-            Text('${category.value} руб'),
-          ],
-        ),
-      ),
-    );
-
-*/

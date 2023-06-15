@@ -32,7 +32,7 @@ class _ButtonsDateTimeState extends State<ButtonsDateTime> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton.icon(
           label: Text(DateFormat.yMMMd().format(DateTime.now())),

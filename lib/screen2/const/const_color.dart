@@ -14,7 +14,7 @@ abstract class ColorApp {
     Colors.green,
     Colors.lightGreen,
     Colors.lime,
-    Colors.yellow,
+    //Colors.yellow,
     Colors.amber,
     Colors.orange,
     Colors.deepOrange,

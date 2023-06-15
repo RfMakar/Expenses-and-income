@@ -32,7 +32,7 @@ class ProviderScreenAddCategory extends ChangeNotifier {
         comment: '',
         color: color.value.toString(),
       );
-      await DBFinance.insert(DBTable.expenses, finance);
+      //await DBFinance.insert(DBTable.expenses, finance);
     }
   }
 

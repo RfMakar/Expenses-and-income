@@ -1,3 +1,4 @@
+import 'package:budget/model/account.dart';
 import 'package:budget/model/category.dart';
 import 'package:budget/model/finance.dart';
 import 'package:budget/model/operation.dart';
@@ -16,12 +17,19 @@ abstract class DBFinance {
     String path = join(await getDatabasesPath(), 'finance.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
     );
   }
 
   static Future _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE ${DBTable.account}(
+          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+          name TEXT NOT NULL,
+          color TEXT NOT NULL
+          );
+      ''');
     await db.execute('''
       CREATE TABLE ${DBTable.expenses}(
           date TEXT,
@@ -35,9 +43,9 @@ abstract class DBFinance {
   }
 
   //Запись в БД
-  static Future<void> insert(String table, Finance finance) async {
+  static Future<void> insert(String table, Map<String, Object?> values) async {
     final db = await database;
-    await db.insert(table, finance.toMap());
+    await db.insert(table, values);
   }
 
   //Лист категорий для screen_home
