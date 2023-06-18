@@ -17,19 +17,33 @@ abstract class DBFinance {
     String path = join(await getDatabasesPath(), 'finance.db');
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _onCreate,
     );
   }
 
   static Future _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE ${DBTable.account}(
-          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-          name TEXT NOT NULL,
-          color TEXT NOT NULL
-          );
+    CREATE TABLE ${DBTable.account}(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    color TEXT NOT NULL
+    );
       ''');
+    await db.execute('''
+    CREATE TABLE ${DBTable.transactions} (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    idAccount INTEGER REFERENCES account (id) ON DELETE CASCADE NOT NULL,
+    idSubCategories INTEGER REFERENCES subcategories (id) ON DELETE CASCADE,
+    date TEXT NOT NULL,
+    year REAL NOT NULL,
+    month REAL NOT NULL,
+    day REAL NOT NULL,
+    value REAL NOT NULL,
+    note TEXT
+    );
+      ''');
+
     await db.execute('''
       CREATE TABLE ${DBTable.expenses}(
           date TEXT,
@@ -43,9 +57,23 @@ abstract class DBFinance {
   }
 
   //Запись в БД
-  static Future<void> insert(String table, Map<String, Object?> values) async {
+  static Future<int> insert(String table, Map<String, Object?> values) async {
     final db = await database;
-    await db.insert(table, values);
+    return await db.insert(table, values);
+  }
+
+  //Лист счетов
+  static Future<List<Account>> getListAccounts() async {
+    final Database db = await database;
+    final maps = await db.rawQuery('''
+      SELECT account.id, account.name, SUM(value) as value, account.color
+      FROM transactions
+      JOIN account ON account.id = transactions.idAccount
+      GROUP BY name
+      ORDER BY value DESC;
+        ''');
+
+    return maps.isNotEmpty ? maps.map((e) => Account.fromMap(e)).toList() : [];
   }
 
   //Лист категорий для screen_home

@@ -54,7 +54,7 @@ class DialogAddAccount extends StatelessWidget {
                     autovalidateMode: AutovalidateMode.always,
                     validator: FormBuilderValidators.minLength(
                       1,
-                      errorText: 'Введите значение',
+                      errorText: 'Введите название',
                     ),
                     decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
@@ -104,16 +104,20 @@ class DialogAddAccount extends StatelessWidget {
             ),
             actions: [
               TextButton(
-                onPressed: provider.onPressedButtonAddAccount,
                 child: Text(
                   'Добавить',
-                  style: TextStyle(
-                    color: provider.colorDialog,
-                  ),
+                  style: TextStyle(color: provider.colorDialog),
                 ),
+                onPressed: () {
+                  final validate = provider.onPressedButtonAddAccount();
+
+                  if (validate) {
+                    Navigator.pop(context, validate);
+                  }
+                },
               ),
               TextButton(
-                onPressed: () => Navigator.pop(context, null),
+                onPressed: () => Navigator.pop(context, false),
                 child: Text(
                   'Отмена',
                   style: TextStyle(color: provider.colorDialog),

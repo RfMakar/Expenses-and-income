@@ -22,8 +22,8 @@ class Account {
   //Чтение БД
   factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json['id'],
+        value: json['value'],
         name: json['name'],
         color: json['color'],
-        value: json['value'],
       );
 }

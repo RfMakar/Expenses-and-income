@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:budget/model/account.dart';
+import 'package:budget/model/transaction.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/const/db_table.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddAccount extends ChangeNotifier {
+  final DateTime dateTime = DateTime.now();
   final textEditingControllerName = TextEditingController();
   final textEditingControllerValue = TextEditingController(text: '0');
   Color colorDialog =
@@ -18,19 +20,35 @@ class ProviderDialogAddAccount extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onPressedButtonAddAccount() {
+  bool onPressedButtonAddAccount() {
     if (!formKey.currentState!.validate()) {
-      return;
+      return false;
     } else {
       saveAccountToDB();
+      return true;
     }
   }
 
-  void saveAccountToDB() {
+  void saveAccountToDB() async {
     final account = Account(
       name: textEditingControllerName.text.trim(),
       color: colorDialog.value.toString(),
     );
-    DBFinance.insert(DBTable.account, account.toMap());
+    final idAccount = await DBFinance.insert(DBTable.account, account.toMap());
+    saveTransactionsToDB(idAccount);
+  }
+
+  void saveTransactionsToDB(int idAccount) async {
+    final transaction = Transactions(
+      idAccount: idAccount,
+      idSubCategories: null,
+      date: dateTime.toString(),
+      year: dateTime.year,
+      month: dateTime.month,
+      day: dateTime.day,
+      value: double.parse(textEditingControllerValue.text.trim()),
+      note: null,
+    );
+    await DBFinance.insert(DBTable.transactions, transaction.toMap());
   }
 }

@@ -1,6 +1,7 @@
 import 'package:budget/dialogs/add_account/dialog_add_account.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/buttons_date_time.dart';
+import 'package:budget/screen2/widget/list_accounts.dart';
 import 'package:budget/screen2/widget/switch_expence_income.dart';
 import 'package:budget/screen2/widget/textfield_value.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,7 @@ class WidgetAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAddFinance>(context);
     return Column(
       children: [
         Row(
@@ -88,72 +90,22 @@ class WidgetAccount extends StatelessWidget {
           children: [
             const Text('Счет'),
             IconButton(
-              onPressed: () {
-                showDialog(
+              onPressed: () async {
+                final bool update = await showDialog(
                   context: context,
                   builder: (context) => const DialogAddAccount(),
                 );
+
+                if (update) {
+                  provider.updateScreen();
+                }
               },
               icon: const Icon(Icons.add),
             ),
           ],
         ),
-        SizedBox(
-          height: 80,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            physics: const PageScrollPhysics(),
-            children: [
-              cardAccount('Основной', 10000, Colors.blue),
-              cardAccount('Наличные', 400, Colors.red),
-              cardAccount('Карта МТС', 2000, Colors.green),
-              cardAccount('Кошелек', 2344, Colors.yellow),
-              cardAccount('Основной', 10000, Colors.blue),
-              cardAccount('Наличные', 400, Colors.red),
-              cardAccount('Карта МТС', 2000, Colors.green),
-              cardAccount('Кошелек', 2344, Colors.yellow),
-            ],
-          ),
-        ),
+        const WidgetListAccounts(),
       ],
-    );
-  }
-
-  Widget cardAccount(String nameAccount, double value, Color color) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-          width: 90,
-          margin: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: color),
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: color,
-                blurRadius: 1,
-                offset: const Offset(0.5, 0.5), // Shadow position
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: 25,
-                decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6))),
-                child: Center(
-                  child: Text(nameAccount),
-                ),
-              ),
-              Text('$value Р')
-            ],
-          )),
     );
   }
 }
