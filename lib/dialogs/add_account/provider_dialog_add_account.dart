@@ -3,7 +3,7 @@ import 'package:budget/model/account.dart';
 import 'package:budget/model/transaction.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
-import 'package:budget/screen2/const/db_table.dart';
+import 'package:budget/screen2/const/db.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddAccount extends ChangeNotifier {
@@ -33,8 +33,11 @@ class ProviderDialogAddAccount extends ChangeNotifier {
     final account = Account(
       name: textEditingControllerName.text.trim(),
       color: colorDialog.value.toString(),
+      selection: 1,
     );
-    final idAccount = await DBFinance.insert(DBTable.account, account.toMap());
+    DBFinance.rawUpdate(DBTableAccount.updateSelection0());
+    final idAccount =
+        await DBFinance.insert(DBTableAccount.name, account.toMap());
     saveTransactionsToDB(idAccount);
   }
 

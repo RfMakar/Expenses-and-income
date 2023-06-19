@@ -3,12 +3,14 @@ class Account {
   double? value;
   final String name;
   final String color;
+  final int selection;
 
   Account({
     this.id,
     this.value,
     required this.name,
     required this.color,
+    required this.selection,
   });
 
   //Для записи в БД
@@ -16,6 +18,7 @@ class Account {
     return {
       'name': name,
       'color': color,
+      'selection': selection,
     };
   }
 
@@ -25,5 +28,6 @@ class Account {
         value: json['value'],
         name: json['name'],
         color: json['color'],
+        selection: json['selection'],
       );
 }

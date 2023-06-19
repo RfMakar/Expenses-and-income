@@ -4,7 +4,6 @@ import 'package:budget/model/subcategory.dart';
 import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/subcategory/provider_screen_subcategory.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenSubCategory extends StatelessWidget {
@@ -122,9 +121,7 @@ class WidgetInfo extends StatelessWidget {
         child: Column(
           children: [
             toggleButtonsDayMonthYear(context),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Text(
               '- 20 343 р',
               style: TextStyle(
@@ -153,9 +150,9 @@ class WidgetInfo extends StatelessWidget {
         ),
         ToggleButtons(
           constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
-          isSelected: [true, false],
+          isSelected: const [true, false],
           onPressed: (index) {},
-          children: [
+          children: const [
             Center(child: Text('Июнь')),
             Center(child: Text('2023')),
           ],

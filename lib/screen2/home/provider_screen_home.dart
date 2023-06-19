@@ -1,6 +1,6 @@
 import 'package:budget/model/category.dart';
 import 'package:budget/repository/db_finance.dart';
-import 'package:budget/screen2/const/db_table.dart';
+import 'package:budget/screen2/const/db.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
@@ -12,15 +12,10 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   //Переключает расход/доход
-  void onPressedSwitchExpInc(List<bool> list) {
-    print(list);
-  }
+  void onPressedSwitchExpInc(List<bool> list) {}
 
   //Переключает дату
-  void onPressedSwitchDate(List<bool> list, DateTime dateTime) {
-    print(list);
-    print(dateTime);
-  }
+  void onPressedSwitchDate(List<bool> list, DateTime dateTime) {}
 
   Future<List<Category>> getListFinance() {
     return DBFinance.getListCategory(DBTable.expenses);

@@ -1,7 +1,6 @@
 import 'package:budget/dialogs/add_account/dialog_add_account.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/buttons_date_time.dart';
-import 'package:budget/screen2/widget/list_accounts.dart';
 import 'package:budget/screen2/widget/switch_expence_income.dart';
 import 'package:budget/screen2/widget/textfield_value.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +25,14 @@ class ScreenAddFinance extends StatelessWidget {
             ),
             body: ListView(
               children: [
-                WidgetFinance(),
-                Divider(),
-                WidgetAccount(),
-                Divider(),
-                WidgetCategories(),
-                Divider(),
-                WidgetValueNote(),
-                Divider(),
+                const WidgetFinance(),
+                const Divider(),
+                const WidgetAccount(),
+                const Divider(),
+                const WidgetCategories(),
+                const Divider(),
+                const WidgetValueNote(),
+                const Divider(),
                 ButtonsDateTime(
                   dateTime: provider.dateTime,
                   timeOfDay: provider.timeOfDay,
@@ -91,12 +90,12 @@ class WidgetAccount extends StatelessWidget {
             const Text('Счет'),
             IconButton(
               onPressed: () async {
-                final bool update = await showDialog(
+                final bool? update = await showDialog(
                   context: context,
                   builder: (context) => const DialogAddAccount(),
                 );
 
-                if (update) {
+                if (update == true) {
                   provider.updateScreen();
                 }
               },
@@ -104,7 +103,78 @@ class WidgetAccount extends StatelessWidget {
             ),
           ],
         ),
-        const WidgetListAccounts(),
+        SizedBox(
+          height: 80,
+          child: FutureBuilder(
+            future: provider.getListAccount(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: provider.listAccounts.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onLongPress: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container();
+                          });
+                    },
+                    onTap: () {
+                      provider.onTapAccount(index);
+                    },
+                    child: Container(
+                        //width: 90,
+                        constraints: const BoxConstraints(minWidth: 90),
+                        margin: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: provider.selectionAccount(index) == 1
+                              ? provider.colorAccount(index)
+                              : Colors.white,
+                          border:
+                              Border.all(color: provider.colorAccount(index)),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: provider.colorAccount(index),
+                              blurRadius: 1,
+                              offset: const Offset(0.5, 0.5),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              constraints: const BoxConstraints(minWidth: 90),
+                              decoration: BoxDecoration(
+                                  color: provider.colorAccount(index),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(6),
+                                      topRight: Radius.circular(6))),
+                              child: Center(
+                                child: Text(provider.nameAccount(index)),
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Text(provider.valueAccount(index)),
+                              ),
+                            ),
+                          ],
+                        )),
+                  );
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }

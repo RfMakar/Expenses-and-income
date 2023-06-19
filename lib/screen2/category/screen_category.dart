@@ -121,9 +121,7 @@ class WidgetInfo extends StatelessWidget {
         child: Column(
           children: [
             toggleButtonsDayMonthYear(context),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Text(
               '- 20 343 р',
               style: TextStyle(
@@ -152,9 +150,9 @@ class WidgetInfo extends StatelessWidget {
         ),
         ToggleButtons(
           constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
-          isSelected: [true, false],
+          isSelected: const [true, false],
           onPressed: (index) {},
-          children: [
+          children: const [
             Center(child: Text('Июнь')),
             Center(child: Text('2023')),
           ],

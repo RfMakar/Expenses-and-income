@@ -1,9 +1,5 @@
 import 'dart:math';
-
-import 'package:budget/model/finance.dart';
-import 'package:budget/repository/db_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
-import 'package:budget/screen2/const/db_table.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddCategory extends ChangeNotifier {
@@ -23,17 +19,17 @@ class ProviderScreenAddCategory extends ChangeNotifier {
   }
 
   void onPressedAddNewCategoy() async {
-    for (var subCat in listSubCategory) {
-      final finance = Finance(
-        date: DateTime.now().toString(),
-        category: texEdConCategory.text.trim(),
-        subcategory: subCat,
-        value: 0,
-        comment: '',
-        color: color.value.toString(),
-      );
-      //await DBFinance.insert(DBTable.expenses, finance);
-    }
+    // for (var subCat in listSubCategory) {
+    // final finance = Finance(
+    //   date: DateTime.now().toString(),
+    //   category: texEdConCategory.text.trim(),
+    //   subcategory: subCat,
+    //   value: 0,
+    //   comment: '',
+    //   color: color.value.toString(),
+    // );
+    //await DBFinance.insert(DBTable.expenses, finance);
+    // }
   }
 
   void loadColor() {

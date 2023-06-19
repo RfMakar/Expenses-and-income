@@ -1,9 +1,7 @@
-import 'package:budget/model/account.dart';
 import 'package:budget/model/category.dart';
-import 'package:budget/model/finance.dart';
 import 'package:budget/model/operation.dart';
 import 'package:budget/model/subcategory.dart';
-import 'package:budget/screen2/const/db_table.dart';
+import 'package:budget/screen2/const/db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -23,26 +21,8 @@ abstract class DBFinance {
   }
 
   static Future _onCreate(Database db, int version) async {
-    await db.execute('''
-    CREATE TABLE ${DBTable.account}(
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    name TEXT NOT NULL,
-    color TEXT NOT NULL
-    );
-      ''');
-    await db.execute('''
-    CREATE TABLE ${DBTable.transactions} (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    idAccount INTEGER REFERENCES account (id) ON DELETE CASCADE NOT NULL,
-    idSubCategories INTEGER REFERENCES subcategories (id) ON DELETE CASCADE,
-    date TEXT NOT NULL,
-    year REAL NOT NULL,
-    month REAL NOT NULL,
-    day REAL NOT NULL,
-    value REAL NOT NULL,
-    note TEXT
-    );
-      ''');
+    await db.execute(DBTableAccount.createTable());
+    await db.execute(DBSql.createTableTransaction);
 
     await db.execute('''
       CREATE TABLE ${DBTable.expenses}(
@@ -62,18 +42,17 @@ abstract class DBFinance {
     return await db.insert(table, values);
   }
 
-  //Лист счетов
-  static Future<List<Account>> getListAccounts() async {
-    final Database db = await database;
-    final maps = await db.rawQuery('''
-      SELECT account.id, account.name, SUM(value) as value, account.color
-      FROM transactions
-      JOIN account ON account.id = transactions.idAccount
-      GROUP BY name
-      ORDER BY value DESC;
-        ''');
+  //Получить данные
+  static Future<List<Map<String, Object?>>> rawQuery(String sql,
+      [List<Object?>? arguments]) async {
+    final db = await database;
+    return await db.rawQuery(sql, arguments);
+  }
 
-    return maps.isNotEmpty ? maps.map((e) => Account.fromMap(e)).toList() : [];
+  //Обновить данные
+  static Future rawUpdate(String sql, [List<Object?>? arguments]) async {
+    final db = await database;
+    await db.rawUpdate(sql, arguments);
   }
 
   //Лист категорий для screen_home
