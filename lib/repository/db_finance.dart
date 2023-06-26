@@ -1,6 +1,3 @@
-import 'package:budget/model/category.dart';
-import 'package:budget/model/operation.dart';
-import 'package:budget/model/subcategory.dart';
 import 'package:budget/screen2/const/db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,19 +18,12 @@ abstract class DBFinance {
   }
 
   static Future _onCreate(Database db, int version) async {
-    await db.execute(DBTableAccount.createTable());
-    await db.execute(DBSql.createTableTransaction);
-
-    await db.execute('''
-      CREATE TABLE ${DBTable.expenses}(
-          date TEXT,
-          category TEXT,
-          subcategory TEXT,
-          value REAL,
-          comment TEXT,
-          color TEXT
-          );
-      ''');
+    await db.execute(DBTableOperations.createTable());
+    await db.rawInsert(DBTableOperations.insertTable());
+    await db.execute(DBTableCategories.createTable());
+    await db.rawInsert(DBTableCategories.insertTable());
+    await db.execute(DBTableSubCategories.createTable());
+    await db.rawInsert(DBTableSubCategories.insertTable());
   }
 
   //Запись в БД
@@ -54,8 +44,26 @@ abstract class DBFinance {
     final db = await database;
     await db.rawUpdate(sql, arguments);
   }
+}
 
-  //Лист категорий для screen_home
+
+
+
+
+
+/*
+WHERE some_column IS NULL OR some_column = '';
+
+
+
+  Чтение
+  static Future<List<Finance>> getListFinance(String table) async {
+    final Database db = await database;
+    final maps = await db.query(table);
+    return maps.isNotEmpty ? maps.map((e) => Finance.fromMap(e)).toList() : [];
+  }
+
+ //Лист категорий для screen_home
   static Future<List<Category>> getListCategory(String table) async {
     final Database db = await database;
     final maps = await db.rawQuery('''
@@ -104,13 +112,4 @@ abstract class DBFinance {
         ? maps.map((e) => Operation.fromMap(e)).toList()
         : [];
   }
-
-  //Чтение
-  // static Future<List<Finance>> getListFinance(String table) async {
-  //   final Database db = await database;
-  //   final maps = await db.query(table);
-  //   return maps.isNotEmpty ? maps.map((e) => Finance.fromMap(e)).toList() : [];
-  // }
-}
-
-//WHERE some_column IS NULL OR some_column = '';
+*/

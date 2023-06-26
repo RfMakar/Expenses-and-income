@@ -41,6 +41,7 @@ dependencies:
   path: ^1.7.0
   percent_indicator: ^4.2.3
   form_builder_validators: ^8.6.1
+  carousel_slider: ^4.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

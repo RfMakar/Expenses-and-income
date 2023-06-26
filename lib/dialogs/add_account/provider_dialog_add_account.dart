@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:budget/model/account.dart';
-import 'package:budget/model/transaction.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/screen2/const/const_color.dart';
 import 'package:budget/screen2/const/db.dart';
@@ -30,28 +29,27 @@ class ProviderDialogAddAccount extends ChangeNotifier {
   }
 
   void saveAccountToDB() async {
-    final account = Account(
-      name: textEditingControllerName.text.trim(),
-      color: colorDialog.value.toString(),
-      selection: 1,
-    );
-    DBFinance.rawUpdate(DBTableAccount.updateSelection0());
-    final idAccount =
-        await DBFinance.insert(DBTableAccount.name, account.toMap());
-    saveTransactionsToDB(idAccount);
+    // final account = Account(
+    //   name: textEditingControllerName.text.trim(),
+    //   color: colorDialog.value.toString(),
+    // );
+
+    // final idAccount =
+    //     await DBFinance.insert(DBTableAccount.name, account.toMap());
+    // saveTransactionsToDB(idAccount);
   }
 
   void saveTransactionsToDB(int idAccount) async {
-    final transaction = Transactions(
-      idAccount: idAccount,
-      idSubCategories: null,
-      date: dateTime.toString(),
-      year: dateTime.year,
-      month: dateTime.month,
-      day: dateTime.day,
-      value: double.parse(textEditingControllerValue.text.trim()),
-      note: null,
-    );
-    await DBFinance.insert(DBTable.transactions, transaction.toMap());
+    // final transaction = Transactions(
+    //   idAccount: idAccount,
+    //   idSubCategories: null,
+    //   date: dateTime.toString(),
+    //   year: dateTime.year,
+    //   month: dateTime.month,
+    //   day: dateTime.day,
+    //   value: double.parse(textEditingControllerValue.text.trim()),
+    //   note: null,
+    // );
+    //await DBFinance.insert(DBTable.transactions, transaction.toMap());
   }
 }

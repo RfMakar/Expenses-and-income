@@ -1,29 +1,24 @@
-class Account {
+class SubCategories {
   int? id;
-  double? value;
+  int? idcategories;
   final String name;
-  final String color;
 
-  Account({
+  SubCategories({
     this.id,
-    this.value,
+    this.idcategories,
     required this.name,
-    required this.color,
   });
-
   //Для записи в БД
   Map<String, dynamic> toMap() {
     return {
+      'idcategories': idcategories,
       'name': name,
-      'color': color,
     };
   }
 
   //Чтение БД
-  factory Account.fromMap(Map<String, dynamic> json) => Account(
+  factory SubCategories.fromMap(Map<String, dynamic> json) => SubCategories(
         id: json['id'],
-        value: json['value'],
         name: json['name'],
-        color: json['color'],
       );
 }

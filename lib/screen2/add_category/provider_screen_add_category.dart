@@ -35,6 +35,7 @@ class ProviderScreenAddCategory extends ChangeNotifier {
   void loadColor() {
     final index = Random().nextInt(ColorApp.listColor.length);
     color = ColorApp.listColor[index];
+    print(color.value);
   }
 
   void onPressedNewSubCategoru(String name) {
