@@ -1,6 +1,7 @@
-import 'package:budget/screen2/add_category/screen_add_categoty.dart';
+import 'package:budget/dialogs/add_categories/dialog_add_categories.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/switch_expence_income.dart';
+import 'package:budget/sheets/menu_categories/sheet_menu_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,24 +17,28 @@ class ScreenAddFinance extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text('Категории'),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScreenAddCategory(
-                      isSelectedBudget: provider.finance,
-                    ),
-                  ),
-                );
-              },
-              child: const Icon(Icons.add),
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    final bool? update = await showDialog(
+                      context: context,
+                      builder: (context) => DialogAddCategories(
+                          idoperations: provider.financeSwitch()),
+                    );
+
+                    if (update == true) {
+                      provider.updateScreen();
+                    }
+                  },
+                  icon: const Icon(Icons.add),
+                ),
+              ],
             ),
             body: ListView(
               children: const [
                 WidgetFinance(),
                 WidgetCategories(),
+                WidgetButtonAddCategories(),
               ],
             ),
           );
@@ -91,15 +96,33 @@ class WidgetCategories extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: provider.listCategories.length,
           itemBuilder: (context, index) {
-            return InkWell(
-              onLongPress: () {
-                print('меню');
-              },
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
               child: ExpansionTile(
+                leading: const Icon(Icons.folder),
+                childrenPadding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: provider.colorCategories(index), width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () async {
+                    final bool? update = await showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SheetMenuCategories(
+                        categories: provider.selectCategories(index),
+                      ),
+                    );
+                    if (update == true) {
+                      provider.updateScreen();
+                    }
+                  },
+                ),
+                key: PageStorageKey(provider.key(index)),
                 textColor: provider.colorCategories(index),
                 iconColor: provider.colorCategories(index),
-                collapsedTextColor: provider.colorCategories(index),
-                collapsedIconColor: provider.colorCategories(index),
                 title: Text(
                   provider.nameCategories(index),
                 ),
@@ -107,6 +130,7 @@ class WidgetCategories extends StatelessWidget {
                     .nameSubCategories(index)
                     .map(
                       (e) => ListTile(
+                        trailing: const Icon(Icons.navigate_next),
                         title: Text(e),
                         onTap: () {},
                       ),
@@ -120,6 +144,30 @@ class WidgetCategories extends StatelessWidget {
     );
   }
 }
+
+class WidgetButtonAddCategories extends StatelessWidget {
+  const WidgetButtonAddCategories({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAddFinance>(context);
+    return TextButton(
+      onPressed: () async {
+        final bool? update = await showDialog(
+          context: context,
+          builder: (context) =>
+              DialogAddCategories(idoperations: provider.financeSwitch()),
+        );
+
+        if (update == true) {
+          provider.updateScreen();
+        }
+      },
+      child: const Text('Новая категория'),
+    );
+  }
+}
+
 
 /*
 

@@ -1,8 +1,5 @@
 import 'dart:math';
-import 'package:budget/model/account.dart';
-import 'package:budget/repository/db_finance.dart';
-import 'package:budget/screen2/const/const_color.dart';
-import 'package:budget/screen2/const/db.dart';
+import 'package:budget/const/const_color.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddAccount extends ChangeNotifier {

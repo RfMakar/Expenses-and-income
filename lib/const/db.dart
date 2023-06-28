@@ -36,12 +36,17 @@ class DBTableCategories {
     (1, 'Зарплата','4288585374'),
     (1, 'Вклад','4284955319'); 
     ''';
+  static String deletedRow() => '''
+    DELETE
+    FROM $name 
+    WHERE id = ?;
+    ''';
   static String getList() => '''
-      SELECT id, name, color
-      FROM $name
-      WHERE idoperations = ?
-      ;
-        ''';
+    SELECT id, name, color
+    FROM $name
+    WHERE idoperations = ?
+    ;
+    ''';
 }
 
 class DBTableSubCategories {

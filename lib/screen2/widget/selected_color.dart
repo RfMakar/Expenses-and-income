@@ -1,4 +1,4 @@
-import 'package:budget/screen2/const/const_color.dart';
+import 'package:budget/const/const_color.dart';
 import 'package:flutter/material.dart';
 
 class WidgetSelectedColor extends StatelessWidget {

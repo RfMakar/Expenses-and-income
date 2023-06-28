@@ -1,4 +1,4 @@
-import 'package:budget/screen2/const/db.dart';
+import 'package:budget/const/db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -43,6 +43,12 @@ abstract class DBFinance {
   static Future rawUpdate(String sql, [List<Object?>? arguments]) async {
     final db = await database;
     await db.rawUpdate(sql, arguments);
+  }
+
+  //Удалить данные
+  static Future rawDelete(String sql, [List<Object?>? arguments]) async {
+    final db = await database;
+    await db.rawDelete(sql, arguments);
   }
 }
 

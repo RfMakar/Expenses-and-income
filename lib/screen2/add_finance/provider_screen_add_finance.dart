@@ -1,7 +1,7 @@
 import 'package:budget/model/categories.dart';
 import 'package:budget/model/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
-import 'package:budget/screen2/const/db.dart';
+import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddFinance extends ChangeNotifier {
@@ -12,6 +12,10 @@ class ProviderScreenAddFinance extends ChangeNotifier {
     return finance[0] == true ? 0 : 1;
   }
 
+  Categories selectCategories(int index) {
+    return listCategories[index];
+  }
+
   String nameCategories(int index) {
     return listCategories[index].name;
   }
@@ -20,9 +24,20 @@ class ProviderScreenAddFinance extends ChangeNotifier {
     return Color(int.parse(listCategories[index].color));
   }
 
+  String key(int index) {
+    return listCategories[index].id.toString();
+  }
+
   List<String> nameSubCategories(int index) {
     final listSubCategories = listCategories[index].listSubcategories;
     return listSubCategories!.map((e) => e.name).toList();
+  }
+
+  void onPressedButtonAddSubCategories(int index) async {
+    final subCategories =
+        SubCategories(idcategories: listCategories[index].id, name: 'dd');
+    await DBFinance.insert(DBTableSubCategories.name, subCategories.toMap());
+    notifyListeners();
   }
 
   Future getListCategories() async {
@@ -42,7 +57,6 @@ class ProviderScreenAddFinance extends ChangeNotifier {
   }
 
   void updateScreen() async {
-    await getListCategories();
     notifyListeners();
   }
 
@@ -55,12 +69,12 @@ class ProviderScreenAddFinance extends ChangeNotifier {
 
 /*
 
- // void onPressedButtonAddSubCategories(int index) async {
-  //   final subCategories =
-  //       SubCategories(idcategories: listCategories[index].id, name: 'dd');
-  //   await DBFinance.insert(DBTableSubCategories.name, subCategories.toMap());
-  //   notifyListeners();
-  // }
+ void onPressedButtonAddSubCategories(int index) async {
+    final subCategories =
+        SubCategories(idcategories: listCategories[index].id, name: 'dd');
+    await DBFinance.insert(DBTableSubCategories.name, subCategories.toMap());
+    notifyListeners();
+  }
 
 
   DateTime? _dateTime;

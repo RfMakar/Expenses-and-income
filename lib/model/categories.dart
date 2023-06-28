@@ -15,14 +15,14 @@ class Categories {
     this.listSubcategories,
   });
 
-  // //Для записи в БД
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'idoperations': idoperations,
-  //     'name': name,
-  //     'color': color,
-  //   };
-  // }
+  //Для записи в БД
+  Map<String, dynamic> toMap() {
+    return {
+      'idoperations': idoperations,
+      'name': name,
+      'color': color,
+    };
+  }
 
   //Чтение БД
   factory Categories.fromMap(Map<String, dynamic> json) => Categories(
