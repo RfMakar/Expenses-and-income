@@ -1,3 +1,4 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_subcategories/dialog_add_subcategories.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/model/categories.dart';
@@ -10,7 +11,10 @@ class SheetMenuCategories extends StatelessWidget {
   final Categories categories;
   @override
   Widget build(BuildContext context) {
-    void navigator() => Navigator.pop(context, true);
+    void navigatorUpdateScreen() =>
+        Navigator.pop(context, ActionsUpdate.updateScreen);
+    void navigatorUpdateWidget() =>
+        Navigator.pop(context, ActionsUpdate.updateWidget);
     return ChangeNotifierProvider(
       create: (context) => ProviderSheetMenuCategories(categories),
       child: Consumer<ProviderSheetMenuCategories>(
@@ -18,8 +22,6 @@ class SheetMenuCategories extends StatelessWidget {
           return Wrap(
             children: [
               ListTile(
-                iconColor: provider.colorCategories(),
-                leading: const Icon(Icons.folder),
                 title: Text(provider.nameSheet()),
               ),
               const Divider(),
@@ -33,7 +35,7 @@ class SheetMenuCategories extends StatelessWidget {
                         DialogAddSubCategories(categories: provider.categories),
                   );
                   if (update == true) {
-                    navigator();
+                    navigatorUpdateWidget();
                   }
                 },
               ),
@@ -54,7 +56,7 @@ class SheetMenuCategories extends StatelessWidget {
                   );
                   if (result == true) {
                     provider.onTapDeletedCategories();
-                    navigator();
+                    navigatorUpdateScreen();
                   }
                 },
               ),

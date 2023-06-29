@@ -1,0 +1,4 @@
+enum ActionsUpdate {
+  updateScreen,
+  updateWidget,
+}

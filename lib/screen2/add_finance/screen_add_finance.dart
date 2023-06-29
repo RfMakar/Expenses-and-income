@@ -1,4 +1,6 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_categories/dialog_add_categories.dart';
+import 'package:budget/model/categories.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/switch_expence_income.dart';
 import 'package:budget/sheets/menu_categories/sheet_menu_categories.dart';
@@ -38,7 +40,6 @@ class ScreenAddFinance extends StatelessWidget {
               children: const [
                 WidgetFinance(),
                 WidgetCategories(),
-                WidgetButtonAddCategories(),
               ],
             ),
           );
@@ -96,47 +97,8 @@ class WidgetCategories extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: provider.listCategories.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ExpansionTile(
-                leading: const Icon(Icons.folder),
-                childrenPadding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: provider.colorCategories(index), width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () async {
-                    final bool? update = await showModalBottomSheet(
-                      context: context,
-                      builder: (context) => SheetMenuCategories(
-                        categories: provider.selectCategories(index),
-                      ),
-                    );
-                    if (update == true) {
-                      provider.updateScreen();
-                    }
-                  },
-                ),
-                key: PageStorageKey(provider.key(index)),
-                textColor: provider.colorCategories(index),
-                iconColor: provider.colorCategories(index),
-                title: Text(
-                  provider.nameCategories(index),
-                ),
-                children: provider
-                    .nameSubCategories(index)
-                    .map(
-                      (e) => ListTile(
-                        trailing: const Icon(Icons.navigate_next),
-                        title: Text(e),
-                        onTap: () {},
-                      ),
-                    )
-                    .toList(),
-              ),
+            return WidgetCardCategory(
+              categories: provider.selectCategories(index),
             );
           },
         );
@@ -145,28 +107,76 @@ class WidgetCategories extends StatelessWidget {
   }
 }
 
-class WidgetButtonAddCategories extends StatelessWidget {
-  const WidgetButtonAddCategories({super.key});
-
+class WidgetCardCategory extends StatelessWidget {
+  const WidgetCardCategory({super.key, required this.categories});
+  final Categories categories;
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenAddFinance>(context);
-    return TextButton(
-      onPressed: () async {
-        final bool? update = await showDialog(
-          context: context,
-          builder: (context) =>
-              DialogAddCategories(idoperations: provider.financeSwitch()),
-        );
-
-        if (update == true) {
-          provider.updateScreen();
-        }
-      },
-      child: const Text('Новая категория'),
+    final providerScreen = Provider.of<ProviderScreenAddFinance>(context);
+    return ChangeNotifierProvider(
+      create: (context) => ProviderWidgetCardCategory(categories),
+      child: Consumer<ProviderWidgetCardCategory>(
+        builder: (context, provider, child) {
+          return FutureBuilder(
+            future: provider.getListSubCategories(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ExpansionTile(
+                  childrenPadding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () async {
+                      final ActionsUpdate? actionsUpdate =
+                          await showModalBottomSheet(
+                        context: context,
+                        builder: (context) => SheetMenuCategories(
+                          categories: provider.categories,
+                        ),
+                      );
+                      if (actionsUpdate == ActionsUpdate.updateWidget) {
+                        provider.updateWidget();
+                      } else if (actionsUpdate == ActionsUpdate.updateScreen) {
+                        providerScreen.updateScreen();
+                      }
+                    },
+                  ),
+                  key: PageStorageKey(provider.key()),
+                  backgroundColor: provider.colorCategories().withOpacity(0.7),
+                  textColor: Colors.white,
+                  iconColor: Colors.white,
+                  title: Text(provider.nameCategories()),
+                  children: provider
+                      .listNameSubcategories()
+                      .map(
+                        (e) => ListTile(
+                          textColor: Colors.white,
+                          iconColor: Colors.white,
+                          trailing: const Icon(Icons.navigate_next),
+                          title: Text(e),
+                          onTap: () {},
+                        ),
+                      )
+                      .toList(),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
+
 
 
 /*
