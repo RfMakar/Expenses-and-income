@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 
 abstract class ColorApp {
   static const List<Color> listColor = [
-    Colors.red,
     Colors.pink,
-    Colors.purple,
-    Colors.deepPurple,
-    Colors.indigo,
-    Colors.blue,
-    Colors.lightBlue,
-    Colors.cyan,
-    Colors.teal,
-    Colors.green,
-    Colors.lightGreen,
-    Colors.lime,
-    //Colors.yellow,
-    Colors.amber,
+    Colors.red,
     Colors.orange,
-    Colors.deepOrange,
+    Colors.amber,
+    Colors.lightGreen,
+    Colors.green,
+    Colors.teal,
+    Colors.cyan,
+    Colors.blue,
+    Colors.indigo,
+    Colors.purple,
+    Colors.blueGrey,
     Colors.brown,
     Colors.grey,
-    Colors.blueGrey,
   ];
 
   static const colorText = Colors.white;

@@ -1,5 +1,5 @@
 import 'package:budget/dialogs/add_account/provider_dialog_add_account.dart';
-import 'package:budget/screen2/widget/selected_color.dart';
+import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -28,7 +28,7 @@ class DialogAddAccount extends StatelessWidget {
                     onPressed: () async {
                       final Color? color = await showModalBottomSheet(
                         context: context,
-                        builder: (context) => const WidgetSelectedColor(),
+                        builder: (context) => const SheetColors(),
                       );
                       if (color != null) {
                         provider.updateColorDialog(color);

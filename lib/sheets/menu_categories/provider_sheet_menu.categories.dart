@@ -15,10 +15,18 @@ class ProviderSheetMenuCategories extends ChangeNotifier {
     return Color(int.parse(categories.color));
   }
 
-  void onTapRenamedCategories() {}
-  void onTapDeletedCategories() {
-    DBFinance.rawDelete(DBTableCategories.deletedRow(), [categories.id]);
+  void onTapRenamedCategories(String newName) async {
+    await DBFinance.rawUpdate(
+        DBTableCategories.updateName(), [newName, categories.id]);
   }
 
-  void onTapChangeColorCategories() {}
+  void onTapDeletedCategories() async {
+    await DBFinance.rawDelete(
+        DBTableCategories.deletedCategories(), [categories.id]);
+  }
+
+  void onTapChangeColorCategories(Color newColor) async {
+    await DBFinance.rawUpdate(DBTableCategories.updateColor(),
+        [newColor.value.toString(), categories.id]);
+  }
 }

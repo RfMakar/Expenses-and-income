@@ -1,16 +1,17 @@
-import 'package:budget/const/const_color.dart';
+import 'package:budget/const/color.dart';
 import 'package:flutter/material.dart';
 
-class WidgetSelectedColor extends StatelessWidget {
-  const WidgetSelectedColor({super.key});
+class SheetColors extends StatelessWidget {
+  const SheetColors({super.key});
 
   @override
   Widget build(BuildContext context) {
     const listColors = ColorApp.listColor;
-    return Stack(
+    return Wrap(
       children: [
         GridView.builder(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 40),
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(8),
           itemCount: listColors.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
@@ -29,11 +30,6 @@ class WidgetSelectedColor extends StatelessWidget {
               ),
             );
           },
-        ),
-        Container(
-          height: 35,
-          color: Colors.white.withOpacity(0.8),
-          child: const Center(child: Text('Выбрать цвет')),
         ),
       ],
     );

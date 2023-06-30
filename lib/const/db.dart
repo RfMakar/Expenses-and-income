@@ -36,15 +36,27 @@ class DBTableCategories {
     (1, 'Зарплата','4288585374'),
     (1, 'Вклад','4284955319'); 
     ''';
-  static String deletedRow() => '''
+  static String deletedCategories() => '''
     DELETE
     FROM $name 
     WHERE id = ?;
     ''';
+  static String updateName() => '''
+    UPDATE $name 
+    SET name = ?
+    WHERE id = ?;
+    ''';
+  static String updateColor() => '''
+    UPDATE $name 
+    SET color = ?
+    WHERE id = ?;
+    ''';
+
   static String getList() => '''
     SELECT id, name, color
     FROM $name
     WHERE idoperations = ?
+    ORDER BY id DESC
     ;
     ''';
 }
@@ -66,11 +78,21 @@ class DBTableSubCategories {
     (1, 'Запчасти'),
     (1, 'Мойка'); 
     ''';
-
+  static String deletedSubCategories() => '''
+    DELETE
+    FROM $name 
+    WHERE id = ?;
+    ''';
+  static String updateName() => '''
+    UPDATE $name 
+    SET name = ?
+    WHERE id = ?;
+    ''';
   static String getList() => '''
       SELECT id, name
       FROM $name
       WHERE idcategories = ?
+      ORDER BY id DESC
       ;
         ''';
 }

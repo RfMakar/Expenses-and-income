@@ -4,6 +4,7 @@ import 'package:budget/model/categories.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/switch_expence_income.dart';
 import 'package:budget/sheets/menu_categories/sheet_menu_categories.dart';
+import 'package:budget/sheets/menu_subcategories/sheet_menu_subcategories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,24 +56,8 @@ class WidgetFinance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenAddFinance>(context);
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue,
-            blurRadius: 1,
-            offset: Offset(1, 1),
-          ),
-        ],
-      ),
-      child: SwitchExpensesIncome(
-        onPressedCallBack: provider.onPressedSwitchExpInc,
-      ),
+    return SwitchExpensesIncome(
+      onPressedCallBack: provider.onPressedSwitchExpInc,
     );
   }
 }
@@ -126,10 +111,9 @@ class WidgetCardCategory extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
+              return Card(
                 child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -151,19 +135,29 @@ class WidgetCardCategory extends StatelessWidget {
                     },
                   ),
                   key: PageStorageKey(provider.key()),
-                  backgroundColor: provider.colorCategories().withOpacity(0.7),
-                  textColor: Colors.white,
-                  iconColor: Colors.white,
+                  textColor: provider.colorCategories(),
+                  iconColor: provider.colorCategories(),
                   title: Text(provider.nameCategories()),
                   children: provider
                       .listNameSubcategories()
                       .map(
-                        (e) => ListTile(
-                          textColor: Colors.white,
-                          iconColor: Colors.white,
-                          trailing: const Icon(Icons.navigate_next),
-                          title: Text(e),
-                          onTap: () {},
+                        (subCategories) => ListTile(
+                          textColor: provider.colorCategories(),
+                          iconColor: provider.colorCategories(),
+                          leading: const Icon(Icons.arrow_right),
+                          title: Text(subCategories.name),
+                          onTap: () async {
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SheetMenuSubCategories(
+                                subCategories: subCategories,
+                              ),
+                            );
+                            if (actionsUpdate == ActionsUpdate.updateWidget) {
+                              provider.updateWidget();
+                            }
+                          },
                         ),
                       )
                       .toList(),

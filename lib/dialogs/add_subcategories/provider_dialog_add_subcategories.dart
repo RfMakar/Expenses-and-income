@@ -9,7 +9,6 @@ class ProviderDialogAddSubCategories extends ChangeNotifier {
   ProviderDialogAddSubCategories(this.categories);
   final textEditingControllerName = TextEditingController();
 
-  Color colorDialog() => Color(int.parse(categories.color));
   String titleDialog() => categories.name;
   final formKey = GlobalKey<FormState>();
 

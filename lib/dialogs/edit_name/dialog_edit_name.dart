@@ -1,23 +1,18 @@
-import 'package:budget/dialogs/add_subcategories/provider_dialog_add_subcategories.dart';
-import 'package:budget/model/categories.dart';
+import 'package:budget/dialogs/edit_name/provider_dialog_edit_name.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
 
-class DialogAddSubCategories extends StatelessWidget {
-  const DialogAddSubCategories({super.key, required this.categories});
-  final Categories categories;
-
+class DialogEditName extends StatelessWidget {
+  const DialogEditName({super.key, required this.name});
+  final String name;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderDialogAddSubCategories(categories),
-      child: Consumer<ProviderDialogAddSubCategories>(
+      create: (context) => ProviderDialogEditName(name),
+      child: Consumer<ProviderDialogEditName>(
         builder: (context, provider, child) {
           return AlertDialog(
-            title: Center(
-              child: Text(provider.titleDialog()),
-            ),
             content: Form(
               key: provider.formKey,
               child: TextFormField(
@@ -32,23 +27,23 @@ class DialogAddSubCategories extends StatelessWidget {
                   errorText: 'Введите название',
                 ),
                 decoration: const InputDecoration(
-                  hintText: 'Новая подкатегория',
+                  hintText: 'Новое название',
                 ),
               ),
             ),
             actions: [
               TextButton(
-                child: const Text('Добавить'),
+                child: const Text('Сохранить'),
                 onPressed: () {
-                  final validate = provider.onPressedButtonAddCategories();
+                  final newName = provider.onPressedButtonSave();
 
-                  if (validate) {
-                    Navigator.pop(context, validate);
+                  if (newName != null) {
+                    Navigator.pop(context, newName);
                   }
                 },
               ),
               TextButton(
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () => Navigator.pop(context, null),
                 child: const Text('Отмена'),
               ),
             ],

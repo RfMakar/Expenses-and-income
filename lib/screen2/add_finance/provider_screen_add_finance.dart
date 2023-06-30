@@ -50,8 +50,8 @@ class ProviderWidgetCardCategory extends ChangeNotifier {
     return categories.id.toString();
   }
 
-  List<String> listNameSubcategories() {
-    return categories.listSubcategories!.map((e) => e.name).toList();
+  List<SubCategories> listNameSubcategories() {
+    return categories.listSubcategories!;
   }
 
   void updateWidget() async {
