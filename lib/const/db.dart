@@ -1,5 +1,5 @@
-class DBTableOperations {
-  static const name = 'operations';
+class DBTableFinance {
+  static const name = 'finance';
 
   static String createTable() => '''
     CREATE TABLE $name(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ButtonsDateTime extends StatefulWidget {
-  const ButtonsDateTime({
+class WidgetButtonsDateTime extends StatefulWidget {
+  const WidgetButtonsDateTime({
     Key? key,
     required this.dateTime,
     required this.timeOfDay,
@@ -15,10 +15,10 @@ class ButtonsDateTime extends StatefulWidget {
   final ValueChanged<TimeOfDay> onChangedTime;
 
   @override
-  State<ButtonsDateTime> createState() => _ButtonsDateTimeState();
+  State<WidgetButtonsDateTime> createState() => _WidgetButtonsDateTimeState();
 }
 
-class _ButtonsDateTimeState extends State<ButtonsDateTime> {
+class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
   late DateTime dateTime;
   late TimeOfDay timeOfDay;
 
@@ -34,9 +34,8 @@ class _ButtonsDateTimeState extends State<ButtonsDateTime> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextButton.icon(
-          label: Text(DateFormat.yMMMd().format(DateTime.now())),
-          icon: const Icon(Icons.date_range),
+        TextButton(
+          child: Text(DateFormat.yMMMd().format(DateTime.now())),
           onPressed: () async {
             final picked = await showDatePicker(
               context: context,
@@ -50,9 +49,8 @@ class _ButtonsDateTimeState extends State<ButtonsDateTime> {
             }
           },
         ),
-        TextButton.icon(
-          label: Text(timeOfDay.format(context)),
-          icon: const Icon(Icons.access_time),
+        TextButton(
+          child: Text(timeOfDay.format(context)),
           onPressed: () async {
             final picked = await showTimePicker(
               context: context,

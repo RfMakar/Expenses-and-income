@@ -152,6 +152,7 @@ class WidgetCardCategory extends StatelessWidget {
                               context: context,
                               builder: (context) => SheetMenuSubCategories(
                                 subCategories: subCategories,
+                                financeSwitch: providerScreen.financeSwitch(),
                               ),
                             );
                             if (actionsUpdate == ActionsUpdate.updateWidget) {
@@ -332,69 +333,5 @@ ListView.builder(
               );
 
 */
-
-
-// class WidgetValueNote extends StatelessWidget {
-//   const WidgetValueNote({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final provider = Provider.of<ProviderScreenAddFinance>(context);
-//     return Container(
-//       margin: const EdgeInsets.all(8),
-//       // padding: const EdgeInsets.all(8),
-//       // decoration: const BoxDecoration(
-//       //   color: Colors.white,
-//       //   borderRadius: BorderRadius.all(Radius.circular(8)),
-//       //   boxShadow: [
-//       //     BoxShadow(
-//       //       color: Colors.blue,
-//       //       blurRadius: 2,
-//       //       offset: Offset(1, 1), // Shadow position
-//       //     ),
-//       //   ],
-//       // ),
-//       child: Column(
-//         children: [
-//           Row(
-//             children: const [
-//               Text('Сумма'),
-//             ],
-//           ),
-//           TextFieldValue(
-//               textEditingController: provider.textEditingControllerValue),
-//           const SizedBox(height: 8),
-//           Row(
-//             children: const [
-//               Text('Заметка'),
-//             ],
-//           ),
-//           const TextField(
-//             keyboardType: TextInputType.text,
-//             textCapitalization: TextCapitalization.sentences,
-//             textAlign: TextAlign.center,
-//             decoration: InputDecoration(
-//               isDense: true,
-//               enabledBorder: OutlineInputBorder(
-//                 borderRadius: BorderRadius.all(Radius.circular(16)),
-//                 borderSide: BorderSide(
-//                   color: Colors.blue,
-//                   width: 2,
-//                 ),
-//               ),
-//               border: OutlineInputBorder(
-//                 borderRadius: BorderRadius.all(Radius.circular(16)),
-//                 borderSide: BorderSide(width: 2),
-//                 gapPadding: 0,
-//               ),
-//               hintText: '...',
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 
 */

@@ -18,8 +18,8 @@ abstract class DBFinance {
   }
 
   static Future _onCreate(Database db, int version) async {
-    await db.execute(DBTableOperations.createTable());
-    await db.rawInsert(DBTableOperations.insertTable());
+    await db.execute(DBTableFinance.createTable());
+    await db.rawInsert(DBTableFinance.insertTable());
     await db.execute(DBTableCategories.createTable());
     await db.rawInsert(DBTableCategories.insertTable());
     await db.execute(DBTableSubCategories.createTable());

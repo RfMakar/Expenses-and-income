@@ -1,8 +1,8 @@
+import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_categories/provider_dialog_add_categories.dart';
 import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DialogAddCategories extends StatelessWidget {
   const DialogAddCategories({super.key, required this.idoperations});
@@ -44,13 +44,9 @@ class DialogAddCategories extends StatelessWidget {
                 autofocus: true,
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.sentences,
-                maxLength: 30,
                 controller: provider.textEditingControllerName,
                 autovalidateMode: AutovalidateMode.always,
-                validator: FormBuilderValidators.minLength(
-                  1,
-                  errorText: 'Введите название',
-                ),
+                validator: ValidatorTextField.text,
                 decoration: const InputDecoration(
                   hintText: 'Новая категория',
                 ),

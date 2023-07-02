@@ -70,17 +70,6 @@ class ProviderWidgetCardCategory extends ChangeNotifier {
 
 
 /*
-
- void onPressedButtonAddSubCategories(int index) async {
-    final subCategories =
-        SubCategories(idcategories: listCategories[index].id, name: 'dd');
-    await DBFinance.insert(DBTableSubCategories.name, subCategories.toMap());
-    notifyListeners();
-  }
-
-
-  DateTime? _dateTime;
-  TimeOfDay? _timeOfDay;
   // var buttonCarouselController = CarouselController();
   // final textEditingControllerValue = TextEditingController();
 
@@ -102,14 +91,5 @@ class ProviderWidgetCardCategory extends ChangeNotifier {
   String valueAccount(int index) {
     return '${listAccounts[index].value} Р';
   }
-
- void onChangedDate(DateTime dateTime) {
-    _dateTime = dateTime;
-  }
-
-  void onChangedTime(TimeOfDay timeOfDay) {
-    _timeOfDay = timeOfDay;
-  }
-
 
 */

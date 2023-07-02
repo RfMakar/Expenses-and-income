@@ -1,8 +1,8 @@
+import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_subcategories/provider_dialog_add_subcategories.dart';
 import 'package:budget/model/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DialogAddSubCategories extends StatelessWidget {
   const DialogAddSubCategories({super.key, required this.categories});
@@ -24,13 +24,9 @@ class DialogAddSubCategories extends StatelessWidget {
                 autofocus: true,
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.sentences,
-                maxLength: 30,
                 controller: provider.textEditingControllerName,
                 autovalidateMode: AutovalidateMode.always,
-                validator: FormBuilderValidators.minLength(
-                  1,
-                  errorText: 'Введите название',
-                ),
+                validator: ValidatorTextField.text,
                 decoration: const InputDecoration(
                   hintText: 'Новая подкатегория',
                 ),
