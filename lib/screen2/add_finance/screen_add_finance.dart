@@ -26,7 +26,7 @@ class ScreenAddFinance extends StatelessWidget {
                     final bool? update = await showDialog(
                       context: context,
                       builder: (context) => DialogAddCategories(
-                          idoperations: provider.financeSwitch()),
+                          idfinance: provider.financeSwitch()),
                     );
 
                     if (update == true) {

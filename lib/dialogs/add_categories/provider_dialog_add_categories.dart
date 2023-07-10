@@ -6,13 +6,13 @@ import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddCategories extends ChangeNotifier {
-  final int idoperations;
-  ProviderDialogAddCategories(this.idoperations);
+  final int idfinance;
+  ProviderDialogAddCategories(this.idfinance);
   final textEditingControllerName = TextEditingController();
 
   Color colorDialog =
       ColorApp.listColor[Random().nextInt(ColorApp.listColor.length)];
-  String titleDialog() => idoperations == 0 ? 'Расход' : 'Доход';
+  String titleDialog() => idfinance == 0 ? 'Расход' : 'Доход';
   final formKey = GlobalKey<FormState>();
 
   void updateColorDialog(Color color) {
@@ -31,7 +31,7 @@ class ProviderDialogAddCategories extends ChangeNotifier {
 
   void insertDBCategories() {
     final categories = Categories(
-      idoperations: idoperations,
+      idfinance: idfinance,
       name: textEditingControllerName.text.trim(),
       color: colorDialog.value.toString(),
     );

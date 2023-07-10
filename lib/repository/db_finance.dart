@@ -24,6 +24,7 @@ abstract class DBFinance {
     await db.rawInsert(DBTableCategories.insertTable());
     await db.execute(DBTableSubCategories.createTable());
     await db.rawInsert(DBTableSubCategories.insertTable());
+    await db.execute(DBTableOperations.createTable());
   }
 
   //Запись в БД

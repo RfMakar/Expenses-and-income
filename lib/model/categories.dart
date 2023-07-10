@@ -2,14 +2,14 @@ import 'package:budget/model/subcategories.dart';
 
 class Categories {
   int? id;
-  int? idoperations;
+  int? idfinance;
   final String name;
   final String color;
   List<SubCategories>? listSubcategories;
 
   Categories({
     this.id,
-    this.idoperations,
+    this.idfinance,
     required this.name,
     required this.color,
     this.listSubcategories,
@@ -18,7 +18,7 @@ class Categories {
   //Для записи в БД
   Map<String, dynamic> toMap() {
     return {
-      'idoperations': idoperations,
+      'idfinance': idfinance,
       'name': name,
       'color': color,
     };

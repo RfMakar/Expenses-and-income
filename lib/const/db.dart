@@ -20,13 +20,13 @@ class DBTableCategories {
   static String createTable() => '''
     CREATE TABLE $name(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    idoperations INTEGER REFERENCES operations (id) ON DELETE CASCADE NOT NULL,
+    idfinance INTEGER REFERENCES operations (id) ON DELETE CASCADE NOT NULL,
     name TEXT NOT NULL,
     color TEXT NOT NULL
     );
     ''';
   static String insertTable() => '''
-    INSERT INTO $name(idoperations, name, color) VALUES
+    INSERT INTO $name(idfinance, name, color) VALUES
     (0, 'Машина','4280391411'),
     (0, 'Продукты','4288585374'),
     (0, 'Развлечения','4294198070'),
@@ -55,7 +55,7 @@ class DBTableCategories {
   static String getList() => '''
     SELECT id, name, color
     FROM $name
-    WHERE idoperations = ?
+    WHERE idfinance = ?
     ORDER BY id DESC
     ;
     ''';
@@ -97,26 +97,19 @@ class DBTableSubCategories {
         ''';
 }
 
-
-
-
-/*
-class DBTableAccount {
-  static const name = 'account';
+class DBTableOperations {
+  static const name = 'operations';
 
   static String createTable() => '''
     CREATE TABLE $name(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    name TEXT NOT NULL,
-    color TEXT NOT NULL
+    idsubcategories INTEGER REFERENCES subcategories (id) ON DELETE CASCADE NOT NULL,
+    date TEXT NOT NULL,
+    year INTEGER NOT NULL,
+    month INTEGER NOT NULL,
+    day INTEGER NOT NULL,
+    value REAL NOT NULL,
+    note TEXT NOT NULL
     );
-      ''';
-  static String getList() => '''
-      SELECT account.id, account.name, SUM(value) as value, account.color
-      FROM transactions
-      JOIN account ON account.id = transactions.idAccount
-      GROUP BY name;
-        ''';
+    ''';
 }
-
-*/

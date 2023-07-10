@@ -5,14 +5,10 @@ class WidgetButtonsDateTime extends StatefulWidget {
   const WidgetButtonsDateTime({
     Key? key,
     required this.dateTime,
-    required this.timeOfDay,
-    required this.onChangedDate,
-    required this.onChangedTime,
+    required this.onChangedDateTime,
   }) : super(key: key);
   final DateTime dateTime;
-  final TimeOfDay timeOfDay;
-  final ValueChanged<DateTime> onChangedDate;
-  final ValueChanged<TimeOfDay> onChangedTime;
+  final ValueChanged<DateTime> onChangedDateTime;
 
   @override
   State<WidgetButtonsDateTime> createState() => _WidgetButtonsDateTimeState();
@@ -20,22 +16,21 @@ class WidgetButtonsDateTime extends StatefulWidget {
 
 class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
   late DateTime dateTime;
-  late TimeOfDay timeOfDay;
 
   @override
   void initState() {
     super.initState();
     dateTime = widget.dateTime;
-    timeOfDay = widget.timeOfDay;
   }
 
   @override
   Widget build(BuildContext context) {
+    var timeOfDay = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          child: Text(DateFormat.yMMMd().format(DateTime.now())),
+          child: Text(DateFormat.yMMMd().format(dateTime)),
           onPressed: () async {
             final picked = await showDatePicker(
               context: context,
@@ -44,8 +39,14 @@ class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
               lastDate: DateTime.now(),
             );
             if (picked != null) {
-              setState(() => dateTime = picked);
-              widget.onChangedDate(picked);
+              setState(() {
+                dateTime = dateTime.copyWith(
+                  year: picked.year,
+                  month: picked.month,
+                  day: picked.day,
+                );
+              });
+              widget.onChangedDateTime(dateTime);
             }
           },
         ),
@@ -57,8 +58,12 @@ class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
               initialTime: timeOfDay,
             );
             if (picked != null) {
-              setState(() => timeOfDay = picked);
-              widget.onChangedTime(picked);
+              setState(() {
+                timeOfDay = picked;
+                dateTime = dateTime.copyWith(
+                    hour: timeOfDay.hour, minute: timeOfDay.minute);
+                widget.onChangedDateTime(dateTime);
+              });
             }
           },
         ),

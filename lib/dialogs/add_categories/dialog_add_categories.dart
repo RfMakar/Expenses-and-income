@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DialogAddCategories extends StatelessWidget {
-  const DialogAddCategories({super.key, required this.idoperations});
-  final int idoperations;
+  const DialogAddCategories({super.key, required this.idfinance});
+  final int idfinance;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderDialogAddCategories(idoperations),
+      create: (context) => ProviderDialogAddCategories(idfinance),
       child: Consumer<ProviderDialogAddCategories>(
         builder: (context, provider, child) {
           return AlertDialog(

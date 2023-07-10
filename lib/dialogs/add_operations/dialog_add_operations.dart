@@ -20,13 +20,6 @@ class DialogAddOperations extends StatelessWidget {
               key: provider.formKey,
               child: Wrap(
                 children: [
-                  Row(
-                    children: [
-                      const Text('Счет:'),
-                      TextButton(
-                          onPressed: () {}, child: const Text('Основной'))
-                    ],
-                  ),
                   TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.number,
@@ -51,9 +44,7 @@ class DialogAddOperations extends StatelessWidget {
                   ),
                   WidgetButtonsDateTime(
                     dateTime: provider.dateTime,
-                    timeOfDay: provider.timeOfDay,
-                    onChangedDate: provider.onChangedDate,
-                    onChangedTime: provider.onChangedTime,
+                    onChangedDateTime: provider.onChangedDate,
                   ),
                 ],
               ),
