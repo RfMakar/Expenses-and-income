@@ -2,6 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SwitchDate extends StatefulWidget {
+  const SwitchDate({super.key, required this.onPressedCallBack});
+
+  final void Function(DateTime) onPressedCallBack;
+
+  @override
+  State<SwitchDate> createState() => _SwitchDateState();
+}
+
+class _SwitchDateState extends State<SwitchDate> {
+  final currentDate = DateTime.now(); // Для onPressedButtonDateNext
+  var dateTime = DateTime.now(); //Текущая дата
+
+  String getDate() {
+    return DateFormat.yMMMM().format(dateTime);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IconButton(
+            splashRadius: 10,
+            icon: const Icon(Icons.navigate_before, color: Colors.grey),
+            onPressed: () {
+              //Если месяц и год не 01.2021 то дата переключится на месяц назад
+              var enabledButton =
+                  (dateTime.year == 2021) && (dateTime.month == 1);
+              if (!enabledButton) {
+                dateTime = DateTime(
+                  dateTime.year,
+                  dateTime.month - 1,
+                );
+              }
+              setState(() {
+                widget.onPressedCallBack(dateTime);
+              });
+            }),
+        TextButton(onPressed: null, child: Text(getDate())),
+        IconButton(
+          splashRadius: 10,
+          onPressed: () {
+            //Если дата не текущая то прибавить месяц
+            var enabledButton = (dateTime.year == currentDate.year) &&
+                (dateTime.month == currentDate.month);
+            if (!enabledButton) {
+              dateTime = DateTime(
+                dateTime.year,
+                dateTime.month + 1,
+              );
+            }
+
+            setState(() {
+              widget.onPressedCallBack(dateTime);
+            });
+          },
+          icon: const Icon(Icons.navigate_next, color: Colors.grey),
+        ),
+      ],
+    );
+  }
+}
+/*
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class SwitchDate extends StatefulWidget {
   const SwitchDate(
       {super.key, required this.onPressedCallBack, required this.titleValue});
 
@@ -170,3 +237,4 @@ class _SwitchDateState extends State<SwitchDate> {
     );
   }
 }
+*/

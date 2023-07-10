@@ -68,16 +68,14 @@ class WidgetInfo extends StatelessWidget {
           ),
         ],
       ),
-      height: 140,
+      // height: 140,
       child: Column(
         children: [
           SwitchExpensesIncome(
             onPressedCallBack: provider.onPressedSwitchExpInc,
           ),
-          SwitchDate(
-            onPressedCallBack: provider.onPressedSwitchDate,
-            titleValue: '20 000',
-          ),
+          Text('200 000Р'),
+          SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
         ],
       ),
     );

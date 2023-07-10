@@ -15,7 +15,7 @@ class ProviderScreenHome extends ChangeNotifier {
   void onPressedSwitchExpInc(List<bool> list) {}
 
   //Переключает дату
-  void onPressedSwitchDate(List<bool> list, DateTime dateTime) {}
+  void onPressedSwitchDate(DateTime dateTime) {}
 
   // Future<List<Operations>> getListOperations() async{
   //   if (isSelectedSwitchExpInc[0]) {
