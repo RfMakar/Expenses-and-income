@@ -2,7 +2,6 @@ import 'package:budget/const/db.dart';
 import 'package:budget/model/history_operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
   var isSelectedSwitchExpInc = [true, false];
