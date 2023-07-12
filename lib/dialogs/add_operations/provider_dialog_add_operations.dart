@@ -39,6 +39,6 @@ class ProviderDialogAddOperations extends ChangeNotifier {
       value: double.parse(textEditingControllerValue.text.trim()),
       note: textEditingControllerNote.text.trim(),
     );
-    DBFinance.insert(DBTableOperations.name, operations.toMap());
+    DBFinance.insert(DBTable.operations, operations.toMap());
   }
 }

@@ -26,6 +26,6 @@ class ProviderDialogAddSubCategories extends ChangeNotifier {
       idcategories: categories.id,
       name: textEditingControllerName.text.trim(),
     );
-    DBFinance.insert(DBTableSubCategories.name, subCategories.toMap());
+    DBFinance.insert(DBTable.subcategories, subCategories.toMap());
   }
 }

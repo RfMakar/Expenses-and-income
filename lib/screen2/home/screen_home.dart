@@ -38,7 +38,7 @@ class ScreenHome extends StatelessWidget {
               body: ListView(
                 children: const [
                   WidgetInfo(),
-                  WidgetListOperations(),
+                  WidgetListHistoryOperations(),
                 ],
               ));
         },
@@ -82,17 +82,17 @@ class WidgetInfo extends StatelessWidget {
   }
 }
 
-class WidgetListOperations extends StatelessWidget {
-  const WidgetListOperations({super.key});
+class WidgetListHistoryOperations extends StatelessWidget {
+  const WidgetListHistoryOperations({super.key});
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenHome>(context);
     return Column(
       children: [
-        const Text('Операции'),
+        const Text('История операций'),
         FutureBuilder(
-          //future: provider.getListOperations(),
+          future: provider.getListOperations(),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());
@@ -103,8 +103,14 @@ class WidgetListOperations extends StatelessWidget {
             return ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
+              itemCount: provider.listHistoryOperations.length,
               itemBuilder: (context, index) {
-                return ListTile();
+                return ListTile(
+                  leading: Text(provider.leadingHistory(index)),
+                  title: Text(provider.titleHistory(index)),
+                  subtitle: Text(provider.subtitleHistory(index)),
+                  trailing: Text(provider.valueHistory(index)),
+                );
               },
             );
           },
@@ -113,9 +119,6 @@ class WidgetListOperations extends StatelessWidget {
     );
   }
 }
-
-
-
 
 /*
 class WidgetCardCategory extends StatelessWidget {

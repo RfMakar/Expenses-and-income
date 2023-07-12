@@ -35,6 +35,6 @@ class ProviderDialogAddCategories extends ChangeNotifier {
       name: textEditingControllerName.text.trim(),
       color: colorDialog.value.toString(),
     );
-    DBFinance.insert(DBTableCategories.name, categories.toMap());
+    DBFinance.insert(DBTable.categories, categories.toMap());
   }
 }

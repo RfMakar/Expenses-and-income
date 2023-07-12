@@ -1,24 +1,27 @@
-class DBTableFinance {
-  static const name = 'finance';
+class DBTable {
+  static const finance = 'finance';
+  static const categories = 'categories';
+  static const subcategories = 'subcategories';
+  static const operations = 'operations';
+}
 
+class DBTableFinance {
   static String createTable() => '''
-    CREATE TABLE $name(
+    CREATE TABLE ${DBTable.finance}(
     id INTEGER PRIMARY KEY NOT NULL,
     name TEXT NOT NULL
     );
     ''';
   static String insertTable() => '''
-     INSERT INTO $name(id, name) VALUES
+     INSERT INTO ${DBTable.finance}(id, name) VALUES
     (0, 'Расход'),
     (1, 'Доход'); 
     ''';
 }
 
 class DBTableCategories {
-  static const name = 'categories';
-
   static String createTable() => '''
-    CREATE TABLE $name(
+    CREATE TABLE ${DBTable.categories}(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idfinance INTEGER REFERENCES operations (id) ON DELETE CASCADE NOT NULL,
     name TEXT NOT NULL,
@@ -26,7 +29,7 @@ class DBTableCategories {
     );
     ''';
   static String insertTable() => '''
-    INSERT INTO $name(idfinance, name, color) VALUES
+    INSERT INTO ${DBTable.categories}(idfinance, name, color) VALUES
     (0, 'Машина','4280391411'),
     (0, 'Продукты','4288585374'),
     (0, 'Развлечения','4294198070'),
@@ -38,23 +41,23 @@ class DBTableCategories {
     ''';
   static String deletedCategories() => '''
     DELETE
-    FROM $name 
+    FROM ${DBTable.categories} 
     WHERE id = ?;
     ''';
   static String updateName() => '''
-    UPDATE $name 
+    UPDATE ${DBTable.categories} 
     SET name = ?
     WHERE id = ?;
     ''';
   static String updateColor() => '''
-    UPDATE $name 
+    UPDATE ${DBTable.categories} 
     SET color = ?
     WHERE id = ?;
     ''';
 
   static String getList() => '''
     SELECT id, name, color
-    FROM $name
+    FROM ${DBTable.categories}
     WHERE idfinance = ?
     ORDER BY id DESC
     ;
@@ -62,17 +65,15 @@ class DBTableCategories {
 }
 
 class DBTableSubCategories {
-  static const name = 'subcategories';
-
   static String createTable() => '''
-    CREATE TABLE $name(
+    CREATE TABLE ${DBTable.subcategories}(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idcategories INTEGER REFERENCES categories (id) ON DELETE CASCADE NOT NULL,
     name TEXT NOT NULL
     );
     ''';
   static String insertTable() => '''
-    INSERT INTO $name(idcategories, name) VALUES
+    INSERT INTO ${DBTable.subcategories}(idcategories, name) VALUES
     (1, 'ТО'),
     (1, 'Бензин'),
     (1, 'Запчасти'),
@@ -80,17 +81,17 @@ class DBTableSubCategories {
     ''';
   static String deletedSubCategories() => '''
     DELETE
-    FROM $name 
+    FROM ${DBTable.subcategories} 
     WHERE id = ?;
     ''';
   static String updateName() => '''
-    UPDATE $name 
+    UPDATE ${DBTable.subcategories} 
     SET name = ?
     WHERE id = ?;
     ''';
   static String getList() => '''
       SELECT id, name
-      FROM $name
+      FROM ${DBTable.subcategories}
       WHERE idcategories = ?
       ORDER BY id DESC
       ;
@@ -98,10 +99,8 @@ class DBTableSubCategories {
 }
 
 class DBTableOperations {
-  static const name = 'operations';
-
   static String createTable() => '''
-    CREATE TABLE $name(
+    CREATE TABLE ${DBTable.operations} (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idsubcategories INTEGER REFERENCES subcategories (id) ON DELETE CASCADE NOT NULL,
     date TEXT NOT NULL,
@@ -113,3 +112,29 @@ class DBTableOperations {
     );
     ''';
 }
+
+class DBTableHistoryOperations {
+  static String getList() => '''
+      SELECT ${DBTable.operations}.id AS idoperations,
+      ${DBTable.categories}.name AS namecategories,
+      ${DBTable.subcategories}.name AS namesubcategories,
+      date,
+      value
+      FROM ${DBTable.operations}
+      JOIN ${DBTable.categories} ON ${DBTable.categories}.id = ${DBTable.subcategories}.idcategories
+      JOIN ${DBTable.subcategories} ON  ${DBTable.subcategories}.id = ${DBTable.operations}.idsubcategories
+      
+      WHERE year = ? AND month = ?  
+      ;
+        ''';
+}
+
+/*
+
+  final int idoperations;
+  final String namecategories;
+  final String namesubcategories;
+  final String date;
+  final double value;
+  final String color;
+*/
