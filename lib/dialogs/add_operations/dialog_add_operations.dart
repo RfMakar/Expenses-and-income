@@ -1,6 +1,6 @@
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_operations/provider_dialog_add_operations.dart';
-import 'package:budget/model/subcategories.dart';
+import 'package:budget/models/subcategories.dart';
 import 'package:budget/screen2/widget/buttons_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

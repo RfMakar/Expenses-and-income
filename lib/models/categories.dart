@@ -1,4 +1,4 @@
-import 'package:budget/model/subcategories.dart';
+import 'package:budget/models/subcategories.dart';
 
 class Categories {
   int? id;

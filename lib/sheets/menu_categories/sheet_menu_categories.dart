@@ -2,7 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_subcategories/dialog_add_subcategories.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
-import 'package:budget/model/categories.dart';
+import 'package:budget/models/categories.dart';
 import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:budget/sheets/menu_categories/provider_sheet_menu.categories.dart';
 import 'package:flutter/material.dart';

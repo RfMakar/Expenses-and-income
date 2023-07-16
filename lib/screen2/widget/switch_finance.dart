@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 
-class SwitchExpensesIncome extends StatefulWidget {
-  const SwitchExpensesIncome({super.key, required this.onPressedCallBack});
+/*
+Виджет переключает кнопки расход и доход и возращает число,
+где 0 это расход, 1 это доход.
+*/
 
-  final void Function(List<bool>) onPressedCallBack;
+class WidgetSwitchFinance extends StatefulWidget {
+  const WidgetSwitchFinance({super.key, required this.onPressedCallBack});
+
+  final void Function(int) onPressedCallBack;
 
   @override
-  State<SwitchExpensesIncome> createState() => _SwitchExpensesIncomeState();
+  State<WidgetSwitchFinance> createState() => _WidgetSwitchFinanceState();
 }
 
-class _SwitchExpensesIncomeState extends State<SwitchExpensesIncome> {
+class _WidgetSwitchFinanceState extends State<WidgetSwitchFinance> {
   final List<bool> isSelected = [true, false];
+
+  int finance() => isSelected[0] == true ? 0 : 1;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _SwitchExpensesIncomeState extends State<SwitchExpensesIncome> {
             }
           }
           setState(() {
-            widget.onPressedCallBack(isSelected);
+            widget.onPressedCallBack(finance());
           });
         },
         children: const [

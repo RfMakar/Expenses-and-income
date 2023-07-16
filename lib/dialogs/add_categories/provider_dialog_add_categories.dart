@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:budget/model/categories.dart';
+import 'package:budget/models/categories.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/const/color.dart';
 import 'package:budget/const/db.dart';

@@ -1,6 +1,6 @@
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_subcategories/provider_dialog_add_subcategories.dart';
-import 'package:budget/model/categories.dart';
+import 'package:budget/models/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

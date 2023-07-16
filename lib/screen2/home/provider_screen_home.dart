@@ -1,21 +1,47 @@
 import 'package:budget/const/db.dart';
-import 'package:budget/model/history_operations.dart';
+import 'package:budget/models/group_categories.dart';
+import 'package:budget/models/history_operations.dart';
+import 'package:budget/models/sum_operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
-  var isSelectedSwitchExpInc = [true, false];
-  var isSelectedSwitchDate = [false, true, false];
+  var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
+  late double sumOperations;
   late List<HistoryOperations> listHistoryOperations;
+  late List<GroupCategories> listGroupCategories;
+
   void screenUpdate() {
     notifyListeners();
   }
 
-  // String titleHistory(int index) {
-  //   return DateFormat.MMMMd()
-  //       .format(DateTime.parse(listHistoryOperations[index].date));
-  // }
+  String titleSumOperations() {
+    return finance == 0
+        ? '- ${sumOperations.toString()}'
+        : '+ ${sumOperations.toString()}';
+  }
+
+  Color colorSumOperations() {
+    return finance == 0 ? Colors.red : Colors.green;
+  }
+
+  Color colorGroupCategories(int index) {
+    return Color(int.parse(listGroupCategories[index].color));
+  }
+
+  String titleGroupCategories(int index) {
+    return listGroupCategories[index].name;
+  }
+
+  double percentGroupCategories(int index) {
+    return listGroupCategories[index].percent;
+  }
+
+  String valueGroupCategories(int index) {
+    return listGroupCategories[index].value.toString();
+  }
+
   String titleHistory(int index) {
     return listHistoryOperations[index].namecategories;
   }
@@ -33,10 +59,16 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   //Переключает расход/доход
-  void onPressedSwitchExpInc(List<bool> list) {}
+  void onPressedSwitchFinace(int switchFinance) {
+    finance = switchFinance;
+    notifyListeners();
+  }
 
   //Переключает дату
-  void onPressedSwitchDate(DateTime dateTime) {}
+  void onPressedSwitchDate(DateTime switchDateTime) {
+    dateTime = switchDateTime;
+    notifyListeners();
+  }
 
   Future getListOperations() async {
     final maps = await DBFinance.rawQuery(
@@ -46,13 +78,37 @@ class ProviderScreenHome extends ChangeNotifier {
         : [];
     listHistoryOperations = list;
   }
-}
 
-/*
- final maps = await DBFinance.rawQuery(
-        DBTableSubCategories.getList(), [categories.id]);
-    final List<SubCategories> listSubCategoties = maps.isNotEmpty
-        ? maps.map((e) => SubCategories.fromMap(e)).toList()
+  Future getListGroupCategories() async {
+    final maps = await DBFinance.rawQuery(
+      DBTableGroupCategories.getList(),
+      [
+        dateTime.year,
+        dateTime.month,
+        finance,
+        dateTime.year,
+        dateTime.month,
+        finance,
+      ],
+    );
+    final List<GroupCategories> list = maps.isNotEmpty
+        ? maps.map((e) => GroupCategories.fromMap(e)).toList()
         : [];
-    categories.listSubcategories = listSubCategoties;
-*/
+    listGroupCategories = list;
+  }
+
+  Future getSumOperations() async {
+    final maps = await DBFinance.rawQuery(
+      DBTableSumOperations.getList(),
+      [
+        dateTime.year,
+        dateTime.month,
+        finance,
+      ],
+    );
+    final List<SumOperations> list = maps.isNotEmpty
+        ? maps.map((e) => SumOperations.fromMap(e)).toList()
+        : [];
+    sumOperations = list[0].value;
+  }
+}

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+/*
+Виджет переключает дату (месяц и год) и возрашает дату
+*/
+
 class SwitchDate extends StatefulWidget {
   const SwitchDate({super.key, required this.onPressedCallBack});
 

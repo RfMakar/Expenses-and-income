@@ -1,8 +1,9 @@
 import 'package:budget/screen2/add_finance/screen_add_finance.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
-import 'package:budget/screen2/widget/switch_expence_income.dart';
+import 'package:budget/screen2/widget/switch_finance.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -38,6 +39,7 @@ class ScreenHome extends StatelessWidget {
               body: ListView(
                 children: const [
                   WidgetInfo(),
+                  WidgetListGroupCategories(),
                   WidgetListHistoryOperations(),
                 ],
               ));
@@ -68,16 +70,71 @@ class WidgetInfo extends StatelessWidget {
           ),
         ],
       ),
-      // height: 140,
       child: Column(
         children: [
-          SwitchExpensesIncome(
-            onPressedCallBack: provider.onPressedSwitchExpInc,
+          WidgetSwitchFinance(
+            onPressedCallBack: provider.onPressedSwitchFinace,
           ),
-          Text('200 000Р'),
+          FutureBuilder(
+            future: provider.getSumOperations(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Text(
+                provider.titleSumOperations(),
+                style: TextStyle(
+                    color: provider.colorSumOperations(), fontSize: 20),
+              );
+            },
+          ),
           SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
         ],
       ),
+    );
+  }
+}
+
+class WidgetListGroupCategories extends StatelessWidget {
+  const WidgetListGroupCategories({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenHome>(context);
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        const Text('Категории'),
+        FutureBuilder(
+          future: provider.getListGroupCategories(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3),
+              itemCount: provider.listGroupCategories.length,
+              itemBuilder: (context, index) {
+                return WidgetGroupCategories(
+                  color: provider.colorGroupCategories(index),
+                  name: provider.titleGroupCategories(index),
+                  percent: provider.percentGroupCategories(index),
+                  value: provider.valueGroupCategories(index),
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
@@ -90,6 +147,7 @@ class WidgetListHistoryOperations extends StatelessWidget {
     final provider = Provider.of<ProviderScreenHome>(context);
     return Column(
       children: [
+        const SizedBox(height: 20),
         const Text('История операций'),
         FutureBuilder(
           future: provider.getListOperations(),
@@ -120,36 +178,31 @@ class WidgetListHistoryOperations extends StatelessWidget {
   }
 }
 
-/*
-class WidgetCardCategory extends StatelessWidget {
-  const WidgetCardCategory({super.key, required this.category});
-
-  final Category category;
-
+class WidgetGroupCategories extends StatelessWidget {
+  const WidgetGroupCategories(
+      {super.key,
+      required this.color,
+      required this.name,
+      required this.percent,
+      required this.value});
+  final Color color;
+  final String name;
+  final double percent;
+  final String value;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => ScreenCategory(category: category),
-      //     ),
-      //   );
-      // },
       child: Container(
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: Color(
-              int.parse(category.color),
-            ),
+            color: color,
           ),
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Color(int.parse(category.color)),
+              color: color,
               blurRadius: 3,
               offset: const Offset(0.5, 0.5), // Shadow position
             ),
@@ -161,33 +214,32 @@ class WidgetCardCategory extends StatelessWidget {
             Container(
               height: 25,
               decoration: BoxDecoration(
-                  color: Color(int.parse(category.color)),
+                  color: color,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(6),
                       topRight: Radius.circular(6))),
               child: Center(
                 child: Text(
-                  category.name,
-                  style: const TextStyle(fontSize: 18),
+                  name,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             ),
             CircularPercentIndicator(
               radius: 20.0,
               lineWidth: 2.0,
-              percent: category.percent / 100,
+              percent: percent / 100,
               animation: true,
               center: Text(
-                '${category.percent} %',
+                '$percent %',
                 style: const TextStyle(fontSize: 8),
               ),
-              progressColor: Color(int.parse(category.color)),
+              progressColor: color,
             ),
-            Text('${category.value} Р'),
+            Text(value),
           ],
         ),
       ),
     );
   }
 }
-*/

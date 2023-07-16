@@ -129,12 +129,37 @@ class DBTableHistoryOperations {
         ''';
 }
 
-/*
+class DBTableGroupCategories {
+  static String getList() => '''
+      SELECT ${DBTable.categories}.id AS idcategories,
+      ${DBTable.categories}.name AS name,
+      ${DBTable.categories}.color AS color,
+      ROUND(
+        SUM(value)/(
+          SELECT SUM(value) 
+          FROM ${DBTable.operations} 
+          JOIN ${DBTable.subcategories} ON ${DBTable.subcategories}.id = ${DBTable.operations}.idsubcategories
+          JOIN ${DBTable.categories} ON ${DBTable.categories}.id = ${DBTable.subcategories}.idcategories 
+          WHERE year = ? AND month = ? AND ${DBTable.categories}.idfinance = ? 
+        )*100.0, 1 ) as percent,
+      ROUND(SUM(value), 1) AS value
+      FROM ${DBTable.operations}
+      JOIN ${DBTable.subcategories} ON ${DBTable.subcategories}.id = ${DBTable.operations}.idsubcategories
+      JOIN ${DBTable.categories} ON ${DBTable.categories}.id = ${DBTable.subcategories}.idcategories    
+      WHERE year = ? AND month = ? AND ${DBTable.categories}.idfinance = ?
+      GROUP BY idcategories
+      ORDER BY value DESC
+      ;
+        ''';
+}
 
-  final int idoperations;
-  final String namecategories;
-  final String namesubcategories;
-  final String date;
-  final double value;
-  final String color;
-*/
+class DBTableSumOperations {
+  static String getList() => '''
+      SELECT ROUND(SUM(value), 1) AS value
+      FROM ${DBTable.operations}
+      JOIN ${DBTable.subcategories} ON ${DBTable.subcategories}.id = ${DBTable.operations}.idsubcategories
+      JOIN ${DBTable.categories} ON ${DBTable.categories}.id = ${DBTable.subcategories}.idcategories    
+      WHERE year = ? AND month = ? AND ${DBTable.categories}.idfinance = ?
+      ;
+        ''';
+}

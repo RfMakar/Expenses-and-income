@@ -1,5 +1,5 @@
-import 'package:budget/model/categories.dart';
-import 'package:budget/model/subcategories.dart';
+import 'package:budget/models/categories.dart';
+import 'package:budget/models/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +8,15 @@ class ProviderScreenAddFinance extends ChangeNotifier {
   List<bool> finance = [true, false]; //Расход_Доход
   late List<Categories> listCategories;
 
-  int financeSwitch() {
-    return finance[0] == true ? 0 : 1;
-  }
+  int financeSwitch = 0;
 
   Categories selectCategories(int index) {
     return listCategories[index];
   }
 
   Future getListCategories() async {
-    final maps = await DBFinance.rawQuery(
-        DBTableCategories.getList(), [financeSwitch()]);
+    final maps =
+        await DBFinance.rawQuery(DBTableCategories.getList(), [financeSwitch]);
     final List<Categories> list =
         maps.isNotEmpty ? maps.map((e) => Categories.fromMap(e)).toList() : [];
     listCategories = list;
@@ -28,8 +26,8 @@ class ProviderScreenAddFinance extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onPressedSwitchExpInc(List<bool> list) {
-    finance = list;
+  void onPressedSwitchExpInc(int finace) {
+    financeSwitch = finace;
     updateScreen();
   }
 }

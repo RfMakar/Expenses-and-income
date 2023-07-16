@@ -1,8 +1,8 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_categories/dialog_add_categories.dart';
-import 'package:budget/model/categories.dart';
+import 'package:budget/models/categories.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
-import 'package:budget/screen2/widget/switch_expence_income.dart';
+import 'package:budget/screen2/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_categories/sheet_menu_categories.dart';
 import 'package:budget/sheets/menu_subcategories/sheet_menu_subcategories.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class ScreenAddFinance extends StatelessWidget {
                     final bool? update = await showDialog(
                       context: context,
                       builder: (context) => DialogAddCategories(
-                          idfinance: provider.financeSwitch()),
+                          idfinance: provider.financeSwitch),
                     );
 
                     if (update == true) {
@@ -56,7 +56,7 @@ class WidgetFinance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenAddFinance>(context);
-    return SwitchExpensesIncome(
+    return WidgetSwitchFinance(
       onPressedCallBack: provider.onPressedSwitchExpInc,
     );
   }
@@ -152,7 +152,7 @@ class WidgetCardCategory extends StatelessWidget {
                               context: context,
                               builder: (context) => SheetMenuSubCategories(
                                 subCategories: subCategories,
-                                financeSwitch: providerScreen.financeSwitch(),
+                                financeSwitch: providerScreen.financeSwitch,
                               ),
                             );
                             if (actionsUpdate == ActionsUpdate.updateWidget) {
