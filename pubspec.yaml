@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.5+5
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -33,14 +33,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   sqflite: ^2.0.2
-  intl: ^0.17.0
+  intl: ^0.18.0
   flutter_colorpicker: ^1.0.3
   provider: ^6.0.2
   shared_preferences: ^2.0.13
   url_launcher: ^6.1.2
   path: ^1.7.0
   percent_indicator: ^4.2.3
-  form_builder_validators: ^8.6.1
+  form_builder_validators: ^9.0.0
   carousel_slider: ^4.2.1
 dev_dependencies:
   flutter_test:
