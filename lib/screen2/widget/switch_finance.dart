@@ -21,7 +21,7 @@ class _WidgetSwitchFinanceState extends State<WidgetSwitchFinance> {
 
   @override
   Widget build(BuildContext context) {
-    final widthToggle = MediaQuery.of(context).size.width * (0.77 / 2.0);
+    final widthToggle = MediaQuery.of(context).size.width * (0.8 / 2.0);
 
     return Center(
       child: ToggleButtons(

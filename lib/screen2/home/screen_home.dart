@@ -34,7 +34,33 @@ class ScreenHome extends StatelessWidget {
                 actions: [
                   IconButton(onPressed: () {}, icon: const Icon(Icons.search))
                 ],
-                title: const Text('Главная'),
+                title: Column(
+                  children: [
+                    Text(
+                      provider.titleAppBar(),
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                    FutureBuilder(
+                      future: provider.getSumOperations(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasError) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return Text(
+                          provider.titleSumOperations(),
+                          style: TextStyle(
+                            color: provider.colorSumOperations(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
               body: ListView(
                 children: const [
@@ -55,41 +81,11 @@ class WidgetInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenHome>(context);
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue,
-            blurRadius: 1,
-            offset: Offset(1, 1), // Shadow position
-          ),
-        ],
-      ),
+    return Card(
       child: Column(
         children: [
           WidgetSwitchFinance(
             onPressedCallBack: provider.onPressedSwitchFinace,
-          ),
-          FutureBuilder(
-            future: provider.getSumOperations(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return Text(
-                provider.titleSumOperations(),
-                style: TextStyle(
-                    color: provider.colorSumOperations(), fontSize: 20),
-              );
-            },
           ),
           SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
         ],
@@ -106,8 +102,11 @@ class WidgetListGroupCategories extends StatelessWidget {
     final provider = Provider.of<ProviderScreenHome>(context);
     return Column(
       children: [
-        const SizedBox(height: 20),
-        const Text('Категории'),
+        const Text(
+          'Категории',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
         FutureBuilder(
           future: provider.getListGroupCategories(),
           builder: (context, snapshot) {
@@ -117,21 +116,27 @@ class WidgetListGroupCategories extends StatelessWidget {
             if (snapshot.hasError) {
               return const Center(child: CircularProgressIndicator());
             }
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3),
-              itemCount: provider.listGroupCategories.length,
-              itemBuilder: (context, index) {
-                return WidgetGroupCategories(
-                  color: provider.colorGroupCategories(index),
-                  name: provider.titleGroupCategories(index),
-                  percent: provider.percentGroupCategories(index),
-                  value: provider.valueGroupCategories(index),
-                );
-              },
-            );
+            return provider.listGroupCategories.isEmpty
+                ? const SizedBox(
+                    height: 60,
+                    width: 120,
+                  )
+                : GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemCount: provider.listGroupCategories.length,
+                    itemBuilder: (context, index) {
+                      return WidgetGroupCategories(
+                        color: provider.colorGroupCategories(index),
+                        name: provider.titleGroupCategories(index),
+                        percent: provider.percentGroupCategories(index),
+                        value: provider.valueGroupCategories(index),
+                      );
+                    },
+                  );
           },
         ),
       ],
@@ -148,7 +153,10 @@ class WidgetListHistoryOperations extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Text('История операций'),
+        const Text(
+          'История операций',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         FutureBuilder(
           future: provider.getListOperations(),
           builder: (context, snapshot) {
@@ -226,8 +234,8 @@ class WidgetGroupCategories extends StatelessWidget {
               ),
             ),
             CircularPercentIndicator(
-              radius: 20.0,
-              lineWidth: 2.0,
+              radius: 30.0,
+              lineWidth: 4.0,
               percent: percent / 100,
               animation: true,
               center: Text(
@@ -236,7 +244,20 @@ class WidgetGroupCategories extends StatelessWidget {
               ),
               progressColor: color,
             ),
-            Text(value),
+            Container(
+              height: 25,
+              decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(6),
+                      bottomRight: Radius.circular(6))),
+              child: Center(
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),

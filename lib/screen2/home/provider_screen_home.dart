@@ -4,6 +4,7 @@ import 'package:budget/models/history_operations.dart';
 import 'package:budget/models/sum_operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
   var finance = 0; //0 - расходы, 1 - доходы
@@ -14,6 +15,12 @@ class ProviderScreenHome extends ChangeNotifier {
 
   void screenUpdate() {
     notifyListeners();
+  }
+
+  String titleAppBar() {
+    return finance == 0
+        ? 'Расходы за ${DateFormat.MMMM().format(dateTime)}'
+        : 'Доходы за ${DateFormat.MMMM().format(dateTime)}';
   }
 
   String titleSumOperations() {
@@ -109,6 +116,7 @@ class ProviderScreenHome extends ChangeNotifier {
     final List<SumOperations> list = maps.isNotEmpty
         ? maps.map((e) => SumOperations.fromMap(e)).toList()
         : [];
+
     sumOperations = list[0].value;
   }
 }

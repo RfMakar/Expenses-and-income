@@ -29,7 +29,7 @@ class _SwitchDateState extends State<SwitchDate> {
       children: [
         IconButton(
             splashRadius: 10,
-            icon: const Icon(Icons.navigate_before, color: Colors.grey),
+            icon: const Icon(Icons.navigate_before),
             onPressed: () {
               //Если месяц и год не 01.2021 то дата переключится на месяц назад
               var enabledButton =
@@ -44,7 +44,7 @@ class _SwitchDateState extends State<SwitchDate> {
                 widget.onPressedCallBack(dateTime);
               });
             }),
-        TextButton(onPressed: null, child: Text(getDate())),
+        TextButton(onPressed: () {}, child: Text(getDate())),
         IconButton(
           splashRadius: 10,
           onPressed: () {
@@ -62,7 +62,7 @@ class _SwitchDateState extends State<SwitchDate> {
               widget.onPressedCallBack(dateTime);
             });
           },
-          icon: const Icon(Icons.navigate_next, color: Colors.grey),
+          icon: const Icon(Icons.navigate_next),
         ),
       ],
     );

@@ -155,7 +155,7 @@ class DBTableGroupCategories {
 
 class DBTableSumOperations {
   static String getList() => '''
-      SELECT ROUND(SUM(value), 1) AS value
+      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
       FROM ${DBTable.operations}
       JOIN ${DBTable.subcategories} ON ${DBTable.subcategories}.id = ${DBTable.operations}.idsubcategories
       JOIN ${DBTable.categories} ON ${DBTable.categories}.id = ${DBTable.subcategories}.idcategories    
