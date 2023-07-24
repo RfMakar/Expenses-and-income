@@ -1,7 +1,5 @@
-import 'package:budget/const/db.dart';
-import 'package:budget/models/group_categories.dart';
-import 'package:budget/models/history_operations.dart';
-import 'package:budget/models/sum_operations.dart';
+import 'package:budget/models/categories.dart';
+import 'package:budget/models/operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +8,8 @@ class ProviderScreenHome extends ChangeNotifier {
   var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
   late double sumOperations;
-  late List<HistoryOperations> listHistoryOperations;
-  late List<GroupCategories> listGroupCategories;
+  late List<HistoryOperation> listHistoryOperation;
+  late List<GroupCategory> listGroupCategories;
 
   void screenUpdate() {
     notifyListeners();
@@ -23,50 +21,50 @@ class ProviderScreenHome extends ChangeNotifier {
         : 'Доходы за ${DateFormat.MMMM().format(dateTime)}';
   }
 
-  String titleSumOperations() {
+  String titleSumOperatin() {
     return finance == 0
         ? '- ${sumOperations.toString()}'
         : '+ ${sumOperations.toString()}';
   }
 
-  Color colorSumOperations() {
+  Color colorSumOperation() {
     return finance == 0 ? Colors.red : Colors.green;
   }
 
-  Color colorGroupCategories(int index) {
+  Color colorGroupCategory(int index) {
     return Color(int.parse(listGroupCategories[index].color));
   }
 
-  String titleGroupCategories(int index) {
+  String titleGroupCategory(int index) {
     return listGroupCategories[index].name;
   }
 
-  double percentGroupCategories(int index) {
+  double percentGroupCategory(int index) {
     return listGroupCategories[index].percent;
   }
 
-  String valueGroupCategories(int index) {
+  String valueGroupCategory(int index) {
     return listGroupCategories[index].value.toString();
   }
 
   String titleHistory(int index) {
-    return listHistoryOperations[index].namecategories;
+    return listHistoryOperation[index].nameCategory;
   }
 
   String subtitleHistory(int index) {
-    return listHistoryOperations[index].namesubcategories;
+    return listHistoryOperation[index].nameSubCategory;
   }
 
   String leadingHistory(int index) {
-    return listHistoryOperations[index].idoperations.toString();
+    return listHistoryOperation[index].id.toString();
   }
 
   String valueHistory(int index) {
-    return listHistoryOperations[index].value.toString();
+    return listHistoryOperation[index].value.toString();
   }
 
   //Переключает расход/доход
-  void onPressedSwitchFinace(int switchFinance) {
+  void onPressedSwitchFinance(int switchFinance) {
     finance = switchFinance;
     notifyListeners();
   }
@@ -77,45 +75,20 @@ class ProviderScreenHome extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getListOperations() async {
-    final maps = await DBFinance.rawQuery(
-        DBTableHistoryOperations.getList(), [dateTime.year, dateTime.month]);
-    final List<HistoryOperations> list = maps.isNotEmpty
-        ? maps.map((e) => HistoryOperations.fromMap(e)).toList()
-        : [];
-    listHistoryOperations = list;
+  Future getListHistoryOperation() async {
+    final list = await DBFinance.getListOperationHistory(dateTime);
+
+    listHistoryOperation = list;
   }
 
-  Future getListGroupCategories() async {
-    final maps = await DBFinance.rawQuery(
-      DBTableGroupCategories.getList(),
-      [
-        dateTime.year,
-        dateTime.month,
-        finance,
-        dateTime.year,
-        dateTime.month,
-        finance,
-      ],
-    );
-    final List<GroupCategories> list = maps.isNotEmpty
-        ? maps.map((e) => GroupCategories.fromMap(e)).toList()
-        : [];
+  Future getListGroupCategory() async {
+    final list = await DBFinance.getListCategoryGroup(dateTime, finance);
+
     listGroupCategories = list;
   }
 
-  Future getSumOperations() async {
-    final maps = await DBFinance.rawQuery(
-      DBTableSumOperations.getList(),
-      [
-        dateTime.year,
-        dateTime.month,
-        finance,
-      ],
-    );
-    final List<SumOperations> list = maps.isNotEmpty
-        ? maps.map((e) => SumOperations.fromMap(e)).toList()
-        : [];
+  Future getSumOperation() async {
+    final list = await DBFinance.getListSumOperation(dateTime, finance);
 
     sumOperations = list[0].value;
   }

@@ -1,10 +1,10 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/add_categories/dialog_add_categories.dart';
+import 'package:budget/dialogs/add_category/dialog_add_category.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/screen2/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen2/widget/switch_finance.dart';
-import 'package:budget/sheets/menu_categories/sheet_menu_categories.dart';
-import 'package:budget/sheets/menu_subcategories/sheet_menu_subcategories.dart';
+import 'package:budget/sheets/menu_category/sheet_menu_category.dart';
+import 'package:budget/sheets/menu_subcategory/sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +25,8 @@ class ScreenAddFinance extends StatelessWidget {
                   onPressed: () async {
                     final bool? update = await showDialog(
                       context: context,
-                      builder: (context) => DialogAddCategories(
-                          idfinance: provider.financeSwitch),
+                      builder: (context) =>
+                          DialogAddCategory(idfinance: provider.financeSwitch),
                     );
 
                     if (update == true) {
@@ -69,7 +69,7 @@ class WidgetCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenAddFinance>(context);
     return FutureBuilder(
-      future: provider.getListCategories(),
+      future: provider.getListCategory(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
@@ -80,10 +80,10 @@ class WidgetCategories extends StatelessWidget {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: provider.listCategories.length,
+          itemCount: provider.listCategory.length,
           itemBuilder: (context, index) {
             return WidgetCardCategory(
-              categories: provider.selectCategories(index),
+              category: provider.selectCategory(index),
             );
           },
         );
@@ -93,13 +93,13 @@ class WidgetCategories extends StatelessWidget {
 }
 
 class WidgetCardCategory extends StatelessWidget {
-  const WidgetCardCategory({super.key, required this.categories});
-  final Categories categories;
+  const WidgetCardCategory({super.key, required this.category});
+  final Category category;
   @override
   Widget build(BuildContext context) {
     final providerScreen = Provider.of<ProviderScreenAddFinance>(context);
     return ChangeNotifierProvider(
-      create: (context) => ProviderWidgetCardCategory(categories),
+      create: (context) => ProviderWidgetCardCategory(category),
       child: Consumer<ProviderWidgetCardCategory>(
         builder: (context, provider, child) {
           return FutureBuilder(
@@ -123,8 +123,8 @@ class WidgetCardCategory extends StatelessWidget {
                       final ActionsUpdate? actionsUpdate =
                           await showModalBottomSheet(
                         context: context,
-                        builder: (context) => SheetMenuCategories(
-                          categories: provider.categories,
+                        builder: (context) => SheetMenuCategory(
+                          category: provider.category,
                         ),
                       );
                       if (actionsUpdate == ActionsUpdate.updateWidget) {
@@ -150,8 +150,8 @@ class WidgetCardCategory extends StatelessWidget {
                             final ActionsUpdate? actionsUpdate =
                                 await showModalBottomSheet(
                               context: context,
-                              builder: (context) => SheetMenuSubCategories(
-                                subCategories: subCategories,
+                              builder: (context) => SheetMenuSubCategory(
+                                subCategory: subCategories,
                                 financeSwitch: providerScreen.financeSwitch,
                               ),
                             );

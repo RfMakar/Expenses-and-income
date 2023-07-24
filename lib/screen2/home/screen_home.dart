@@ -41,7 +41,7 @@ class ScreenHome extends StatelessWidget {
                       style: const TextStyle(fontSize: 10),
                     ),
                     FutureBuilder(
-                      future: provider.getSumOperations(),
+                      future: provider.getSumOperation(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
                           return const Center(
@@ -52,9 +52,9 @@ class ScreenHome extends StatelessWidget {
                               child: CircularProgressIndicator());
                         }
                         return Text(
-                          provider.titleSumOperations(),
+                          provider.titleSumOperatin(),
                           style: TextStyle(
-                            color: provider.colorSumOperations(),
+                            color: provider.colorSumOperation(),
                           ),
                         );
                       },
@@ -85,7 +85,7 @@ class WidgetInfo extends StatelessWidget {
       child: Column(
         children: [
           WidgetSwitchFinance(
-            onPressedCallBack: provider.onPressedSwitchFinace,
+            onPressedCallBack: provider.onPressedSwitchFinance,
           ),
           SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
         ],
@@ -108,7 +108,7 @@ class WidgetListGroupCategories extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         FutureBuilder(
-          future: provider.getListGroupCategories(),
+          future: provider.getListGroupCategory(),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());
@@ -130,10 +130,10 @@ class WidgetListGroupCategories extends StatelessWidget {
                     itemCount: provider.listGroupCategories.length,
                     itemBuilder: (context, index) {
                       return WidgetGroupCategories(
-                        color: provider.colorGroupCategories(index),
-                        name: provider.titleGroupCategories(index),
-                        percent: provider.percentGroupCategories(index),
-                        value: provider.valueGroupCategories(index),
+                        color: provider.colorGroupCategory(index),
+                        name: provider.titleGroupCategory(index),
+                        percent: provider.percentGroupCategory(index),
+                        value: provider.valueGroupCategory(index),
                       );
                     },
                   );
@@ -158,7 +158,7 @@ class WidgetListHistoryOperations extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         FutureBuilder(
-          future: provider.getListOperations(),
+          future: provider.getListHistoryOperation(),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());
@@ -169,7 +169,7 @@ class WidgetListHistoryOperations extends StatelessWidget {
             return ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: provider.listHistoryOperations.length,
+              itemCount: provider.listHistoryOperation.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: Text(provider.leadingHistory(index)),

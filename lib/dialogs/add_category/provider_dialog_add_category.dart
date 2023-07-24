@@ -2,12 +2,11 @@ import 'dart:math';
 import 'package:budget/models/categories.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:budget/const/color.dart';
-import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
 
-class ProviderDialogAddCategories extends ChangeNotifier {
+class ProviderDialogAddCategory extends ChangeNotifier {
   final int idfinance;
-  ProviderDialogAddCategories(this.idfinance);
+  ProviderDialogAddCategory(this.idfinance);
   final textEditingControllerName = TextEditingController();
 
   Color colorDialog =
@@ -20,21 +19,21 @@ class ProviderDialogAddCategories extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool onPressedButtonAddCategories() {
+  bool onPressedButtonAddCategory() {
     if (!formKey.currentState!.validate()) {
       return false;
     } else {
-      insertDBCategories();
+      insertDBCategory();
       return true;
     }
   }
 
-  void insertDBCategories() {
-    final categories = Categories(
+  void insertDBCategory() {
+    final writeCategory = WriteCategory(
       idfinance: idfinance,
       name: textEditingControllerName.text.trim(),
       color: colorDialog.value.toString(),
     );
-    DBFinance.insert(DBTable.categories, categories.toMap());
+    DBFinance.insertCategory(writeCategory);
   }
 }

@@ -1,31 +1,30 @@
 import 'package:budget/models/categories.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
-import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
 
-class ProviderDialogAddSubCategories extends ChangeNotifier {
-  final Categories categories;
-  ProviderDialogAddSubCategories(this.categories);
+class ProviderDialogAddSubCategory extends ChangeNotifier {
+  final Category category;
+  ProviderDialogAddSubCategory(this.category);
   final textEditingControllerName = TextEditingController();
 
-  String titleDialog() => categories.name;
+  String titleDialog() => category.name;
   final formKey = GlobalKey<FormState>();
 
-  bool onPressedButtonAddCategories() {
+  bool onPressedButtonAddCategory() {
     if (!formKey.currentState!.validate()) {
       return false;
     } else {
-      insertDBCategories();
+      insertDBCategory();
       return true;
     }
   }
 
-  void insertDBCategories() {
-    final subCategories = SubCategories(
-      idcategories: categories.id,
+  void insertDBCategory() {
+    final writeSubCategory = WriteSubCategory(
+      idCategory: category.id,
       name: textEditingControllerName.text.trim(),
     );
-    DBFinance.insert(DBTable.subcategories, subCategories.toMap());
+    DBFinance.insertSubCategory(writeSubCategory);
   }
 }

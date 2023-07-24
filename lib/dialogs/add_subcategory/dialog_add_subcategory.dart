@@ -1,18 +1,18 @@
 import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/dialogs/add_subcategories/provider_dialog_add_subcategories.dart';
+import 'package:budget/dialogs/add_subcategory/provider_dialog_add_subcategories.dart';
 import 'package:budget/models/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DialogAddSubCategories extends StatelessWidget {
-  const DialogAddSubCategories({super.key, required this.categories});
-  final Categories categories;
+class DialogAddSubCategory extends StatelessWidget {
+  const DialogAddSubCategory({super.key, required this.category});
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderDialogAddSubCategories(categories),
-      child: Consumer<ProviderDialogAddSubCategories>(
+      create: (context) => ProviderDialogAddSubCategory(category),
+      child: Consumer<ProviderDialogAddSubCategory>(
         builder: (context, provider, child) {
           return AlertDialog(
             title: Center(
@@ -36,7 +36,7 @@ class DialogAddSubCategories extends StatelessWidget {
               TextButton(
                 child: const Text('Добавить'),
                 onPressed: () {
-                  final validate = provider.onPressedButtonAddCategories();
+                  final validate = provider.onPressedButtonAddCategory();
 
                   if (validate) {
                     Navigator.pop(context, validate);

@@ -1,18 +1,18 @@
 import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/dialogs/add_operations/provider_dialog_add_operations.dart';
+import 'package:budget/dialogs/add_operation/provider_dialog_add_operation.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/screen2/widget/buttons_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DialogAddOperations extends StatelessWidget {
-  const DialogAddOperations({super.key, required this.subCategories});
-  final SubCategories subCategories;
+class DialogAddOperation extends StatelessWidget {
+  const DialogAddOperation({super.key, required this.subCategory});
+  final SubCategory subCategory;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderDialogAddOperations(subCategories),
-      child: Consumer<ProviderDialogAddOperations>(
+      create: (context) => ProviderDialogAddOperation(subCategory),
+      child: Consumer<ProviderDialogAddOperation>(
         builder: (context, provider, child) {
           return AlertDialog(
             title: Center(child: Text(provider.titleDialog())),
@@ -53,7 +53,7 @@ class DialogAddOperations extends StatelessWidget {
               TextButton(
                 child: const Text('Добавить'),
                 onPressed: () {
-                  final validate = provider.onPressedButtonAddCategories();
+                  final validate = provider.onPressedButtonAddCategory();
 
                   if (validate) {
                     Navigator.pop(context, validate);

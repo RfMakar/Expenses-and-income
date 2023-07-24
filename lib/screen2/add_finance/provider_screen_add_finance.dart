@@ -1,25 +1,21 @@
 import 'package:budget/models/categories.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
-import 'package:budget/const/db.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddFinance extends ChangeNotifier {
   List<bool> finance = [true, false]; //Расход_Доход
-  late List<Categories> listCategories;
+  late List<Category> listCategory;
 
   int financeSwitch = 0;
 
-  Categories selectCategories(int index) {
-    return listCategories[index];
+  Category selectCategory(int index) {
+    return listCategory[index];
   }
 
-  Future getListCategories() async {
-    final maps =
-        await DBFinance.rawQuery(DBTableCategories.getList(), [financeSwitch]);
-    final List<Categories> list =
-        maps.isNotEmpty ? maps.map((e) => Categories.fromMap(e)).toList() : [];
-    listCategories = list;
+  Future getListCategory() async {
+    final list = await DBFinance.getListCategory(financeSwitch);
+    listCategory = list;
   }
 
   void updateScreen() async {
@@ -33,23 +29,23 @@ class ProviderScreenAddFinance extends ChangeNotifier {
 }
 
 class ProviderWidgetCardCategory extends ChangeNotifier {
-  ProviderWidgetCardCategory(this.categories);
-  final Categories categories;
+  ProviderWidgetCardCategory(this.category);
+  final Category category;
 
   String nameCategories() {
-    return categories.name;
+    return category.name;
   }
 
   Color colorCategories() {
-    return Color(int.parse(categories.color));
+    return Color(int.parse(category.color));
   }
 
   String key() {
-    return categories.id.toString();
+    return category.id.toString();
   }
 
-  List<SubCategories> listNameSubcategories() {
-    return categories.listSubcategories!;
+  List<SubCategory> listNameSubcategories() {
+    return category.listSubCategories!;
   }
 
   void updateWidget() async {
@@ -57,37 +53,7 @@ class ProviderWidgetCardCategory extends ChangeNotifier {
   }
 
   Future getListSubCategories() async {
-    final maps = await DBFinance.rawQuery(
-        DBTableSubCategories.getList(), [categories.id]);
-    final List<SubCategories> listSubCategoties = maps.isNotEmpty
-        ? maps.map((e) => SubCategories.fromMap(e)).toList()
-        : [];
-    categories.listSubcategories = listSubCategoties;
+    final listSubCategoties = await DBFinance.getListSubCategory(category);
+    category.listSubCategories = listSubCategoties;
   }
 }
-
-
-/*
-  // var buttonCarouselController = CarouselController();
-  // final textEditingControllerValue = TextEditingController();
-
-  // DateTime get dateTime => _dateTime ?? DateTime.now();
-  // TimeOfDay get timeOfDay => _timeOfDay ?? TimeOfDay.now();
-
-  late List<Account> listAccounts;
-
-  void onTapAccount(int index) async {}
-
-  Color colorAccount(int index) {
-    return Color(int.parse(listAccounts[index].color));
-  }
-
-  String nameAccount(int index) {
-    return listAccounts[index].name;
-  }
-
-  String valueAccount(int index) {
-    return '${listAccounts[index].value} Р';
-  }
-
-*/

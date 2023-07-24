@@ -1,44 +1,45 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/add_subcategories/dialog_add_subcategories.dart';
+import 'package:budget/dialogs/add_operation/dialog_add_operation.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
-import 'package:budget/models/categories.dart';
-import 'package:budget/sheets/colors/sheet_colors.dart';
-import 'package:budget/sheets/menu_categories/provider_sheet_menu.categories.dart';
+import 'package:budget/models/subcategories.dart';
+import 'package:budget/sheets/menu_subcategory/provider_sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SheetMenuCategories extends StatelessWidget {
-  const SheetMenuCategories({super.key, required this.categories});
-  final Categories categories;
+class SheetMenuSubCategory extends StatelessWidget {
+  const SheetMenuSubCategory(
+      {super.key, required this.subCategory, required this.financeSwitch});
+  final SubCategory subCategory;
+  final int financeSwitch;
   @override
   Widget build(BuildContext context) {
-    void navigatorUpdateScreen() =>
-        Navigator.pop(context, ActionsUpdate.updateScreen);
     void navigatorUpdateWidget() =>
         Navigator.pop(context, ActionsUpdate.updateWidget);
+    void navigatorPop() => Navigator.pop(context, ActionsUpdate.updateWidget);
     return ChangeNotifierProvider(
-      create: (context) => ProviderSheetMenuCategories(categories),
-      child: Consumer<ProviderSheetMenuCategories>(
+      create: (context) =>
+          ProviderSheetMenuSubCategory(subCategory, financeSwitch),
+      child: Consumer<ProviderSheetMenuSubCategory>(
         builder: (context, provider, child) {
           return Wrap(
             children: [
               ListTile(
-                title: Text(provider.nameSheet()),
-                subtitle: const Text('Категория'),
+                title: Text(provider.titleSheet()),
+                subtitle: const Text('Подкатегория'),
               ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.add),
-                title: const Text('Добавить подкатегорию'),
+                title: Text(provider.titleButtonAddFinace()),
                 onTap: () async {
                   final bool? update = await showDialog(
                     context: context,
                     builder: (context) =>
-                        DialogAddSubCategories(categories: provider.categories),
+                        DialogAddOperation(subCategory: provider.subCategory),
                   );
                   if (update == true) {
-                    navigatorUpdateWidget();
+                    navigatorPop();
                   }
                 },
               ),
@@ -50,11 +51,11 @@ class SheetMenuCategories extends StatelessWidget {
                   final String? newName = await showDialog(
                     context: context,
                     builder: (context) =>
-                        DialogEditName(name: provider.nameSheet()),
+                        DialogEditName(name: provider.titleSheet()),
                   );
                   if (newName != null) {
-                    provider.onTapRenamedCategories(newName);
-                    navigatorUpdateScreen();
+                    provider.onTapRenamedSubCategory(newName);
+                    navigatorUpdateWidget();
                   }
                 },
               ),
@@ -65,25 +66,11 @@ class SheetMenuCategories extends StatelessWidget {
                   final bool? result = await showDialog(
                     context: context,
                     builder: (context) =>
-                        DialodgDelete(text: provider.nameSheet()),
+                        DialodgDelete(text: provider.titleSheet()),
                   );
                   if (result == true) {
-                    provider.onTapDeletedCategories();
-                    navigatorUpdateScreen();
-                  }
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.color_lens),
-                title: const Text('Изменить цвет'),
-                onTap: () async {
-                  final Color? newColor = await showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SheetColors(),
-                  );
-                  if (newColor != null) {
-                    provider.onTapChangeColorCategories(newColor);
-                    navigatorUpdateScreen();
+                    provider.onTapDeletedSubCategory();
+                    navigatorUpdateWidget();
                   }
                 },
               ),

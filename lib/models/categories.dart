@@ -1,18 +1,20 @@
 import 'package:budget/models/subcategories.dart';
 
-class Categories {
-  int? id;
-  int? idfinance;
+abstract class Categories {
   final String name;
   final String color;
-  List<SubCategories>? listSubcategories;
 
-  Categories({
-    this.id,
-    this.idfinance,
-    required this.name,
-    required this.color,
-    this.listSubcategories,
+  Categories({required this.name, required this.color});
+}
+
+//Column table -> |id|idfinace|name|color|
+class WriteCategory extends Categories {
+  final int idfinance;
+
+  WriteCategory({
+    required this.idfinance,
+    required super.name,
+    required super.color,
   });
 
   //Для записи в БД
@@ -23,11 +25,51 @@ class Categories {
       'color': color,
     };
   }
+}
 
+//Column table -> |id|name|color|
+class ReadCategory extends Categories {
+  final int id;
+
+  ReadCategory({required this.id, required super.name, required super.color});
+}
+
+//Column table -> |id|name|color| + Column table -> |id|name|
+class Category extends ReadCategory {
+  List<SubCategory>? listSubCategories;
+  Category({
+    required super.id,
+    required super.name,
+    required super.color,
+    this.listSubCategories,
+  });
   //Чтение БД
-  factory Categories.fromMap(Map<String, dynamic> json) => Categories(
+  factory Category.fromMap(Map<String, dynamic> json) => Category(
         id: json['id'],
         name: json['name'],
         color: json['color'],
+      );
+}
+
+//Column table -> |id|name|color|percent|value|
+class GroupCategory extends ReadCategory {
+  final double percent;
+  final double value;
+
+  GroupCategory({
+    required super.id,
+    required super.name,
+    required super.color,
+    required this.percent,
+    required this.value,
+  });
+
+  //Чтение БД
+  factory GroupCategory.fromMap(Map<String, dynamic> json) => GroupCategory(
+        id: json['id'],
+        name: json['name'],
+        color: json['color'],
+        percent: json['percent'],
+        value: json['value'],
       );
 }
