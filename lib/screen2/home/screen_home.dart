@@ -65,8 +65,8 @@ class ScreenHome extends StatelessWidget {
               body: ListView(
                 children: const [
                   WidgetInfo(),
-                  WidgetListGroupCategories(),
-                  WidgetListHistoryOperations(),
+                  WidgetListGroupCategory(),
+                  WidgetListHistoryOperation(),
                 ],
               ));
         },
@@ -94,8 +94,8 @@ class WidgetInfo extends StatelessWidget {
   }
 }
 
-class WidgetListGroupCategories extends StatelessWidget {
-  const WidgetListGroupCategories({super.key});
+class WidgetListGroupCategory extends StatelessWidget {
+  const WidgetListGroupCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,8 +144,8 @@ class WidgetListGroupCategories extends StatelessWidget {
   }
 }
 
-class WidgetListHistoryOperations extends StatelessWidget {
-  const WidgetListHistoryOperations({super.key});
+class WidgetListHistoryOperation extends StatelessWidget {
+  const WidgetListHistoryOperation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -167,15 +167,49 @@ class WidgetListHistoryOperations extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             return ListView.builder(
+              padding: const EdgeInsets.all(8),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: provider.listHistoryOperation.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Text(provider.leadingHistory(index)),
-                  title: Text(provider.titleHistory(index)),
-                  subtitle: Text(provider.subtitleHistory(index)),
-                  trailing: Text(provider.valueHistory(index)),
+              itemBuilder: (context, indexHistory) {
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          provider.titleHistoryOperation(indexHistory),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          provider.valueHistory(indexHistory),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: provider.listOperation(indexHistory).length,
+                      itemBuilder: (context, indexOperation) {
+                        return ListTile(
+                          title: Text(
+                            provider.titleOperation(
+                                indexHistory, indexOperation),
+                          ),
+                          subtitle: Text(
+                            provider.subtitlegOperation(
+                                indexHistory, indexOperation),
+                          ),
+                          trailing: Text(
+                            provider.trailingOperation(
+                                indexHistory, indexOperation),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 );
               },
             );

@@ -37,18 +37,31 @@ class WriteOperation extends Operations {
 
 //Column table -> |id|date|value|
 class ReadOperation extends Operations {
-  final int id;
   final String date;
-  ReadOperation({required this.id, required this.date, required super.value});
+  ReadOperation({required this.date, required super.value});
+}
+
+//Column table -> |date|value| + Column table -> |id|namecategory|namesubcategory|date|value|
+class HistoryOperation extends ReadOperation {
+  List<Operation>? listOperation;
+  HistoryOperation(
+      {required super.date, required super.value, this.listOperation});
+  //Чтение БД
+  factory HistoryOperation.fromMap(Map<String, dynamic> json) =>
+      HistoryOperation(
+        date: json['date'],
+        value: json['value'],
+      );
 }
 
 //Column table -> |id|namecategory|namesubcategory|date|value|
-class HistoryOperation extends ReadOperation {
+class Operation extends ReadOperation {
+  final int id;
   final String nameCategory;
   final String nameSubCategory;
-
-  HistoryOperation({
-    required super.id,
+  //Добаваить заметки
+  Operation({
+    required this.id,
     required this.nameCategory,
     required this.nameSubCategory,
     required super.date,
@@ -56,8 +69,7 @@ class HistoryOperation extends ReadOperation {
   });
 
   //Чтение БД
-  factory HistoryOperation.fromMap(Map<String, dynamic> json) =>
-      HistoryOperation(
+  factory Operation.fromMap(Map<String, dynamic> json) => Operation(
         id: json['id'],
         nameCategory: json['namecategory'],
         nameSubCategory: json['namesubcategory'],
@@ -75,75 +87,30 @@ class SumOperation extends Operations {
       );
 }
 
+
 /*
-
-
-//Column table -> |id|idfinace|name|color|
-class WriteCategory extends Categories {
-  final int idfinance;
-
-  WriteCategory({
-    required this.idfinance,
-    required super.name,
-    required super.color,
-  });
-
-  //Для записи в БД
-  Map<String, dynamic> toMap() {
-    return {
-      'idfinance': idfinance,
-      'name': name,
-      'color': color,
-    };
-  }
-}
-
-//Column table -> |id|name|color|
-class ReadCategory extends Categories {
+//Column table -> |id|namecategory|namesubcategory|date|value|
+class Operation extends ReadOperation {
   final int id;
+  final String nameCategory;
+  final String nameSubCategory;
 
-  ReadCategory({required this.id, required super.name, required super.color});
-}
-
-//Column table -> |id|name|color| + Column table -> |id|name|
-class Category extends ReadCategory {
-  List<SubCategory>? listSubCategories;
-  Category({
-    required super.id,
-    required super.name,
-    required super.color,
-    this.listSubCategories,
-  });
-  //Чтение БД
-  factory Category.fromMap(Map<String, dynamic> json) => Category(
-        id: json['id'],
-        name: json['name'],
-        color: json['color'],
-      );
-}
-
-//Column table -> |id|name|color|percent|value|
-class CategoryGroup extends ReadCategory {
-  final double percent;
-  final double value;
-
-  CategoryGroup({
-    required super.id,
-    required super.name,
-    required super.color,
-    required this.percent,
-    required this.value,
+  Operation({
+    required this.id,
+    required this.nameCategory,
+    required this.nameSubCategory,
+    required super.date,
+    required super.value,
   });
 
   //Чтение БД
-  factory CategoryGroup.fromMap(Map<String, dynamic> json) => CategoryGroup(
+  factory Operation.fromMap(Map<String, dynamic> json) => Operation(
         id: json['id'],
-        name: json['name'],
-        color: json['color'],
-        percent: json['percent'],
+        nameCategory: json['namecategory'],
+        nameSubCategory: json['namesubcategory'],
+        date: json['date'],
         value: json['value'],
       );
 }
-
 
 */

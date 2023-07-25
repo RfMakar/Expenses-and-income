@@ -8,10 +8,22 @@ class ProviderScreenHome extends ChangeNotifier {
   var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
   late double sumOperations;
-  late List<HistoryOperation> listHistoryOperation;
   late List<GroupCategory> listGroupCategories;
+  late List<HistoryOperation> listHistoryOperation;
 
   void screenUpdate() {
+    notifyListeners();
+  }
+
+  //Переключает расход/доход
+  void onPressedSwitchFinance(int switchFinance) {
+    finance = switchFinance;
+    notifyListeners();
+  }
+
+  //Переключает дату
+  void onPressedSwitchDate(DateTime switchDateTime) {
+    dateTime = switchDateTime;
     notifyListeners();
   }
 
@@ -47,38 +59,42 @@ class ProviderScreenHome extends ChangeNotifier {
     return listGroupCategories[index].value.toString();
   }
 
-  String titleHistory(int index) {
-    return listHistoryOperation[index].nameCategory;
-  }
-
-  String subtitleHistory(int index) {
-    return listHistoryOperation[index].nameSubCategory;
-  }
-
-  String leadingHistory(int index) {
-    return listHistoryOperation[index].id.toString();
+  String titleHistoryOperation(int index) {
+    final dateTimeHistory =
+        DateTime.tryParse(listHistoryOperation[index].date)!;
+    if (dateTime.day == dateTimeHistory.day) {
+      return 'Сегодня';
+    } else if (dateTime.day - 1 == dateTimeHistory.day) {
+      return 'Вчера';
+    } else {
+      return DateFormat.MMMMd().format(dateTimeHistory);
+    }
   }
 
   String valueHistory(int index) {
     return listHistoryOperation[index].value.toString();
   }
 
-  //Переключает расход/доход
-  void onPressedSwitchFinance(int switchFinance) {
-    finance = switchFinance;
-    notifyListeners();
+  List<Operation> listOperation(int index) {
+    return listHistoryOperation[index].listOperation ?? [];
   }
 
-  //Переключает дату
-  void onPressedSwitchDate(DateTime switchDateTime) {
-    dateTime = switchDateTime;
-    notifyListeners();
+  String titleOperation(int indexHistory, int indexOperation) {
+    return listOperation(indexHistory)[indexOperation].nameCategory;
   }
 
-  Future getListHistoryOperation() async {
-    final list = await DBFinance.getListOperationHistory(dateTime);
+  String subtitlegOperation(int indexHistory, int indexOperation) {
+    return listOperation(indexHistory)[indexOperation].nameSubCategory;
+  }
 
-    listHistoryOperation = list;
+  String trailingOperation(int indexHistory, int indexOperation) {
+    return listOperation(indexHistory)[indexOperation].value.toString();
+  }
+
+  Future getSumOperation() async {
+    final list = await DBFinance.getListSumOperation(dateTime, finance);
+
+    sumOperations = list[0].value;
   }
 
   Future getListGroupCategory() async {
@@ -87,9 +103,13 @@ class ProviderScreenHome extends ChangeNotifier {
     listGroupCategories = list;
   }
 
-  Future getSumOperation() async {
-    final list = await DBFinance.getListSumOperation(dateTime, finance);
+  Future getListHistoryOperation() async {
+    final list = await DBFinance.getListHistoryOperation(dateTime, finance);
+    for (var historyOperation in list) {
+      historyOperation.listOperation = await DBFinance.getListOperation(
+          DateTime.tryParse(historyOperation.date)!, finance);
+    }
 
-    sumOperations = list[0].value;
+    listHistoryOperation = list;
   }
 }

@@ -149,8 +149,31 @@ abstract class DBFinance {
         : [];
   }
 
-  static Future<List<HistoryOperation>> getListOperationHistory(
-      DateTime dateTime) async {
+  static Future<List<HistoryOperation>> getListHistoryOperation(
+      DateTime dateTime, int finance) async {
+    final db = await database;
+    var maps = await db.rawQuery(
+      '''
+      SELECT date,
+      SUM(value) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ? AND month = ? AND ${TableDB.finance}.id = ?
+      GROUP BY day
+      ORDER BY day DESC
+      ;
+        ''',
+      [dateTime.year, dateTime.month, finance],
+    );
+    return maps.isNotEmpty
+        ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
+        : [];
+  }
+
+  static Future<List<Operation>> getListOperation(
+      DateTime dateTime, int finance) async {
     final db = await database;
     var maps = await db.rawQuery(
       '''
@@ -160,15 +183,16 @@ abstract class DBFinance {
       date,
       value
       FROM ${TableDB.operations}
+      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      JOIN ${TableDB.subcategories} ON  ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ?  
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ?   
       ;
         ''',
-      [dateTime.year, dateTime.month],
+      [dateTime.year, dateTime.month, dateTime.day, finance],
     );
     return maps.isNotEmpty
-        ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
+        ? maps.map((e) => Operation.fromMap(e)).toList()
         : [];
   }
 
