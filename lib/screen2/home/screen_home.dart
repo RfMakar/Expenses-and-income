@@ -1,7 +1,9 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/screen2/add_finance/screen_add_finance.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
 import 'package:budget/screen2/widget/switch_finance.dart';
+import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,7 @@ class ScreenHome extends StatelessWidget {
                       builder: (context) => const ScreenAddFinance(),
                     ),
                   );
-                  provider.screenUpdate();
+                  provider.updateScreen();
                 },
                 child: const Icon(Icons.add),
               ),
@@ -206,6 +208,20 @@ class WidgetListHistoryOperation extends StatelessWidget {
                             provider.trailingOperation(
                                 indexHistory, indexOperation),
                           ),
+                          onTap: () async {
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SheetMenuOperation(
+                                operation: provider.operation(
+                                    indexHistory, indexOperation),
+                                finance: provider.finance,
+                              ),
+                            );
+                            if (actionsUpdate == ActionsUpdate.updateScreen) {
+                              provider.updateScreen();
+                            }
+                          },
                         );
                       },
                     ),

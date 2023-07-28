@@ -54,16 +54,18 @@ class HistoryOperation extends ReadOperation {
       );
 }
 
-//Column table -> |id|namecategory|namesubcategory|date|value|
+//Column table -> |id|namecategory|namesubcategory|note|date|value|
 class Operation extends ReadOperation {
   final int id;
   final String nameCategory;
   final String nameSubCategory;
+  final String note;
   //Добаваить заметки
   Operation({
     required this.id,
     required this.nameCategory,
     required this.nameSubCategory,
+    required this.note,
     required super.date,
     required super.value,
   });
@@ -73,6 +75,7 @@ class Operation extends ReadOperation {
         id: json['id'],
         nameCategory: json['namecategory'],
         nameSubCategory: json['namesubcategory'],
+        note: json['note'],
         date: json['date'],
         value: json['value'],
       );

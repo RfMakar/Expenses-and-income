@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
 class DialodgDelete extends StatelessWidget {
-  const DialodgDelete({super.key, required this.text});
-  final String text;
+  const DialodgDelete({super.key});
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Удалить?'),
-      content: Text(text),
+      title: const Center(child: Text('Удалить?')),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context, true),
-          child: const Text('Да'),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(context, false),
-          child: const Text('Нет'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Да'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Нет'),
+            ),
+          ],
         ),
       ],
     );

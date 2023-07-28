@@ -147,17 +147,13 @@ class WidgetCardCategory extends StatelessWidget {
                           leading: const Icon(Icons.arrow_right),
                           title: Text(subCategories.name),
                           onTap: () async {
-                            final ActionsUpdate? actionsUpdate =
-                                await showModalBottomSheet(
+                            await showModalBottomSheet(
                               context: context,
                               builder: (context) => SheetMenuSubCategory(
                                 subCategory: subCategories,
                                 financeSwitch: providerScreen.financeSwitch,
                               ),
                             );
-                            if (actionsUpdate == ActionsUpdate.updateWidget) {
-                              provider.updateWidget();
-                            }
                           },
                         ),
                       )

@@ -180,13 +180,15 @@ abstract class DBFinance {
       SELECT ${TableDB.operations}.id AS id,
       ${TableDB.categories}.name AS namecategory,
       ${TableDB.subcategories}.name AS namesubcategory,
+      note,
       date,
       value
       FROM ${TableDB.operations}
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ?   
+      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? 
+      ORDER BY id DESC
       ;
         ''',
       [dateTime.year, dateTime.month, dateTime.day, finance],
@@ -253,6 +255,15 @@ abstract class DBFinance {
     ''', [subCategory.id]);
   }
 
+  static Future<int> deleteOperation(Operation operation) async {
+    final db = await database;
+    return await db.rawDelete('''
+    DELETE
+    FROM ${TableDB.operations} 
+    WHERE id = ?;
+    ''', [operation.id]);
+  }
+
   //Обновить данные
 
   static Future<int> updateCategoryName(
@@ -286,18 +297,6 @@ abstract class DBFinance {
     SET name = ?
     WHERE id = ?;
     ''', [newName, subCategory.id]);
-  }
-
-  //////////////////
-  static Future<int> insert(String table, Map<String, Object?> values) async {
-    final db = await database;
-    return await db.insert(table, values);
-  }
-
-  static Future<List<Map<String, Object?>>> rawQuery(String sql,
-      [List<Object?>? arguments]) async {
-    final db = await database;
-    return await db.rawQuery(sql, arguments);
   }
 }
 

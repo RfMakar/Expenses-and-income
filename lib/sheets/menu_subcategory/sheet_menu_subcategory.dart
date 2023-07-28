@@ -16,7 +16,7 @@ class SheetMenuSubCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     void navigatorUpdateWidget() =>
         Navigator.pop(context, ActionsUpdate.updateWidget);
-    void navigatorPop() => Navigator.pop(context, ActionsUpdate.updateWidget);
+
     return ChangeNotifierProvider(
       create: (context) =>
           ProviderSheetMenuSubCategory(subCategory, financeSwitch),
@@ -33,14 +33,11 @@ class SheetMenuSubCategory extends StatelessWidget {
                 leading: const Icon(Icons.add),
                 title: Text(provider.titleButtonAddFinace()),
                 onTap: () async {
-                  final bool? update = await showDialog(
+                  await showDialog(
                     context: context,
                     builder: (context) =>
                         DialogAddOperation(subCategory: provider.subCategory),
                   );
-                  if (update == true) {
-                    navigatorPop();
-                  }
                 },
               ),
               const Divider(),
@@ -65,8 +62,7 @@ class SheetMenuSubCategory extends StatelessWidget {
                 onTap: () async {
                   final bool? result = await showDialog(
                     context: context,
-                    builder: (context) =>
-                        DialodgDelete(text: provider.titleSheet()),
+                    builder: (context) => const DialodgDelete(),
                   );
                   if (result == true) {
                     provider.onTapDeletedSubCategory();

@@ -11,7 +11,7 @@ class ProviderScreenHome extends ChangeNotifier {
   late List<GroupCategory> listGroupCategories;
   late List<HistoryOperation> listHistoryOperation;
 
-  void screenUpdate() {
+  void updateScreen() {
     notifyListeners();
   }
 
@@ -60,14 +60,16 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleHistoryOperation(int index) {
-    final dateTimeHistory =
-        DateTime.tryParse(listHistoryOperation[index].date)!;
-    if (dateTime.day == dateTimeHistory.day) {
+    final historyDay = DateTime.tryParse(listHistoryOperation[index].date)!.day;
+    final curentDay = DateTime.now().day;
+
+    if (curentDay == historyDay) {
       return 'Сегодня';
-    } else if (dateTime.day - 1 == dateTimeHistory.day) {
+    } else if (curentDay - 1 == historyDay) {
       return 'Вчера';
     } else {
-      return DateFormat.MMMMd().format(dateTimeHistory);
+      return DateFormat.MMMMd()
+          .format(DateTime.tryParse(listHistoryOperation[index].date)!);
     }
   }
 
@@ -77,6 +79,10 @@ class ProviderScreenHome extends ChangeNotifier {
 
   List<Operation> listOperation(int index) {
     return listHistoryOperation[index].listOperation ?? [];
+  }
+
+  Operation operation(int indexHistory, int indexOperation) {
+    return listOperation(indexHistory)[indexOperation];
   }
 
   String titleOperation(int indexHistory, int indexOperation) {

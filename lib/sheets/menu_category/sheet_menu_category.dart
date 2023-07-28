@@ -64,8 +64,7 @@ class SheetMenuCategory extends StatelessWidget {
                 onTap: () async {
                   final bool? result = await showDialog(
                     context: context,
-                    builder: (context) =>
-                        DialodgDelete(text: provider.nameSheet()),
+                    builder: (context) => const DialodgDelete(),
                   );
                   if (result == true) {
                     provider.onTapDeletedCategory();
