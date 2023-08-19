@@ -106,10 +106,10 @@ class WidgetCardCategory extends StatelessWidget {
             future: provider.getListSubCategories(),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
+                return const ListTile();
               }
               if (snapshot.hasError) {
-                return const Center(child: CircularProgressIndicator());
+                return const ListTile();
               }
               return Card(
                 child: ExpansionTile(
@@ -147,13 +147,17 @@ class WidgetCardCategory extends StatelessWidget {
                           leading: const Icon(Icons.arrow_right),
                           title: Text(subCategories.name),
                           onTap: () async {
-                            await showModalBottomSheet(
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
                               context: context,
                               builder: (context) => SheetMenuSubCategory(
                                 subCategory: subCategories,
                                 financeSwitch: providerScreen.financeSwitch,
                               ),
                             );
+                            if (actionsUpdate == ActionsUpdate.updateWidget) {
+                              provider.updateWidget();
+                            }
                           },
                         ),
                       )

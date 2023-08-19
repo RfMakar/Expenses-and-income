@@ -49,6 +49,7 @@ class ProviderWidgetCardCategory extends ChangeNotifier {
   }
 
   void updateWidget() async {
+    await getListSubCategories();
     notifyListeners();
   }
 

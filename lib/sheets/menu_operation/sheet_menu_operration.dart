@@ -25,23 +25,11 @@ class SheetMenuOperation extends StatelessWidget {
                 subtitle: Text(provider.subtitleSheet()),
                 trailing: Text(provider.trailingSheet()),
               ),
-              //const Divider(),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Text('Заметка: ${provider.note()}'),
-                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+                child: Text('Заметка: ${provider.note()}'),
               ),
               const Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(provider.date()),
-                  Text(provider.time()),
-                ],
-              ),
-              const Divider(),
-
               ListTile(
                 leading: const Icon(Icons.edit),
                 title: const Text('Изменить'),
@@ -56,7 +44,6 @@ class SheetMenuOperation extends StatelessWidget {
                   // }
                 },
               ),
-              const Divider(),
               ListTile(
                 leading: const Icon(Icons.delete),
                 title: const Text('Удалить'),
@@ -70,6 +57,14 @@ class SheetMenuOperation extends StatelessWidget {
                     navigatorUpdateScreen();
                   }
                 },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(provider.date()),
+                  const Text(' '),
+                  Text(provider.time()),
+                ],
               ),
             ],
           );

@@ -32,17 +32,7 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
     return operation.value.toString();
   }
 
-  String titleEditValue() {
-    if (finance == 0) {
-      return 'Изменить расход';
-    } else {
-      return 'Изменить доход';
-    }
-  }
-
   void onTapDeletedOperation() async {
     DBFinance.deleteOperation(operation);
   }
-
-  void onTapEditOperation() async {}
 }
