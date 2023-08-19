@@ -118,10 +118,12 @@ class WidgetListGroupCategory extends StatelessWidget {
             if (snapshot.hasError) {
               return const Center(child: CircularProgressIndicator());
             }
+
             return provider.listGroupCategories.isEmpty
                 ? const SizedBox(
                     height: 60,
-                    width: 120,
+                    child: Center(
+                        child: Text('В этом месяце нет данных, нажмите "+".')),
                   )
                 : GridView.builder(
                     shrinkWrap: true,
@@ -284,7 +286,7 @@ class WidgetGroupCategories extends StatelessWidget {
               ),
             ),
             CircularPercentIndicator(
-              radius: 30.0,
+              radius: 25.0,
               lineWidth: 4.0,
               percent: percent / 100,
               animation: true,

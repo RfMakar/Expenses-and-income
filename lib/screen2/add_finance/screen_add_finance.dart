@@ -109,7 +109,7 @@ class WidgetCardCategory extends StatelessWidget {
                 return const ListTile();
               }
               if (snapshot.hasError) {
-                return const ListTile();
+                return const Center(child: CircularProgressIndicator());
               }
               return Card(
                 child: ExpansionTile(
