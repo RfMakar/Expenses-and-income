@@ -20,14 +20,38 @@ class SheetMenuOperation extends StatelessWidget {
         builder: (context, provider, child) {
           return Wrap(
             children: [
-              ListTile(
-                title: Text(provider.titleSheet()),
-                subtitle: Text(provider.subtitleSheet()),
-                trailing: Text(provider.trailingSheet()),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          provider.titleSheet(),
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text(provider.subtitleSheet())],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text('Заметка: ${provider.note()}'),
+              ListTile(
+                title: Text(provider.titleCategoty()),
+                subtitle: const Text('Категория'),
+              ),
+              ListTile(
+                title: Text(provider.titleSubCategory()),
+                subtitle: const Text('Подкатегория'),
+              ),
+              ListTile(
+                title: Text(provider.titleNote()),
+                subtitle: const Text('Заметка'),
               ),
               const Divider(),
               ListTile(
@@ -57,14 +81,6 @@ class SheetMenuOperation extends StatelessWidget {
                     navigatorUpdateScreen();
                   }
                 },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(provider.date()),
-                  const Text(' '),
-                  Text(provider.time()),
-                ],
               ),
             ],
           );

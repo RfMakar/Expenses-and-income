@@ -182,7 +182,7 @@ abstract class DBFinance {
       ${TableDB.subcategories}.name AS namesubcategory,
       note,
       date,
-      value
+      ROUND(value, 2) as value
       FROM ${TableDB.operations}
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory

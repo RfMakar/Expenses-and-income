@@ -9,27 +9,25 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
   final int finance;
 
   String titleSheet() {
-    return operation.nameCategory;
+    return operation.value.toString();
   }
 
   String subtitleSheet() {
+    final date = DateFormat.yMd().format(DateTime.tryParse(operation.date)!);
+    final time = DateFormat.jm().format(DateTime.tryParse(operation.date)!);
+    return '$date $time';
+  }
+
+  String titleCategoty() {
+    return operation.nameCategory;
+  }
+
+  String titleSubCategory() {
     return operation.nameSubCategory;
   }
 
-  String note() {
-    return operation.note;
-  }
-
-  String date() {
-    return DateFormat.yMd().format(DateTime.tryParse(operation.date)!);
-  }
-
-  String time() {
-    return DateFormat.jm().format(DateTime.tryParse(operation.date)!);
-  }
-
-  String trailingSheet() {
-    return operation.value.toString();
+  String titleNote() {
+    return operation.note == '' ? '-' : operation.note;
   }
 
   void onTapDeletedOperation() async {
