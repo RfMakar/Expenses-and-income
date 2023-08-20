@@ -33,9 +33,6 @@ class ScreenHome extends StatelessWidget {
               appBar: AppBar(
                 leading:
                     IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-                actions: [
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-                ],
                 title: Column(
                   children: [
                     Text(
@@ -171,26 +168,24 @@ class WidgetListHistoryOperation extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             return ListView.builder(
-              padding: const EdgeInsets.all(8),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: provider.listHistoryOperation.length,
               itemBuilder: (context, indexHistory) {
                 return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          provider.titleHistoryOperation(indexHistory),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          provider.valueHistory(indexHistory),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.grey),
-                        ),
-                      ],
+                    ListTile(
+                      title: Text(
+                        provider.titleHistoryOperation(indexHistory),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Text(
+                        provider.valueHistory(indexHistory),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                            fontSize: 14),
+                      ),
                     ),
                     ListView.builder(
                       shrinkWrap: true,
