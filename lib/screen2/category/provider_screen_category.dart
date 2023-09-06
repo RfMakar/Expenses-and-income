@@ -44,7 +44,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   String valueGroupSubCategory(int index) {
     return finance == 0
         ? '-${listGroupSubCategory[index].value.toString()} ₽'
-        : ' +${listGroupSubCategory[index].value.toString()} ₽';
+        : '+${listGroupSubCategory[index].value.toString()} ₽';
   }
 
   Future getSumOperationCategory() async {
