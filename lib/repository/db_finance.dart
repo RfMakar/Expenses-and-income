@@ -155,7 +155,7 @@ abstract class DBFinance {
     var maps = await db.rawQuery(
       '''
       SELECT date,
-      SUM(value) AS value
+      ROUND(SUM(value),2) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory

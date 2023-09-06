@@ -101,6 +101,7 @@ class WidgetListGroupCategory extends StatelessWidget {
     final provider = Provider.of<ProviderScreenHome>(context);
     return Column(
       children: [
+        const SizedBox(height: 10),
         const Text(
           'Категории',
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -177,13 +178,16 @@ class WidgetListHistoryOperation extends StatelessWidget {
                     ListTile(
                       title: Text(
                         provider.titleHistoryOperation(indexHistory),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: provider.colorSumOperation(),
+                        ),
                       ),
                       trailing: Text(
                         provider.valueHistory(indexHistory),
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey,
+                            color: provider.colorSumOperation(),
                             fontSize: 14),
                       ),
                     ),
@@ -204,6 +208,7 @@ class WidgetListHistoryOperation extends StatelessWidget {
                           trailing: Text(
                             provider.trailingOperation(
                                 indexHistory, indexOperation),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           onTap: () async {
                             final ActionsUpdate? actionsUpdate =
@@ -276,7 +281,8 @@ class WidgetGroupCategories extends StatelessWidget {
               child: Center(
                 child: Text(
                   name,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -287,7 +293,7 @@ class WidgetGroupCategories extends StatelessWidget {
               animation: true,
               center: Text(
                 '$percent %',
-                style: const TextStyle(fontSize: 8),
+                style: const TextStyle(fontSize: 10),
               ),
               progressColor: color,
             ),
@@ -301,7 +307,8 @@ class WidgetGroupCategories extends StatelessWidget {
               child: Center(
                 child: Text(
                   value,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),

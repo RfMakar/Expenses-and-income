@@ -74,7 +74,9 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String valueHistory(int index) {
-    return listHistoryOperation[index].value.toString();
+    return finance == 0
+        ? '- ${listHistoryOperation[index].value.toString()}'
+        : '+ ${listHistoryOperation[index].value.toString()}';
   }
 
   List<Operation> listOperation(int index) {
