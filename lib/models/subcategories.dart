@@ -33,3 +33,23 @@ class SubCategory extends ReadSubCategory {
         name: json['name'],
       );
 }
+
+//Column table -> |id|name|percent|value|
+class GroupSubCategory extends ReadSubCategory {
+  final double percent;
+  final double value;
+  GroupSubCategory({
+    required super.id,
+    required super.name,
+    required this.percent,
+    required this.value,
+  });
+  //Чтение БД
+  factory GroupSubCategory.fromMap(Map<String, dynamic> json) =>
+      GroupSubCategory(
+        id: json['id'],
+        name: json['name'],
+        percent: json['percent'],
+        value: json['value'],
+      );
+}

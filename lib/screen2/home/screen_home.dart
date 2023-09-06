@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/screen2/add_finance/screen_add_finance.dart';
+import 'package:budget/screen2/category/screen_category.dart';
 import 'package:budget/screen2/home/provider_screen_home.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
 import 'package:budget/screen2/widget/switch_finance.dart';
@@ -117,7 +118,7 @@ class WidgetListGroupCategory extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return provider.listGroupCategories.isEmpty
+            return provider.listGroupCategory.isEmpty
                 ? const SizedBox(
                     height: 60,
                     child: Center(
@@ -129,13 +130,25 @@ class WidgetListGroupCategory extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3),
-                    itemCount: provider.listGroupCategories.length,
+                    itemCount: provider.listGroupCategory.length,
                     itemBuilder: (context, index) {
-                      return WidgetGroupCategories(
+                      return WidgetGroupCategory(
                         color: provider.colorGroupCategory(index),
                         name: provider.titleGroupCategory(index),
                         percent: provider.percentGroupCategory(index),
                         value: provider.valueGroupCategory(index),
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenCategory(
+                                finance: provider.finance,
+                                dateTime: provider.dateTime,
+                                groupCategory: provider.groupCategory(index),
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   );
@@ -238,20 +251,24 @@ class WidgetListHistoryOperation extends StatelessWidget {
   }
 }
 
-class WidgetGroupCategories extends StatelessWidget {
-  const WidgetGroupCategories(
-      {super.key,
-      required this.color,
-      required this.name,
-      required this.percent,
-      required this.value});
+class WidgetGroupCategory extends StatelessWidget {
+  const WidgetGroupCategory({
+    super.key,
+    required this.color,
+    required this.name,
+    required this.percent,
+    required this.value,
+    required this.onTap,
+  });
   final Color color;
   final String name;
   final double percent;
   final String value;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(

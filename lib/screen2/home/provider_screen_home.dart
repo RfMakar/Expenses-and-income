@@ -8,7 +8,7 @@ class ProviderScreenHome extends ChangeNotifier {
   var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
   late double sumOperations;
-  late List<GroupCategory> listGroupCategories;
+  late List<GroupCategory> listGroupCategory;
   late List<HistoryOperation> listHistoryOperation;
 
   void updateScreen() {
@@ -34,9 +34,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleSumOperatin() {
-    return finance == 0
-        ? '- ${sumOperations.toString()}'
-        : '+ ${sumOperations.toString()}';
+    return '${sumOperations.toString()} ₽';
   }
 
   Color colorSumOperation() {
@@ -44,19 +42,25 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   Color colorGroupCategory(int index) {
-    return Color(int.parse(listGroupCategories[index].color));
+    return Color(int.parse(listGroupCategory[index].color));
   }
 
   String titleGroupCategory(int index) {
-    return listGroupCategories[index].name;
+    return listGroupCategory[index].name;
   }
 
   double percentGroupCategory(int index) {
-    return listGroupCategories[index].percent;
+    return listGroupCategory[index].percent;
   }
 
   String valueGroupCategory(int index) {
-    return listGroupCategories[index].value.toString();
+    return finance == 0
+        ? '-${listGroupCategory[index].value.toString()} ₽'
+        : ' +${listGroupCategory[index].value.toString()} ₽';
+  }
+
+  GroupCategory groupCategory(int index) {
+    return listGroupCategory[index];
   }
 
   String titleHistoryOperation(int index) {
@@ -75,8 +79,8 @@ class ProviderScreenHome extends ChangeNotifier {
 
   String valueHistory(int index) {
     return finance == 0
-        ? '- ${listHistoryOperation[index].value.toString()}'
-        : '+ ${listHistoryOperation[index].value.toString()}';
+        ? '-${listHistoryOperation[index].value.toString()} ₽'
+        : '+${listHistoryOperation[index].value.toString()} ₽';
   }
 
   List<Operation> listOperation(int index) {
@@ -96,7 +100,9 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String trailingOperation(int indexHistory, int indexOperation) {
-    return listOperation(indexHistory)[indexOperation].value.toString();
+    return finance == 0
+        ? '-${listOperation(indexHistory)[indexOperation].value.toString()} ₽'
+        : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
   }
 
   Future getSumOperation() async {
@@ -106,9 +112,9 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   Future getListGroupCategory() async {
-    final list = await DBFinance.getListCategoryGroup(dateTime, finance);
+    final list = await DBFinance.getListGroupCategory(dateTime, finance);
 
-    listGroupCategories = list;
+    listGroupCategory = list;
   }
 
   Future getListHistoryOperation() async {
