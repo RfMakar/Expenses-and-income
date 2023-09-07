@@ -6,20 +6,27 @@ import 'package:intl/intl.dart';
 */
 
 class SwitchDate extends StatefulWidget {
-  const SwitchDate({super.key, required this.onPressedCallBack});
+  const SwitchDate(
+      {super.key, required this.onPressedCallBack, required this.dateTime});
 
   final void Function(DateTime) onPressedCallBack;
-
+  final DateTime dateTime;
   @override
   State<SwitchDate> createState() => _SwitchDateState();
 }
 
 class _SwitchDateState extends State<SwitchDate> {
   final currentDate = DateTime.now(); // Для onPressedButtonDateNext
-  var dateTime = DateTime.now(); //Текущая дата
+  late DateTime dateTime; //Текущая дата
 
   String getDate() {
     return DateFormat.yMMMM().format(dateTime);
+  }
+
+  @override
+  void initState() {
+    dateTime = widget.dateTime;
+    super.initState();
   }
 
   @override

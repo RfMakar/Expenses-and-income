@@ -73,7 +73,10 @@ class WidgetInfo extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
+          SwitchDate(
+            onPressedCallBack: provider.onPressedSwitchDate,
+            dateTime: provider.dateTime,
+          ),
         ],
       ),
     );

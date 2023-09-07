@@ -87,7 +87,10 @@ class WidgetInfo extends StatelessWidget {
           WidgetSwitchFinance(
             onPressedCallBack: provider.onPressedSwitchFinance,
           ),
-          SwitchDate(onPressedCallBack: provider.onPressedSwitchDate),
+          SwitchDate(
+            onPressedCallBack: provider.onPressedSwitchDate,
+            dateTime: provider.dateTime,
+          ),
         ],
       ),
     );
