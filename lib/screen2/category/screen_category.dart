@@ -110,8 +110,7 @@ class WidgetListGroupCategory extends StatelessWidget {
             return provider.listGroupSubCategory.isEmpty
                 ? const SizedBox(
                     height: 60,
-                    child: Center(
-                        child: Text('В этом месяце нет данных, нажмите "+".')),
+                    child: Center(child: Text('В этом месяце нет данных')),
                   )
                 : ListView.builder(
                     shrinkWrap: true,
