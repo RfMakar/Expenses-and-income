@@ -105,8 +105,8 @@ class ProviderScreenHome extends ChangeNotifier {
         : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
   }
 
-  Future getSumOperation() async {
-    final list = await DBFinance.getListSumOperation(dateTime, finance);
+  Future getSumAllOperation() async {
+    final list = await DBFinance.getListSumAllOperation(dateTime, finance);
 
     sumOperations = list[0].value;
   }
@@ -117,10 +117,10 @@ class ProviderScreenHome extends ChangeNotifier {
     listGroupCategory = list;
   }
 
-  Future getListHistoryOperation() async {
-    final list = await DBFinance.getListHistoryOperation(dateTime, finance);
+  Future getListHistoryAllOperation() async {
+    final list = await DBFinance.getListHistoryAllOperation(dateTime, finance);
     for (var historyOperation in list) {
-      historyOperation.listOperation = await DBFinance.getListOperation(
+      historyOperation.listOperation = await DBFinance.getListAllOperation(
           DateTime.tryParse(historyOperation.date)!, finance);
     }
 

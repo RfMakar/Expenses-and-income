@@ -41,7 +41,7 @@ class ScreenHome extends StatelessWidget {
                       style: const TextStyle(fontSize: 10),
                     ),
                     FutureBuilder(
-                      future: provider.getSumOperation(),
+                      future: provider.getSumAllOperation(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
                           return const Center(
@@ -66,7 +66,7 @@ class ScreenHome extends StatelessWidget {
                 children: const [
                   WidgetInfo(),
                   WidgetListGroupCategory(),
-                  WidgetListHistoryOperation(),
+                  WidgetListHistoryAllOperation(),
                 ],
               ));
         },
@@ -151,6 +151,7 @@ class WidgetListGroupCategory extends StatelessWidget {
                               ),
                             ),
                           );
+                          provider.updateScreen();
                         },
                       );
                     },
@@ -162,8 +163,8 @@ class WidgetListGroupCategory extends StatelessWidget {
   }
 }
 
-class WidgetListHistoryOperation extends StatelessWidget {
-  const WidgetListHistoryOperation({super.key});
+class WidgetListHistoryAllOperation extends StatelessWidget {
+  const WidgetListHistoryAllOperation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +177,7 @@ class WidgetListHistoryOperation extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         FutureBuilder(
-          future: provider.getListHistoryOperation(),
+          future: provider.getListHistoryAllOperation(),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());

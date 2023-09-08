@@ -1,6 +1,8 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/screen2/category/provider_screen_category.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
+import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +56,8 @@ class ScreenCategory extends StatelessWidget {
               children: const [
                 SizedBox(height: 4),
                 WidgetInfo(),
-                WidgetListGroupCategory(),
+                WidgetListGroupSubCategory(),
+                WidgetListHistoryOperationCategory(),
               ],
             ),
           );
@@ -83,8 +86,8 @@ class WidgetInfo extends StatelessWidget {
   }
 }
 
-class WidgetListGroupCategory extends StatelessWidget {
-  const WidgetListGroupCategory({super.key});
+class WidgetListGroupSubCategory extends StatelessWidget {
+  const WidgetListGroupSubCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +168,98 @@ class WidgetGroupSubCategory extends StatelessWidget {
         barRadius: const Radius.circular(8),
         progressColor: color,
       ),
+    );
+  }
+}
+
+class WidgetListHistoryOperationCategory extends StatelessWidget {
+  const WidgetListHistoryOperationCategory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenCategory>(context);
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        const Text(
+          'История операций',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        FutureBuilder(
+          future: provider.getListHistoryOperationCategory(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: provider.listHistoryOperation.length,
+              itemBuilder: (context, indexHistory) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        provider.titleHistoryOperation(indexHistory),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: provider.colorSumOperation(),
+                        ),
+                      ),
+                      trailing: Text(
+                        provider.valueHistory(indexHistory),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: provider.colorSumOperation(),
+                            fontSize: 14),
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: provider.listOperation(indexHistory).length,
+                      itemBuilder: (context, indexOperation) {
+                        return ListTile(
+                          title: Text(
+                            provider.titleOperation(
+                                indexHistory, indexOperation),
+                          ),
+                          subtitle: Text(
+                            provider.subtitlegOperation(
+                                indexHistory, indexOperation),
+                          ),
+                          trailing: Text(
+                            provider.trailingOperation(
+                                indexHistory, indexOperation),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          onTap: () async {
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SheetMenuOperation(
+                                operation: provider.operation(
+                                    indexHistory, indexOperation),
+                                finance: provider.finance,
+                              ),
+                            );
+                            if (actionsUpdate == ActionsUpdate.updateScreen) {
+                              provider.updateScreen();
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
