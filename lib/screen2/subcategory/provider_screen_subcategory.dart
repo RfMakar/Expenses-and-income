@@ -1,17 +1,15 @@
-import 'package:budget/models/categories.dart';
 import 'package:budget/models/operations.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ProviderScreenCategory extends ChangeNotifier {
-  ProviderScreenCategory(this.finance, this.dateTime, this.groupCategory);
+class ProviderScreenSubCategory extends ChangeNotifier {
+  ProviderScreenSubCategory(this.finance, this.dateTime, this.groupSubCategory);
   final int finance;
   DateTime dateTime;
-  final GroupCategory groupCategory;
+  final GroupSubCategory groupSubCategory;
   late double sumOperations;
-  late List<GroupSubCategory> listGroupSubCategory;
   late List<HistoryOperation> listHistoryOperation;
 
   void updateScreen() {
@@ -19,7 +17,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   String titleAppBar() {
-    return groupCategory.name;
+    return groupSubCategory.name;
   }
 
   String titleSumOperatin() {
@@ -34,24 +32,6 @@ class ProviderScreenCategory extends ChangeNotifier {
   void onPressedSwitchDate(DateTime switchDateTime) {
     dateTime = switchDateTime;
     notifyListeners();
-  }
-
-  Color colorGroupSubCategory(int index) {
-    return Color(int.parse(groupCategory.color));
-  }
-
-  String titleGroupSubCategory(int index) {
-    return listGroupSubCategory[index].name;
-  }
-
-  double percentGroupSubCategory(int index) {
-    return listGroupSubCategory[index].percent;
-  }
-
-  String valueGroupSubCategory(int index) {
-    return finance == 0
-        ? '-${listGroupSubCategory[index].value.toString()} ₽'
-        : '+${listGroupSubCategory[index].value.toString()} ₽';
   }
 
   String titleHistoryOperation(int index) {
@@ -96,29 +76,22 @@ class ProviderScreenCategory extends ChangeNotifier {
         : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
   }
 
-  GroupSubCategory groupSubCategory(int index) {
-    return listGroupSubCategory[index];
-  }
-
-  Future getSumOperationCategory() async {
-    final list = await DBFinance.getListSumOperationCategory(
-        dateTime, finance, groupCategory.id);
+  Future getSumOperationSubCategory() async {
+    final list = await DBFinance.getListSumOperationSubCategory(
+        dateTime, finance, groupSubCategory.id);
 
     sumOperations = list[0].value;
   }
 
-  Future getListGroupSubCategory() async {
-    final list = await DBFinance.getListGroupSubCategory(
-        dateTime, finance, groupCategory.id);
-    listGroupSubCategory = list;
-  }
-
-  Future getListHistoryOperationCategory() async {
-    final list = await DBFinance.getListHistoryOperationCategory(
-        dateTime, finance, groupCategory.id);
+  Future getListHistoryOperationSubCategory() async {
+    final list = await DBFinance.getListHistoryOperationSubCategory(
+        dateTime, finance, groupSubCategory.id);
     for (var historyOperation in list) {
-      historyOperation.listOperation = await DBFinance.getListOperationCategory(
-          DateTime.tryParse(historyOperation.date)!, finance, groupCategory.id);
+      historyOperation.listOperation =
+          await DBFinance.getListOperationSubCategory(
+              DateTime.tryParse(historyOperation.date)!,
+              finance,
+              groupSubCategory.id);
     }
 
     listHistoryOperation = list;

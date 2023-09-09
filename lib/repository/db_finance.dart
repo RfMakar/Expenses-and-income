@@ -235,6 +235,29 @@ abstract class DBFinance {
         : [];
   }
 
+  static Future<List<HistoryOperation>> getListHistoryOperationSubCategory(
+      DateTime dateTime, int finance, int idSubCategory) async {
+    final db = await database;
+    var maps = await db.rawQuery(
+      '''
+      SELECT date,
+      ROUND(SUM(value),2) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ? AND month = ? AND ${TableDB.finance}.id = ? AND ${TableDB.subcategories}.id = ? 
+      GROUP BY day
+      ORDER BY day DESC
+      ;
+        ''',
+      [dateTime.year, dateTime.month, finance, idSubCategory],
+    );
+    return maps.isNotEmpty
+        ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
+        : [];
+  }
+
   static Future<List<Operation>> getListAllOperation(
       DateTime dateTime, int finance) async {
     final db = await database;
@@ -287,6 +310,32 @@ abstract class DBFinance {
         : [];
   }
 
+  static Future<List<Operation>> getListOperationSubCategory(
+      DateTime dateTime, int finance, int idSubCategory) async {
+    final db = await database;
+    var maps = await db.rawQuery(
+      '''
+      SELECT ${TableDB.operations}.id AS id,
+      ${TableDB.categories}.name AS namecategory,
+      ${TableDB.subcategories}.name AS namesubcategory,
+      note,
+      date,
+      ROUND(value, 2) as value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? AND ${TableDB.subcategories}.id = ? 
+      ORDER BY id DESC
+      ;
+        ''',
+      [dateTime.year, dateTime.month, dateTime.day, finance, idSubCategory],
+    );
+    return maps.isNotEmpty
+        ? maps.map((e) => Operation.fromMap(e)).toList()
+        : [];
+  }
+
   static Future<List<SumOperation>> getListSumAllOperation(
       DateTime dateTime, int finance) async {
     final db = await database;
@@ -319,6 +368,25 @@ abstract class DBFinance {
       ;
         ''',
       [dateTime.year, dateTime.month, finance, idCategory],
+    );
+    return maps.isNotEmpty
+        ? maps.map((e) => SumOperation.fromMap(e)).toList()
+        : [];
+  }
+
+  static Future<List<SumOperation>> getListSumOperationSubCategory(
+      DateTime dateTime, int finance, int idSubCategory) async {
+    final db = await database;
+    var maps = await db.rawQuery(
+      '''
+      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
+      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? AND ${TableDB.subcategories}.id = ?
+      ;
+        ''',
+      [dateTime.year, dateTime.month, finance, idSubCategory],
     );
     return maps.isNotEmpty
         ? maps.map((e) => SumOperation.fromMap(e)).toList()

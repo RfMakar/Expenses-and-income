@@ -1,6 +1,7 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/screen2/category/provider_screen_category.dart';
+import 'package:budget/screen2/subcategory/screen_subcategory.dart';
 import 'package:budget/screen2/widget/switch_date.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +126,20 @@ class WidgetListGroupSubCategory extends StatelessWidget {
                         value: provider.valueGroupSubCategory(index),
                         percent: provider.percentGroupSubCategory(index),
                         color: provider.colorGroupSubCategory(index),
-                        onTap: () {},
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenSubCategory(
+                                finance: provider.finance,
+                                dateTime: provider.dateTime,
+                                groupSubCategory:
+                                    provider.groupSubCategory(index),
+                              ),
+                            ),
+                          );
+                          provider.updateScreen();
+                        },
                       );
                     },
                   );
