@@ -25,31 +25,7 @@ class ScreenSubCategory extends StatelessWidget {
           builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Column(
-              children: [
-                Text(
-                  provider.titleAppBar(),
-                  style: const TextStyle(fontSize: 10),
-                ),
-                FutureBuilder(
-                  future: provider.getSumOperationSubCategory(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.done) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshot.hasError) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return Text(
-                      provider.titleSumOperatin(),
-                      style: TextStyle(
-                        color: provider.colorSumOperation(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            title: Text(provider.titleAppBar()),
           ),
           body: ListView(
             children: const [
@@ -71,13 +47,21 @@ class WidgetInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenSubCategory>(context);
     return Card(
-      child: Column(
-        children: [
-          SwitchDate(
+      child: FutureBuilder(
+        future: provider.getSumOperationSubCategory(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SwitchDate(
             onPressedCallBack: provider.onPressedSwitchDate,
             dateTime: provider.dateTime,
-          ),
-        ],
+            value: provider.titleSumOperatin(),
+          );
+        },
       ),
     );
   }

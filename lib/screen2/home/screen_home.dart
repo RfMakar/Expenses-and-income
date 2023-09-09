@@ -34,39 +34,16 @@ class ScreenHome extends StatelessWidget {
               appBar: AppBar(
                 leading:
                     IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-                title: Column(
-                  children: [
-                    Text(
-                      provider.titleAppBar(),
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                    FutureBuilder(
-                      future: provider.getSumAllOperation(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        return Text(
-                          provider.titleSumOperatin(),
-                          style: TextStyle(
-                            color: provider.colorSumOperation(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                title: Text(provider.titleAppBar()),
               ),
               body: ListView(
-                children: const [
-                  WidgetInfo(),
-                  WidgetListGroupCategory(),
-                  WidgetListHistoryAllOperation(),
+                children: [
+                  WidgetSwitchFinance(
+                    onPressedCallBack: provider.onPressedSwitchFinance,
+                  ),
+                  const WidgetInfo(),
+                  const WidgetListGroupCategory(),
+                  const WidgetListHistoryAllOperation(),
                 ],
               ));
         },
@@ -82,16 +59,21 @@ class WidgetInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenHome>(context);
     return Card(
-      child: Column(
-        children: [
-          WidgetSwitchFinance(
-            onPressedCallBack: provider.onPressedSwitchFinance,
-          ),
-          SwitchDate(
+      child: FutureBuilder(
+        future: provider.getSumAllOperation(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SwitchDate(
             onPressedCallBack: provider.onPressedSwitchDate,
             dateTime: provider.dateTime,
-          ),
-        ],
+            value: provider.titleSumOperatin(),
+          );
+        },
       ),
     );
   }

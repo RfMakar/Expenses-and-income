@@ -28,9 +28,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleAppBar() {
-    return finance == 0
-        ? 'Расходы за ${DateFormat.MMMM().format(dateTime)}'
-        : 'Доходы за ${DateFormat.MMMM().format(dateTime)}';
+    return 'Main';
   }
 
   String titleSumOperatin() {
