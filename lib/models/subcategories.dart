@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 abstract class SubCategories {
   final String name;
 
@@ -52,4 +54,9 @@ class GroupSubCategory extends ReadSubCategory {
         percent: json['percent'],
         value: json['value'],
       );
+  String getValue(int finance) {
+    return finance == 0
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}'
+        : '+${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}';
+  }
 }

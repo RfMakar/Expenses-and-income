@@ -27,7 +27,6 @@ class DialogEditOperation extends StatelessWidget {
                       validator: ValidatorTextField.value,
                       decoration: const InputDecoration(
                         hintText: 'Значение',
-                        suffixIcon: Icon(Icons.currency_ruble),
                       ),
                     ),
                     TextFormField(

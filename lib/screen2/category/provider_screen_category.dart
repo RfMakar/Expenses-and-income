@@ -22,10 +22,10 @@ class ProviderScreenCategory extends ChangeNotifier {
     return groupCategory.name;
   }
 
-  String titleSumOperatin() {
+  String titleSumOperation() {
     return finance == 0
-        ? '-${sumOperations.toString()} ₽'
-        : '+${sumOperations.toString()} ₽';
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}'
+        : '+${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}';
   }
 
   //Переключает дату
@@ -47,9 +47,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   String valueGroupSubCategory(int index) {
-    return finance == 0
-        ? '-${listGroupSubCategory[index].value.toString()} ₽'
-        : '+${listGroupSubCategory[index].value.toString()} ₽';
+    return listGroupSubCategory[index].getValue(finance);
   }
 
   String titleHistoryOperation(int index) {
@@ -67,9 +65,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   String valueHistory(int index) {
-    return finance == 0
-        ? '-${listHistoryOperation[index].value.toString()} ₽'
-        : '+${listHistoryOperation[index].value.toString()} ₽';
+    return listHistoryOperation[index].getValue(finance);
   }
 
   List<Operation> listOperation(int index) {
@@ -89,9 +85,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   String trailingOperation(int indexHistory, int indexOperation) {
-    return finance == 0
-        ? '-${listOperation(indexHistory)[indexOperation].value.toString()} ₽'
-        : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
+    return listOperation(indexHistory)[indexOperation].getValue(finance);
   }
 
   GroupSubCategory groupSubCategory(int index) {

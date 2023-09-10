@@ -9,9 +9,7 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
   final int finance;
 
   String titleSheet() {
-    return finance == 0
-        ? '-${operation.value.toString()} ₽'
-        : '+${operation.value.toString()} ₽';
+    return operation.getValue(finance);
   }
 
   String subtitleSheet() {

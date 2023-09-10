@@ -59,7 +59,7 @@ class WidgetInfo extends StatelessWidget {
           return SwitchDate(
             onPressedCallBack: provider.onPressedSwitchDate,
             dateTime: provider.dateTime,
-            value: provider.titleSumOperatin(),
+            value: provider.titleSumOperation(),
           );
         },
       ),

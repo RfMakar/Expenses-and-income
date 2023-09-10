@@ -1,7 +1,14 @@
+import 'package:intl/intl.dart';
+
 abstract class Operations {
   final double value;
 
   Operations({required this.value});
+  String getValue(int finance) {
+    return finance == 0
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}'
+        : '+${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}';
+  }
 }
 
 //Column table -> |idsubcategory|date|year|month|day|note|value|

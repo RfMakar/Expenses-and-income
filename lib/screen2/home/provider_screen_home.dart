@@ -31,9 +31,9 @@ class ProviderScreenHome extends ChangeNotifier {
     return 'Main';
   }
 
-  String titleSumOperatin() {
+  String titleSumOperation() {
     return finance == 0
-        ? '-${sumOperations.toString()} ₽'
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU').format(sumOperations)}'
         : '+${sumOperations.toString()} ₽';
   }
 
@@ -50,9 +50,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String valueGroupCategory(int index) {
-    return finance == 0
-        ? '-${listGroupCategory[index].value.toString()} ₽'
-        : '+${listGroupCategory[index].value.toString()} ₽';
+    return listGroupCategory[index].getValue(finance);
   }
 
   GroupCategory groupCategory(int index) {
@@ -74,9 +72,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String valueHistory(int index) {
-    return finance == 0
-        ? '-${listHistoryOperation[index].value.toString()} ₽'
-        : '+${listHistoryOperation[index].value.toString()} ₽';
+    return listHistoryOperation[index].getValue(finance);
   }
 
   List<Operation> listOperation(int index) {
@@ -96,9 +92,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String trailingOperation(int indexHistory, int indexOperation) {
-    return finance == 0
-        ? '-${listOperation(indexHistory)[indexOperation].value.toString()} ₽'
-        : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
+    return listOperation(indexHistory)[indexOperation].getValue(finance);
   }
 
   Future getSumAllOperation() async {

@@ -1,6 +1,7 @@
 import 'package:budget/screen2/home/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MaterialAppMain extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+        FormBuilderLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('ru', 'RU'),

@@ -20,10 +20,10 @@ class ProviderScreenSubCategory extends ChangeNotifier {
     return groupSubCategory.name;
   }
 
-  String titleSumOperatin() {
+  String titleSumOperation() {
     return finance == 0
-        ? '-${sumOperations.toString()} ₽'
-        : '+${sumOperations.toString()} ₽';
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}'
+        : '+${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}';
   }
 
   //Переключает дату
@@ -47,9 +47,7 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   }
 
   String valueHistory(int index) {
-    return finance == 0
-        ? '-${listHistoryOperation[index].value.toString()} ₽'
-        : '+${listHistoryOperation[index].value.toString()} ₽';
+    return listHistoryOperation[index].getValue(finance);
   }
 
   List<Operation> listOperation(int index) {
@@ -69,9 +67,7 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   }
 
   String trailingOperation(int indexHistory, int indexOperation) {
-    return finance == 0
-        ? '-${listOperation(indexHistory)[indexOperation].value.toString()} ₽'
-        : '+${listOperation(indexHistory)[indexOperation].value.toString()} ₽';
+    return listOperation(indexHistory)[indexOperation].getValue(finance);
   }
 
   Future getSumOperationSubCategory() async {
