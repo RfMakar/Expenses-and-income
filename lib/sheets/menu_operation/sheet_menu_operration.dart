@@ -30,28 +30,43 @@ class SheetMenuOperation extends StatelessWidget {
                         Text(
                           provider.titleSheet(),
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text(provider.subtitleSheet())],
+                    children: [
+                      Text(
+                        provider.subtitleSheet(),
+                        style: const TextStyle(fontSize: 10),
+                      )
+                    ],
                   ),
+                  const Divider(),
                 ],
               ),
               ListTile(
                 title: Text(provider.titleCategoty()),
-                subtitle: const Text('Категория'),
+                subtitle: const Text(
+                  'Категория',
+                  style: TextStyle(fontSize: 10),
+                ),
               ),
               ListTile(
                 title: Text(provider.titleSubCategory()),
-                subtitle: const Text('Подкатегория'),
+                subtitle: const Text(
+                  'Подкатегория',
+                  style: TextStyle(fontSize: 10),
+                ),
               ),
               ListTile(
                 title: Text(provider.titleNote()),
-                subtitle: const Text('Заметка'),
+                subtitle: const Text(
+                  'Заметка',
+                  style: TextStyle(fontSize: 10),
+                ),
               ),
               const Divider(),
               ListTile(
