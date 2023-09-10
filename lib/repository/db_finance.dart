@@ -474,6 +474,20 @@ abstract class DBFinance {
     WHERE id = ?;
     ''', [newName, subCategory.id]);
   }
+
+  static Future<int> updateOperation(
+      double newValue, String newNote, Operation operation) async {
+    final db = await database;
+    return await db.rawUpdate('''
+    UPDATE ${TableDB.operations}
+    SET value = ?, note = ?
+    WHERE id = ?;
+    ''', [
+      newValue,
+      newNote,
+      operation.id,
+    ]);
+  }
 }
 
 class TableDB {

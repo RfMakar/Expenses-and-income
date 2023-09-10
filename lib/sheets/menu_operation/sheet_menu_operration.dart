@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
+import 'package:budget/dialogs/edit_operation/dialog_edit_operation.dart';
 import 'package:budget/models/operations.dart';
 import 'package:budget/sheets/menu_operation/provider_sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,8 @@ class SheetMenuOperation extends StatelessWidget {
                         Text(
                           provider.titleSheet(),
                           style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 24,
+                          ),
                         )
                       ],
                     ),
@@ -73,14 +75,13 @@ class SheetMenuOperation extends StatelessWidget {
                 leading: const Icon(Icons.edit),
                 title: const Text('Изменить'),
                 onTap: () async {
-                  // final String? newNote = await showDialog(
-                  //   context: context,
-                  //   builder: (context) => DialogEditName(name: provider.note()),
-                  // );
-                  // if (newNote != null) {
-                  //   provider.onTapRenameNote(newNote);
-                  //   navigatorUpdateScreen();
-                  // }
+                  final bool? result = await showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DialogEditOperation(operation: provider.operation));
+                  if (result == true) {
+                    navigatorUpdateScreen();
+                  }
                 },
               ),
               ListTile(

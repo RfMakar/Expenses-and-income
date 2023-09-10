@@ -13,6 +13,10 @@ class ValidatorTextField {
       10,
       errorText: 'Неверное значение',
     ),
+    FormBuilderValidators.min(
+      0,
+      errorText: 'Неверное значение',
+    ),
   ]);
   static var text = FormBuilderValidators.compose([
     FormBuilderValidators.minLength(
