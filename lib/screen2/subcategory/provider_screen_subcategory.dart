@@ -9,7 +9,7 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   final int finance;
   DateTime dateTime;
   final GroupSubCategory groupSubCategory;
-  late double sumOperations;
+  late SumOperation sumOperation;
   late List<HistoryOperation> listHistoryOperation;
 
   void updateScreen() {
@@ -21,9 +21,7 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   }
 
   String titleSumOperation() {
-    return finance == 0
-        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}'
-        : '+${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(sumOperations)}';
+    return sumOperation.getValue(finance);
   }
 
   //Переключает дату
@@ -74,7 +72,7 @@ class ProviderScreenSubCategory extends ChangeNotifier {
     final list = await DBFinance.getListSumOperationSubCategory(
         dateTime, finance, groupSubCategory.id);
 
-    sumOperations = list[0].value;
+    sumOperation = list[0];
   }
 
   Future getListHistoryOperationSubCategory() async {

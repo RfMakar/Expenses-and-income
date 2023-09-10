@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class ProviderScreenHome extends ChangeNotifier {
   var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
-  late double sumOperations;
+  late SumOperation sumOperation;
   late List<GroupCategory> listGroupCategory;
   late List<HistoryOperation> listHistoryOperation;
 
@@ -32,9 +32,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleSumOperation() {
-    return finance == 0
-        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU').format(sumOperations)}'
-        : '+${sumOperations.toString()} ₽';
+    return sumOperation.getValue(finance);
   }
 
   Color colorGroupCategory(int index) {
@@ -98,7 +96,7 @@ class ProviderScreenHome extends ChangeNotifier {
   Future getSumAllOperation() async {
     final list = await DBFinance.getListSumAllOperation(dateTime, finance);
 
-    sumOperations = list[0].value;
+    sumOperation = list[0];
   }
 
   Future getListGroupCategory() async {
