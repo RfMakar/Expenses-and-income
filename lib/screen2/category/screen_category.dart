@@ -202,17 +202,14 @@ class WidgetListHistoryOperationCategory extends StatelessWidget {
                     ListTile(
                       title: Text(
                         provider.titleHistoryOperation(indexHistory),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: provider.colorSumOperation(),
                         ),
                       ),
                       trailing: Text(
                         provider.valueHistory(indexHistory),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: provider.colorSumOperation(),
-                            fontSize: 14),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
                     ListView.builder(

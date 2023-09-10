@@ -32,11 +32,9 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleSumOperatin() {
-    return '${sumOperations.toString()} ₽';
-  }
-
-  Color colorSumOperation() {
-    return finance == 0 ? Colors.red : Colors.green;
+    return finance == 0
+        ? '-${sumOperations.toString()} ₽'
+        : '+${sumOperations.toString()} ₽';
   }
 
   Color colorGroupCategory(int index) {
@@ -54,7 +52,7 @@ class ProviderScreenHome extends ChangeNotifier {
   String valueGroupCategory(int index) {
     return finance == 0
         ? '-${listGroupCategory[index].value.toString()} ₽'
-        : ' +${listGroupCategory[index].value.toString()} ₽';
+        : '+${listGroupCategory[index].value.toString()} ₽';
   }
 
   GroupCategory groupCategory(int index) {

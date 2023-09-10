@@ -21,11 +21,9 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   }
 
   String titleSumOperatin() {
-    return '${sumOperations.toString()} ₽';
-  }
-
-  Color colorSumOperation() {
-    return finance == 0 ? Colors.red : Colors.green;
+    return finance == 0
+        ? '-${sumOperations.toString()} ₽'
+        : '+${sumOperations.toString()} ₽';
   }
 
   //Переключает дату
