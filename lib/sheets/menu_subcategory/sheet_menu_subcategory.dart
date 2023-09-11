@@ -26,7 +26,10 @@ class SheetMenuSubCategory extends StatelessWidget {
             children: [
               ListTile(
                 title: Text(provider.titleSheet()),
-                subtitle: const Text('Подкатегория'),
+                subtitle: const Text(
+                  'Подкатегория',
+                  style: TextStyle(fontSize: 10),
+                ),
               ),
               const Divider(),
               ListTile(
