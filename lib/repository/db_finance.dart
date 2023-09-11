@@ -86,7 +86,7 @@ abstract class DBFinance {
     SELECT id, name, color
     FROM ${TableDB.categories}
     WHERE idfinance = ?
-    ORDER BY id DESC;
+    ORDER BY name;
     ''',
       [finance],
     );
@@ -100,7 +100,7 @@ abstract class DBFinance {
     SELECT id, name
     FROM ${TableDB.subcategories}
     WHERE idcategory = ?
-    ORDER BY id DESC
+    ORDER BY name
     ;
     ''',
       [category.id],
@@ -274,7 +274,7 @@ abstract class DBFinance {
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? 
-      ORDER BY id DESC
+      ORDER BY date DESC
       ;
         ''',
       [dateTime.year, dateTime.month, dateTime.day, finance],
@@ -300,7 +300,7 @@ abstract class DBFinance {
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? AND ${TableDB.categories}.id = ? 
-      ORDER BY id DESC
+      ORDER BY date DESC
       ;
         ''',
       [dateTime.year, dateTime.month, dateTime.day, finance, idCategory],
@@ -326,7 +326,7 @@ abstract class DBFinance {
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? AND ${TableDB.subcategories}.id = ? 
-      ORDER BY id DESC
+      ORDER BY date DESC
       ;
         ''',
       [dateTime.year, dateTime.month, dateTime.day, finance, idSubCategory],
