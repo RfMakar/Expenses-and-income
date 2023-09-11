@@ -18,6 +18,7 @@ class MaterialAppMain extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         FormBuilderLocalizations.delegate,
       ],
       supportedLocales: const [
