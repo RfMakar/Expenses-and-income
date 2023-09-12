@@ -32,7 +32,7 @@ class MaterialAppMain extends StatelessWidget {
         ),
         toggleButtonsTheme: const ToggleButtonsThemeData(
           borderRadius: BorderRadius.all(
-            Radius.circular(8),
+            Radius.circular(16),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/edit_name/provider_dialog_edit_name.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,8 @@ class DialogEditName extends StatelessWidget {
                   final newName = provider.onPressedButtonSave();
 
                   if (newName != null) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBarApp.snackBarEdit);
                     Navigator.pop(context, newName);
                   }
                 },

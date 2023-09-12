@@ -1,3 +1,4 @@
+import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/edit_operation/provider_dialog_edit_operation.dart';
 import 'package:budget/models/operations.dart';
@@ -49,6 +50,8 @@ class DialogEditOperation extends StatelessWidget {
                   final validate = provider.onPressedButtonEditOperation();
 
                   if (validate) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBarApp.snackBarEdit);
                     Navigator.pop(context, validate);
                   }
                 },

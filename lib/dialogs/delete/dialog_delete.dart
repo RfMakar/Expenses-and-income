@@ -1,3 +1,4 @@
+import 'package:budget/const/snack_bar.dart';
 import 'package:flutter/material.dart';
 
 class DialodgDelete extends StatelessWidget {
@@ -11,7 +12,11 @@ class DialodgDelete extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBarApp.snackBarDelete);
+                Navigator.pop(context, true);
+              },
               child: const Text('Да'),
             ),
             TextButton(

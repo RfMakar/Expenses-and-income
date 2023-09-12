@@ -36,11 +36,14 @@ class SheetMenuSubCategory extends StatelessWidget {
                 leading: const Icon(Icons.add),
                 title: Text(provider.titleButtonAddFinace()),
                 onTap: () async {
-                  await showDialog(
+                  final bool? update = await showDialog(
                     context: context,
                     builder: (context) =>
                         DialogAddOperation(subCategory: provider.subCategory),
                   );
+                  if (update == true) {
+                    navigatorUpdateWidget();
+                  }
                 },
               ),
               const Divider(),
