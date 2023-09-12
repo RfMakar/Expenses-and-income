@@ -9,21 +9,39 @@ class SheetColors extends StatelessWidget {
     const listColors = ColorApp.listColor;
     return Wrap(
       children: [
+        const SizedBox(
+          height: 50,
+          child: Center(
+              child: Text('Выберите цвет', style: TextStyle(fontSize: 16))),
+        ),
+        const Divider(),
         GridView.builder(
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
           itemCount: listColors.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
+            crossAxisCount: 5,
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
           ),
           itemBuilder: (context, index) {
             return Container(
               decoration: BoxDecoration(
-                  color: listColors[index], shape: BoxShape.circle),
+                color: listColors[index],
+                shape: BoxShape.circle,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2,
+                    offset: Offset(0.5, 0.5), // Shadow position
+                  ),
+                ],
+              ),
               child: IconButton(
-                icon: const Icon(Icons.brush, color: Colors.white),
+                icon: const Icon(
+                  Icons.brush,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.pop(context, listColors[index]);
                 },

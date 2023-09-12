@@ -22,7 +22,16 @@ class DialogAddCategory extends StatelessWidget {
                 Text(provider.titleDialog()),
                 Container(
                   decoration: BoxDecoration(
-                      color: provider.colorDialog, shape: BoxShape.circle),
+                    color: provider.colorDialog,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2,
+                        offset: Offset(0.5, 0.5), // Shadow position
+                      ),
+                    ],
+                  ),
                   child: IconButton(
                     icon: const Icon(Icons.brush, color: Colors.white),
                     onPressed: () async {
