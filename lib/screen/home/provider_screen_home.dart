@@ -36,7 +36,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleAppBar() {
-    return 'Main';
+    return 'Название';
   }
 
   String titleSumOperation() {
