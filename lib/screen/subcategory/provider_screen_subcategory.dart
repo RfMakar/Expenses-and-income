@@ -68,6 +68,11 @@ class ProviderScreenSubCategory extends ChangeNotifier {
     return listOperation(indexHistory)[indexOperation].getValue(finance);
   }
 
+  Future loadData() async {
+    await getSumOperationSubCategory();
+    await getListHistoryOperationSubCategory();
+  }
+
   Future getSumOperationSubCategory() async {
     final list = await DBFinance.getListSumOperationSubCategory(
         dateTime, finance, groupSubCategory.id);

@@ -4,6 +4,36 @@ import 'package:flutter/material.dart';
 Виджет переключает кнопки расход и доход и возращает число,
 где 0 это расход, 1 это доход.
 */
+class WidgetSwitchFinance extends StatelessWidget {
+  const WidgetSwitchFinance(
+      {super.key, required this.isSelected, required this.onPressed});
+  final List<bool> isSelected;
+  final void Function(int) onPressed;
+  @override
+  Widget build(BuildContext context) {
+    final widthToggle = MediaQuery.of(context).size.width * (0.8 / 2.0);
+    return Center(
+      child: ToggleButtons(
+        constraints: BoxConstraints(maxHeight: 30, minWidth: widthToggle),
+        isSelected: isSelected,
+        onPressed: onPressed,
+        children: const [
+          Center(child: Text('Расход')),
+          Center(child: Text('Доход')),
+        ],
+      ),
+    );
+  }
+}
+
+
+/*
+
+
+/*
+Виджет переключает кнопки расход и доход и возращает число,
+где 0 это расход, 1 это доход.
+*/
 
 class WidgetSwitchFinance extends StatefulWidget {
   const WidgetSwitchFinance({super.key, required this.onPressedCallBack});
@@ -47,3 +77,4 @@ class _WidgetSwitchFinanceState extends State<WidgetSwitchFinance> {
     );
   }
 }
+*/

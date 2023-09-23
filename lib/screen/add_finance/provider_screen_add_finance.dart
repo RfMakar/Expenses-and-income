@@ -4,27 +4,34 @@ import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddFinance extends ChangeNotifier {
-  List<bool> finance = [true, false]; //Расход_Доход
   late List<Category> listCategory;
+  var isSelectedFinance = [true, false];
+  int get finance =>
+      isSelectedFinance[0] == true ? 0 : 1; //0 - расходы, 1 - доходы
 
-  int financeSwitch = 0;
+  //Переключает |расход||доход|
+  void onPressedButFinance(int index) {
+    for (int i = 0; i < isSelectedFinance.length; i++) {
+      if (index == i) {
+        isSelectedFinance[i] = true;
+      } else {
+        isSelectedFinance[i] = false;
+      }
+    }
+    notifyListeners();
+  }
 
   Category selectCategory(int index) {
     return listCategory[index];
   }
 
   Future getListCategory() async {
-    final list = await DBFinance.getListCategory(financeSwitch);
+    final list = await DBFinance.getListCategory(finance);
     listCategory = list;
   }
 
   void updateScreen() async {
     notifyListeners();
-  }
-
-  void onPressedSwitchExpInc(int finace) {
-    financeSwitch = finace;
-    updateScreen();
   }
 }
 

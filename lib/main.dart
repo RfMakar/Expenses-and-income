@@ -1,4 +1,4 @@
-import 'package:budget/screen2/home/screen_home.dart';
+import 'package:budget/screen/home/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';

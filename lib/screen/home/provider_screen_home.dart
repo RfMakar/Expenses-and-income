@@ -5,19 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
-  var finance = 0; //0 - расходы, 1 - доходы
   var dateTime = DateTime.now();
   late SumOperation sumOperation;
   late List<GroupCategory> listGroupCategory;
   late List<HistoryOperation> listHistoryOperation;
+  var isSelectedFinance = [true, false];
+  int get finance =>
+      isSelectedFinance[0] == true ? 0 : 1; //0 - расходы, 1 - доходы
 
-  void updateScreen() {
+  //Переключает |расход||доход|
+  void onPressedButFinance(int index) {
+    for (int i = 0; i < isSelectedFinance.length; i++) {
+      if (index == i) {
+        isSelectedFinance[i] = true;
+      } else {
+        isSelectedFinance[i] = false;
+      }
+    }
     notifyListeners();
   }
 
-  //Переключает расход/доход
-  void onPressedSwitchFinance(int switchFinance) {
-    finance = switchFinance;
+  void updateScreen() {
     notifyListeners();
   }
 
@@ -91,6 +99,12 @@ class ProviderScreenHome extends ChangeNotifier {
 
   String trailingOperation(int indexHistory, int indexOperation) {
     return listOperation(indexHistory)[indexOperation].getValue(finance);
+  }
+
+  Future loadData() async {
+    await getSumAllOperation();
+    await getListGroupCategory();
+    await getListHistoryAllOperation();
   }
 
   Future getSumAllOperation() async {
