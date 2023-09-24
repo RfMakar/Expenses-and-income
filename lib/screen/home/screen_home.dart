@@ -2,6 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/home/provider_screen_home.dart';
+import 'package:budget/screen/widget/drawer.dart';
 import 'package:budget/screen/widget/switch_date.dart';
 import 'package:budget/screen/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
@@ -32,10 +33,9 @@ class ScreenHome extends StatelessWidget {
               child: const Icon(Icons.add),
             ),
             appBar: AppBar(
-              leading:
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
               title: Text(provider.titleAppBar()),
             ),
+            drawer: const Drawer(child: WidgetDrawer()),
             body: FutureBuilder(
               future: provider.loadData(),
               builder: (context, snapshot) {
