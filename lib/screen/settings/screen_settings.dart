@@ -10,12 +10,7 @@ class ScreenSettings extends StatelessWidget {
       create: (context) => ProviderScreenSettings(),
       builder: (context, child) => Consumer<ProviderScreenSettings>(
         builder: (context, provider, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Настройки'),
-            ),
-            body: ListView(),
-          );
+          return ListView();
         },
       ),
     );

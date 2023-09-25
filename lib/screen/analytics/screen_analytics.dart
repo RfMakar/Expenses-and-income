@@ -10,12 +10,7 @@ class ScreenAnalytics extends StatelessWidget {
       create: (context) => ProviderScreenAnalytics(),
       builder: (context, child) => Consumer<ProviderScreenAnalytics>(
         builder: (context, provider, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Аналитика'),
-            ),
-            body: ListView(),
-          );
+          return ListView();
         },
       ),
     );

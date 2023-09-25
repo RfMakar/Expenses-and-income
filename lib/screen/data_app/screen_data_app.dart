@@ -13,65 +13,60 @@ class ScreenDataApp extends StatelessWidget {
       create: (context) => ProviderScreenDataApp(),
       builder: (context, child) => Consumer<ProviderScreenDataApp>(
         builder: (context, provider, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Данные'),
-            ),
-            body: ListView(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.cloud_outlined),
-                  title: const Text('Хранение данных'),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const DialogDataStorage(),
-                    );
-                  },
+          return ListView(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.cloud_outlined),
+                title: const Text('Хранение данных'),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const DialogDataStorage(),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: const Text('Удалить расходы'),
+                onTap: () async {
+                  final bool? result = await showDialog(
+                    context: context,
+                    builder: (context) => const DialodgDelete(),
+                  );
+                  if (result == true) {
+                    provider.onTapDeleteExpenses();
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: const Text('Удалить доходы'),
+                onTap: () async {
+                  final bool? result = await showDialog(
+                    context: context,
+                    builder: (context) => const DialodgDelete(),
+                  );
+                  if (result == true) {
+                    provider.onTapDeleteIncome();
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                textColor: Colors.red,
+                title: const Text(
+                  'Удалить все операции',
                 ),
-                ListTile(
-                  leading: const Icon(Icons.delete_outline),
-                  title: const Text('Удалить расходы'),
-                  onTap: () async {
-                    final bool? result = await showDialog(
-                      context: context,
-                      builder: (context) => const DialodgDelete(),
-                    );
-                    if (result == true) {
-                      provider.onTapDeleteExpenses();
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.delete_outline),
-                  title: const Text('Удалить доходы'),
-                  onTap: () async {
-                    final bool? result = await showDialog(
-                      context: context,
-                      builder: (context) => const DialodgDelete(),
-                    );
-                    if (result == true) {
-                      provider.onTapDeleteIncome();
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.delete_outline),
-                  textColor: Colors.red,
-                  title: const Text(
-                    'Удалить все операции',
-                  ),
-                  onTap: () async {
-                    final bool? result = await showDialog(
-                      context: context,
-                      builder: (context) => const DialodgDelete(),
-                    );
-                    if (result == true) {}
-                    provider.onTapDeleteAllData();
-                  },
-                ),
-              ],
-            ),
+                onTap: () async {
+                  final bool? result = await showDialog(
+                    context: context,
+                    builder: (context) => const DialodgDelete(),
+                  );
+                  if (result == true) {}
+                  provider.onTapDeleteAllData();
+                },
+              ),
+            ],
           );
         },
       ),

@@ -1,8 +1,6 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
-import 'package:budget/screen/widget/drawer.dart';
 import 'package:budget/screen/widget/switch_date.dart';
 import 'package:budget/screen/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
@@ -19,44 +17,26 @@ class ScreenFinance extends StatelessWidget {
       create: (context) => ProviderScreenFinance(),
       builder: (context, child) => Consumer<ProviderScreenFinance>(
         builder: (context, provider, _) {
-          return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenAddFinance(),
-                  ),
-                );
-                provider.updateScreen();
-              },
-              child: const Icon(Icons.add),
-            ),
-            appBar: AppBar(
-              title: Text(provider.titleAppBar()),
-            ),
-            drawer: const WidgetDrawer(),
-            body: FutureBuilder(
-              future: provider.loadData(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return ListView(
-                  children: [
-                    WidgetSwitchFinance(
-                        isSelected: provider.isSelectedFinance,
-                        onPressed: provider.onPressedButFinance),
-                    const WidgetInfo(),
-                    const WidgetListGroupCategory(),
-                    const WidgetListHistoryAllOperation(),
-                  ],
-                );
-              },
-            ),
+          return FutureBuilder(
+            future: provider.loadData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ListView(
+                children: [
+                  WidgetSwitchFinance(
+                      isSelected: provider.isSelectedFinance,
+                      onPressed: provider.onPressedButFinance),
+                  const WidgetInfo(),
+                  const WidgetListGroupCategory(),
+                  const WidgetListHistoryAllOperation(),
+                ],
+              );
+            },
           );
         },
       ),

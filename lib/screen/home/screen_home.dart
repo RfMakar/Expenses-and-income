@@ -1,14 +1,51 @@
-import 'package:budget/screen/analytics/screen_analytics.dart';
-import 'package:budget/screen/data_app/screen_data_app.dart';
-import 'package:budget/screen/settings/screen_settings.dart';
+import 'package:budget/screen/add_finance/screen_add_finance.dart';
+import 'package:budget/screen/home/provider_screen_home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+class ScreenHome extends StatelessWidget {
+  const ScreenHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => ProviderScreenHome(),
+      builder: (context, child) => Consumer<ProviderScreenHome>(
+        builder: (context, provider, _) {
+          return Scaffold(
+            floatingActionButton: provider.selectedIndex == 0
+                ? FloatingActionButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenAddFinance(),
+                        ),
+                      );
+                      provider.updateScreen();
+                    },
+                    child: const Icon(Icons.add),
+                  )
+                : null,
+            appBar: AppBar(
+              title: Text(provider.titleAppBar()),
+            ),
+            drawer: const WidgetDrawer(),
+            body: provider.screen(),
+          );
+        },
+      ),
+    );
+  }
+}
 
 class WidgetDrawer extends StatelessWidget {
   const WidgetDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenHome>(context);
     return Drawer(
       child: ListView(
         children: [
@@ -18,19 +55,17 @@ class WidgetDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Финансы'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              provider.onItemTapped(0);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.query_stats_outlined),
             title: const Text('Аналитика'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenAnalytics(),
-                ),
-              );
+              provider.onItemTapped(1);
             },
           ),
           ListTile(
@@ -38,12 +73,7 @@ class WidgetDrawer extends StatelessWidget {
             title: const Text('Данные'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenDataApp(),
-                ),
-              );
+              provider.onItemTapped(2);
             },
           ),
           ListTile(
@@ -51,12 +81,7 @@ class WidgetDrawer extends StatelessWidget {
             title: const Text('Настройки'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenSettings(),
-                ),
-              );
+              provider.onItemTapped(3);
             },
           ),
           const Center(child: Text('О приложении')),
