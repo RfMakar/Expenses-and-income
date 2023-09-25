@@ -456,6 +456,15 @@ abstract class DBFinance {
     ''');
   }
 
+  static Future<int> deleteAll() async {
+    final db = await database;
+    return await db.rawDelete('''
+    DELETE
+    FROM ${TableDB.categories} 
+    ;
+    ''');
+  }
+
   //Обновить данные
 
   static Future<int> updateCategoryName(

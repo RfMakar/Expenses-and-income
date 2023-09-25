@@ -2,15 +2,12 @@ import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenDataApp extends ChangeNotifier {
-  Future<void> onTapDeleteExpenses() async {
-    //Удалить все расходы
+  Future<void> onTapDeleteAll() async {
+    //Удалить всё
+    await DBFinance.deleteAll();
   }
 
-  Future<void> onTapDeleteIncome() async {
-    //Удалить все доходы
-  }
-
-  Future<void> onTapDeleteAllData() async {
+  Future<void> onTapDeleteAllOperation() async {
     //Удалить все операции
     await DBFinance.deleteAllOperation();
   }

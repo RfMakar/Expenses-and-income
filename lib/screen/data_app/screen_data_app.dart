@@ -27,33 +27,6 @@ class ScreenDataApp extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.delete_outline),
-                title: const Text('Удалить расходы'),
-                onTap: () async {
-                  final bool? result = await showDialog(
-                    context: context,
-                    builder: (context) => const DialodgDelete(),
-                  );
-                  if (result == true) {
-                    provider.onTapDeleteExpenses();
-                  }
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.delete_outline),
-                title: const Text('Удалить доходы'),
-                onTap: () async {
-                  final bool? result = await showDialog(
-                    context: context,
-                    builder: (context) => const DialodgDelete(),
-                  );
-                  if (result == true) {
-                    provider.onTapDeleteIncome();
-                  }
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.delete_outline),
-                textColor: Colors.red,
                 title: const Text(
                   'Удалить все операции',
                 ),
@@ -63,7 +36,21 @@ class ScreenDataApp extends StatelessWidget {
                     builder: (context) => const DialodgDelete(),
                   );
                   if (result == true) {}
-                  provider.onTapDeleteAllData();
+                  provider.onTapDeleteAllOperation();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                textColor: Colors.red,
+                title: const Text('Удалить все данные'),
+                onTap: () async {
+                  final bool? result = await showDialog(
+                    context: context,
+                    builder: (context) => const DialodgDelete(),
+                  );
+                  if (result == true) {
+                    provider.onTapDeleteAll();
+                  }
                 },
               ),
             ],
