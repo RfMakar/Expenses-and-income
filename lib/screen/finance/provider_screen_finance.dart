@@ -4,7 +4,7 @@ import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ProviderScreenHome extends ChangeNotifier {
+class ProviderScreenFinance extends ChangeNotifier {
   var dateTime = DateTime.now();
   late SumOperation sumOperation;
   late List<GroupCategory> listGroupCategory;
@@ -36,7 +36,7 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleAppBar() {
-    return 'Название';
+    return 'Финансы';
   }
 
   String titleSumOperation() {

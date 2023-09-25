@@ -1,3 +1,4 @@
+import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenDataApp extends ChangeNotifier {
@@ -10,6 +11,7 @@ class ProviderScreenDataApp extends ChangeNotifier {
   }
 
   Future<void> onTapDeleteAllData() async {
-    //Удалить все данные
+    //Удалить все операции
+    await DBFinance.deleteAllOperation();
   }
 }

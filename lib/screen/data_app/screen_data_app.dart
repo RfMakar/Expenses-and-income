@@ -59,7 +59,7 @@ class ScreenDataApp extends StatelessWidget {
                   leading: const Icon(Icons.delete_outline),
                   textColor: Colors.red,
                   title: const Text(
-                    'Удалить все данные',
+                    'Удалить все операции',
                   ),
                   onTap: () async {
                     final bool? result = await showDialog(

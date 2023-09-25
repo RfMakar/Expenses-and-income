@@ -4,6 +4,13 @@ import 'package:budget/models/operations.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+class TableDB {
+  static const finance = 'finance';
+  static const categories = 'categories';
+  static const subcategories = 'subcategories';
+  static const operations = 'operations';
+}
+
 abstract class DBFinance {
   static Database? _database;
 
@@ -440,6 +447,15 @@ abstract class DBFinance {
     ''', [operation.id]);
   }
 
+  static Future<int> deleteAllOperation() async {
+    final db = await database;
+    return await db.rawDelete('''
+    DELETE
+    FROM ${TableDB.operations} 
+    ;
+    ''');
+  }
+
   //Обновить данные
 
   static Future<int> updateCategoryName(
@@ -488,11 +504,4 @@ abstract class DBFinance {
       operation.id,
     ]);
   }
-}
-
-class TableDB {
-  static const finance = 'finance';
-  static const categories = 'categories';
-  static const subcategories = 'subcategories';
-  static const operations = 'operations';
 }

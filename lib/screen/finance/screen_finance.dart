@@ -1,7 +1,7 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
-import 'package:budget/screen/home/provider_screen_home.dart';
+import 'package:budget/screen/finance/provider_screen_finance.dart';
 import 'package:budget/screen/widget/drawer.dart';
 import 'package:budget/screen/widget/switch_date.dart';
 import 'package:budget/screen/widget/switch_finance.dart';
@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
-class ScreenHome extends StatelessWidget {
-  const ScreenHome({super.key});
+class ScreenFinance extends StatelessWidget {
+  const ScreenFinance({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderScreenHome(),
-      builder: (context, child) => Consumer<ProviderScreenHome>(
+      create: (context) => ProviderScreenFinance(),
+      builder: (context, child) => Consumer<ProviderScreenFinance>(
         builder: (context, provider, _) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
@@ -35,7 +35,7 @@ class ScreenHome extends StatelessWidget {
             appBar: AppBar(
               title: Text(provider.titleAppBar()),
             ),
-            drawer: const Drawer(child: WidgetDrawer()),
+            drawer: const WidgetDrawer(),
             body: FutureBuilder(
               future: provider.loadData(),
               builder: (context, snapshot) {
@@ -69,7 +69,7 @@ class WidgetInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenHome>(context);
+    final provider = Provider.of<ProviderScreenFinance>(context);
     return SwitchDate(
       onPressedCallBack: provider.onPressedSwitchDate,
       dateTime: provider.dateTime,
@@ -83,7 +83,7 @@ class WidgetListGroupCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenHome>(context);
+    final provider = Provider.of<ProviderScreenFinance>(context);
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -136,7 +136,7 @@ class WidgetListHistoryAllOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenHome>(context);
+    final provider = Provider.of<ProviderScreenFinance>(context);
     return Column(
       children: [
         const SizedBox(height: 20),
