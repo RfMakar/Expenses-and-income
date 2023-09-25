@@ -5,22 +5,22 @@ import 'package:budget/screen/settings/screen_settings.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
-  int selectedIndex = 0;
-  final List<Widget> listWidgetScreen = const [
+  int _selectedIndex = 0;
+  final List<Widget> _listWidgetScreen = const [
     ScreenFinance(),
     ScreenAnalytics(),
     ScreenDataApp(),
     ScreenSettings(),
   ];
-  final List<String> listNameAppBar = const [
+  final List<String> _listNameAppBar = const [
     'Финансы',
     'Аналитика',
     'Данные',
     'Настройки',
   ];
 
-  Widget screen() {
-    return listWidgetScreen[selectedIndex];
+  Widget widgetScreen() {
+    return _listWidgetScreen[_selectedIndex];
   }
 
   void updateScreen() {
@@ -28,11 +28,11 @@ class ProviderScreenHome extends ChangeNotifier {
   }
 
   String titleAppBar() {
-    return listNameAppBar[selectedIndex];
+    return _listNameAppBar[_selectedIndex];
   }
 
   void onItemTapped(int index) {
-    selectedIndex = index;
+    _selectedIndex = index;
     notifyListeners();
   }
 }

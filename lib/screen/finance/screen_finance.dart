@@ -1,4 +1,5 @@
 import 'package:budget/const/actions_update.dart';
+import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
 import 'package:budget/screen/widget/switch_date.dart';
@@ -26,19 +27,50 @@ class ScreenFinance extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return ListView(
+              return Stack(
+                alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  WidgetSwitchFinance(
-                      isSelected: provider.isSelectedFinance,
-                      onPressed: provider.onPressedButFinance),
-                  const WidgetInfo(),
-                  const WidgetListGroupCategory(),
-                  const WidgetListHistoryAllOperation(),
+                  ListView(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                    children: [
+                      WidgetSwitchFinance(
+                          isSelected: provider.isSelectedFinance,
+                          onPressed: provider.onPressedButFinance),
+                      const WidgetInfo(),
+                      const WidgetListGroupCategory(),
+                      const WidgetListHistoryAllOperation(),
+                    ],
+                  ),
+                  const ButtonAddFinance(),
                 ],
               );
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class ButtonAddFinance extends StatelessWidget {
+  const ButtonAddFinance({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenFinance>(context);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ScreenAddFinance(),
+            ),
+          );
+          provider.updateScreen();
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

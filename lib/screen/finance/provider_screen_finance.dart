@@ -25,7 +25,7 @@ class ProviderScreenFinance extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateScreen() {
+  void updateScreen() async {
     notifyListeners();
   }
 

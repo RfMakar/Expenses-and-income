@@ -1,4 +1,3 @@
-import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/home/provider_screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,25 +13,11 @@ class ScreenHome extends StatelessWidget {
       builder: (context, child) => Consumer<ProviderScreenHome>(
         builder: (context, provider, _) {
           return Scaffold(
-            floatingActionButton: provider.selectedIndex == 0
-                ? FloatingActionButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ScreenAddFinance(),
-                        ),
-                      );
-                      provider.updateScreen();
-                    },
-                    child: const Icon(Icons.add),
-                  )
-                : null,
             appBar: AppBar(
               title: Text(provider.titleAppBar()),
             ),
             drawer: const WidgetDrawer(),
-            body: provider.screen(),
+            body: provider.widgetScreen(),
           );
         },
       ),
