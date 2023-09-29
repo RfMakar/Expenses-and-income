@@ -21,7 +21,7 @@ abstract class DBFinance {
     String path = join(await getDatabasesPath(), 'finance.db');
     return await openDatabase(
       path,
-      version: 4,
+      version: 3,
       onCreate: _onCreate,
     );
   }
