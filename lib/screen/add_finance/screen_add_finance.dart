@@ -20,26 +20,11 @@ class ScreenAddFinance extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text('Категории'),
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    final bool? update = await showDialog(
-                      context: context,
-                      builder: (context) =>
-                          DialogAddCategory(idfinance: provider.finance),
-                    );
-
-                    if (update == true) {
-                      provider.updateScreen();
-                    }
-                  },
-                  icon: const Icon(Icons.add),
-                ),
-              ],
             ),
             body: ListView(
               children: const [
                 WidgetFinance(),
+                WidgetButtonAddCateory(),
                 WidgetCategories(),
               ],
             ),
@@ -47,6 +32,29 @@ class ScreenAddFinance extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class WidgetButtonAddCateory extends StatelessWidget {
+  const WidgetButtonAddCateory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAddFinance>(context);
+    return TextButton.icon(
+        onPressed: () async {
+          final bool? update = await showDialog(
+            context: context,
+            builder: (context) =>
+                DialogAddCategory(idfinance: provider.finance),
+          );
+
+          if (update == true) {
+            provider.updateScreen();
+          }
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Добавить категорию'));
   }
 }
 
