@@ -16,6 +16,7 @@ class SheetMenuSubCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     void navigatorUpdateWidget() =>
         Navigator.pop(context, ActionsUpdate.updateWidget);
+    void navigatorPop() => Navigator.pop(context);
 
     return ChangeNotifierProvider(
       create: (context) =>
@@ -42,7 +43,7 @@ class SheetMenuSubCategory extends StatelessWidget {
                         DialogAddOperation(subCategory: provider.subCategory),
                   );
                   if (update == true) {
-                    navigatorUpdateWidget();
+                    navigatorPop();
                   }
                 },
               ),
