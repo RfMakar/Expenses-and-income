@@ -60,6 +60,23 @@ class HistoryOperation extends ReadOperation {
         date: json['date'],
         value: json['value'],
       );
+  String getDateFormat() {
+    final curentDate = DateTime.now();
+    final historyDate = DateTime.tryParse(super.date)!;
+    final today = (curentDate.day == historyDate.day) &&
+        (curentDate.month == historyDate.month) &&
+        (curentDate.year == historyDate.year);
+    final yesterday = (curentDate.day - 1 == historyDate.day) &&
+        (curentDate.month == historyDate.month) &&
+        (curentDate.year == historyDate.year);
+    if (today) {
+      return 'Сегодня';
+    } else if (yesterday) {
+      return 'Вчера';
+    } else {
+      return DateFormat.MMMd().format(historyDate);
+    }
+  }
 }
 
 //Column table -> |id|namecategory|namesubcategory|note|date|value|
@@ -68,7 +85,7 @@ class Operation extends ReadOperation {
   final String nameCategory;
   final String nameSubCategory;
   final String note;
-  //Добаваить заметки
+
   Operation({
     required this.id,
     required this.nameCategory,
@@ -87,6 +104,15 @@ class Operation extends ReadOperation {
         date: json['date'],
         value: json['value'],
       );
+  String getDateFormat() {
+    final date = DateFormat.yMd().format(DateTime.tryParse(super.date)!);
+    final time = DateFormat.jm().format(DateTime.tryParse(super.date)!);
+    return '$date $time';
+  }
+
+  String getNote() {
+    return note == '' ? '-' : note;
+  }
 }
 
 //Column table -> |value|
@@ -97,31 +123,3 @@ class SumOperation extends Operations {
         value: json['value'],
       );
 }
-
-
-/*
-//Column table -> |id|namecategory|namesubcategory|date|value|
-class Operation extends ReadOperation {
-  final int id;
-  final String nameCategory;
-  final String nameSubCategory;
-
-  Operation({
-    required this.id,
-    required this.nameCategory,
-    required this.nameSubCategory,
-    required super.date,
-    required super.value,
-  });
-
-  //Чтение БД
-  factory Operation.fromMap(Map<String, dynamic> json) => Operation(
-        id: json['id'],
-        nameCategory: json['namecategory'],
-        nameSubCategory: json['namesubcategory'],
-        date: json['date'],
-        value: json['value'],
-      );
-}
-
-*/

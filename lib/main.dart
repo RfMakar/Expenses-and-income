@@ -26,8 +26,9 @@ class MaterialAppMain extends StatelessWidget {
       ],
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: const Color.fromRGBO(255, 215, 0, 1),
         appBarTheme: const AppBarTheme(
+          color: Color.fromRGBO(255, 215, 0, 1),
           centerTitle: true,
         ),
         toggleButtonsTheme: const ToggleButtonsThemeData(

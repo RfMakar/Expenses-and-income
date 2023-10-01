@@ -17,8 +17,4 @@ abstract class ColorApp {
     Colors.brown,
     Colors.grey,
   ];
-
-  static const colorText = Colors.white;
-  static const colorIcon = Colors.white;
-  static const colorApp = Color.fromRGBO(103, 182, 255, 1);
 }

@@ -1,7 +1,6 @@
 import 'package:budget/models/operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 class ProviderSheetMenuOperation extends ChangeNotifier {
   ProviderSheetMenuOperation(this.operation, this.finance);
@@ -13,9 +12,7 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
   }
 
   String subtitleSheet() {
-    final date = DateFormat.yMd().format(DateTime.tryParse(operation.date)!);
-    final time = DateFormat.jm().format(DateTime.tryParse(operation.date)!);
-    return '$date $time';
+    return operation.getDateFormat();
   }
 
   String titleCategoty() {
@@ -27,7 +24,7 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
   }
 
   String titleNote() {
-    return operation.note == '' ? '-' : operation.note;
+    return operation.getNote();
   }
 
   void onTapDeletedOperation() async {

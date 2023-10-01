@@ -3,7 +3,6 @@ import 'package:budget/models/operations.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ProviderScreenCategory extends ChangeNotifier {
   ProviderScreenCategory(this.finance, this.dateTime, this.groupCategory);
@@ -49,17 +48,7 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   String titleHistoryOperation(int index) {
-    final historyDay = DateTime.tryParse(listHistoryOperation[index].date)!.day;
-    final curentDay = DateTime.now().day;
-
-    if (curentDay == historyDay) {
-      return 'Сегодня';
-    } else if (curentDay - 1 == historyDay) {
-      return 'Вчера';
-    } else {
-      return DateFormat.MMMMd()
-          .format(DateTime.tryParse(listHistoryOperation[index].date)!);
-    }
+    return listHistoryOperation[index].getDateFormat();
   }
 
   String valueHistory(int index) {
