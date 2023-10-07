@@ -1,17 +1,18 @@
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_category/provider_dialog_add_category.dart';
+import 'package:budget/main.dart';
 import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DialogAddCategory extends StatelessWidget {
-  const DialogAddCategory({super.key, required this.idfinance});
-  final int idfinance;
+  const DialogAddCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
-      create: (context) => ProviderDialogAddCategory(idfinance),
+      create: (context) => ProviderDialogAddCategory(providerApp.finance),
       child: Consumer<ProviderDialogAddCategory>(
         builder: (context, provider, child) {
           return AlertDialog(
