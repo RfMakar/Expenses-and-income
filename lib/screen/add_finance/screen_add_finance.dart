@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_category/dialog_add_category.dart';
+import 'package:budget/main.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/screen/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screen/widget/switch_finance.dart';
@@ -23,7 +24,7 @@ class ScreenAddFinance extends StatelessWidget {
             ),
             body: ListView(
               children: const [
-                WidgetFinance(),
+                WidgetSwitchFinance(),
                 WidgetButtonAddCateory(),
                 WidgetCategories(),
               ],
@@ -41,12 +42,12 @@ class WidgetButtonAddCateory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenAddFinance>(context);
+
     return TextButton.icon(
         onPressed: () async {
           final bool? update = await showDialog(
             context: context,
-            builder: (context) =>
-                DialogAddCategory(idfinance: provider.finance),
+            builder: (context) => const DialogAddCategory(),
           );
 
           if (update == true) {
@@ -58,26 +59,15 @@ class WidgetButtonAddCateory extends StatelessWidget {
   }
 }
 
-class WidgetFinance extends StatelessWidget {
-  const WidgetFinance({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenAddFinance>(context);
-    return WidgetSwitchFinance(
-        isSelected: provider.isSelectedFinance,
-        onPressed: provider.onPressedButFinance);
-  }
-}
-
 class WidgetCategories extends StatelessWidget {
   const WidgetCategories({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     final provider = Provider.of<ProviderScreenAddFinance>(context);
     return FutureBuilder(
-      future: provider.getListCategory(),
+      future: provider.getListCategory(providerApp.finance.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
@@ -159,9 +149,7 @@ class WidgetCardCategory extends StatelessWidget {
                                 await showModalBottomSheet(
                               context: context,
                               builder: (context) => SheetMenuSubCategory(
-                                subCategory: subCategories,
-                                financeSwitch: providerScreen.finance,
-                              ),
+                                  subCategory: subCategories),
                             );
                             if (actionsUpdate == ActionsUpdate.updateWidget) {
                               provider.updateWidget();

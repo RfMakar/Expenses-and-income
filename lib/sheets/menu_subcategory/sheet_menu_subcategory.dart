@@ -8,10 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SheetMenuSubCategory extends StatelessWidget {
-  const SheetMenuSubCategory(
-      {super.key, required this.subCategory, required this.financeSwitch});
+  const SheetMenuSubCategory({super.key, required this.subCategory});
   final SubCategory subCategory;
-  final int financeSwitch;
+
   @override
   Widget build(BuildContext context) {
     void navigatorUpdateWidget() =>
@@ -19,8 +18,7 @@ class SheetMenuSubCategory extends StatelessWidget {
     void navigatorPop() => Navigator.pop(context);
 
     return ChangeNotifierProvider(
-      create: (context) =>
-          ProviderSheetMenuSubCategory(subCategory, financeSwitch),
+      create: (context) => ProviderSheetMenuSubCategory(subCategory),
       child: Consumer<ProviderSheetMenuSubCategory>(
         builder: (context, provider, child) {
           return Wrap(
@@ -35,7 +33,7 @@ class SheetMenuSubCategory extends StatelessWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.add),
-                title: Text(provider.titleButtonAddFinace()),
+                title: const Text('Добавить'),
                 onTap: () async {
                   final bool? update = await showDialog(
                     context: context,

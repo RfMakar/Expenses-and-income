@@ -1,4 +1,5 @@
 import 'package:budget/const/actions_update.dart';
+import 'package:budget/main.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
@@ -14,12 +15,13 @@ class ScreenFinance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenFinance(),
       builder: (context, child) => Consumer<ProviderScreenFinance>(
         builder: (context, provider, _) {
           return FutureBuilder(
-            future: provider.loadData(),
+            future: provider.loadData(providerApp.finance.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(child: CircularProgressIndicator());
@@ -32,13 +34,11 @@ class ScreenFinance extends StatelessWidget {
                 children: [
                   ListView(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                    children: [
-                      WidgetSwitchFinance(
-                          isSelected: provider.isSelectedFinance,
-                          onPressed: provider.onPressedButFinance),
-                      const WidgetInfo(),
-                      const WidgetListGroupCategory(),
-                      const WidgetListHistoryAllOperation(),
+                    children: const [
+                      WidgetSwitchFinance(),
+                      WidgetInfo(),
+                      WidgetListGroupCategory(),
+                      WidgetListHistoryAllOperation(),
                     ],
                   ),
                   const ButtonAddFinance(),
@@ -82,6 +82,7 @@ class WidgetInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenFinance>(context);
+
     return SwitchDate(
       onPressedCallBack: provider.onPressedSwitchDate,
       dateTime: provider.dateTime,
