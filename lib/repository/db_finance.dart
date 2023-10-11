@@ -1,3 +1,4 @@
+import 'package:budget/models/analitics.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/models/operations.dart';
@@ -455,6 +456,97 @@ abstract class DBFinance {
         ? maps.map((e) => SumOperation.fromMap(e)).toList()
         : [];
   }
+
+  //Получение данных для Аналитики
+  static Future<List<AnaliticsYear>> getListAnaliticsYear() async {
+    final db = await database;
+    var maps = await db.rawQuery('''
+    SELECT DISTINCT year
+    FROM ${TableDB.operations}
+    ORDER BY year
+    ;
+    ''');
+
+    return maps.isNotEmpty
+        ? maps.map((e) => AnaliticsYear.fromMap(e)).toList()
+        : [];
+  }
+
+  static Future<List<AnaliticsMonth>> getListAnaliticsMonth(int year) async {
+    final db = await database;
+    var maps = await db.rawQuery('''
+    SELECT 
+      month,
+      CASE 
+        WHEN ${TableDB.finance}.id = 0
+          THEN IFNULL(ROUND(SUM(value),2),0.0) END AS expense ,
+      IFNULL(ROUND(SUM(value),2),0.0)  AS income ,
+      IFNULL(ROUND(SUM(value),2),0.0) AS total
+    FROM ${TableDB.operations}
+    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+    WHERE year = ?
+    GROUP BY month
+    ORDER BY year
+    ;
+    ''', [year]);
+
+    return maps.isNotEmpty
+        ? maps.map((e) => AnaliticsMonth.fromMap(e)).toList()
+        : [];
+  }
+
+  // static Future<List<int>> getListMonth(int year) async {
+  //   final db = await database;
+  //   var maps = await db.rawQuery('''
+  //   SELECT DISTINCT month
+  //   FROM ${TableDB.operations}
+  //   WHERE year = ?
+  //   ORDER BY month
+  //   ;
+  //   ''', [year]);
+  //   return maps.isNotEmpty ? maps.map((e) => e['month'] as int).toList() : [];
+  // }
+
+  // static Future<AnaliticMonth?> getListAnaliticMonth(
+  //     int year, int month) async {
+  //   final db = await database;
+  //   var maps = await db.rawQuery('''
+  //   SELECT (
+  //     SELECT IFNULL( ROUND(SUM(value), 1),0.0)
+  //     FROM ${TableDB.operations}
+  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+  //     WHERE year = ? AND month = ? AND ${TableDB.finance}.id = 0) AS expense ,
+
+  //     (SELECT IFNULL( ROUND(SUM(value), 1),0.0)
+  //     FROM ${TableDB.operations}
+  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+  //     WHERE year = ? AND month = ? AND ${TableDB.finance}.id = 1 )  AS income ,
+
+  //     (SELECT IFNULL( ROUND(SUM(value), 1),0.0)
+  //     FROM ${TableDB.operations}
+  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+  //     WHERE year = ? AND month = ?)  AS total
+
+  //   FROM ${TableDB.operations}
+  //   ;
+  //   ''', [
+  //     year,
+  //     month,
+  //     year,
+  //     month,
+  //     year,
+  //     month,
+  //   ]);
+  //   return maps.isNotEmpty ? maps.forEach((element) {}) : null;
+  // }
 
   //Запись в БД
 
