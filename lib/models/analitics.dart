@@ -1,28 +1,15 @@
 class Analitics {
   final int year;
-  final List<AnaliticsMonth> listAnaliticMonth;
+  final List<AnaliticsMonth> listAnaliticsMonth;
 
-  Analitics({required this.year, required this.listAnaliticMonth});
-}
-
-class AnaliticsYear {
-  final int year;
-
-  AnaliticsYear({
-    required this.year,
-  });
-
-  //Чтение БД
-  factory AnaliticsYear.fromMap(Map<String, dynamic> json) => AnaliticsYear(
-        year: json['year'],
-      );
+  Analitics({required this.year, required this.listAnaliticsMonth});
 }
 
 class AnaliticsMonth {
-  final num month;
-  final double? expense;
-  final double? income;
-  final double? total;
+  final int month;
+  final double expense;
+  final double income;
+  final double total;
 
   AnaliticsMonth({
     required this.month,
@@ -40,26 +27,12 @@ class AnaliticsMonth {
       );
 }
 
+class AnaliticsYear {
+  final int year;
 
-
-
-/*
-class AnaliticsMonth {
-  final double expense;
-  final double income;
-  final double total;
-
-  AnaliticsMonth({
-    required this.expense,
-    required this.income,
-    required this.total,
-  });
+  AnaliticsYear({required this.year});
 
   //Чтение БД
-  factory AnaliticsMonth.fromMap(Map<String, dynamic> json) => AnaliticsMonth(
-        expense: json['expense'],
-        income: json['income'],
-        total: json['total'],
-      );
-
-*/
+  factory AnaliticsYear.fromMap(Map<String, dynamic> json) =>
+      AnaliticsYear(year: json['year']);
+}

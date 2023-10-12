@@ -19,54 +19,23 @@ class ScreenAnalytics extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return ListView(
+              return ListView.builder(
                 padding: const EdgeInsets.all(8),
-                children: [
-                  const Center(
-                    child: Text(
-                      '2023',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Table(
-                    border: TableBorder.all(
-                        color: Colors.yellow,
-                        width: 2,
-                        borderRadius: BorderRadius.circular(4)),
-                    children: const [
-                      TableRow(
-                        children: [
-                          Center(child: Text('Месяц')),
-                          Center(child: Text('Расход')),
-                          Center(child: Text('Доход')),
-                          Center(child: Text('Итого')),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          Center(child: Text('Итого')),
-                          Center(child: Text('-333333')),
-                          Center(child: Text('+3333')),
-                          Center(child: Text('-200цуцу0')),
-                        ],
-                      ),
+                itemCount: provider.list.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Center(
+                        child: Text(provider.titleTable(index)),
+                      )
                     ],
-                  ),
-                ],
+                  );
+                },
               );
             },
           );
         },
       ),
     );
-  }
-}
-
-class WidgetTable extends StatelessWidget {
-  const WidgetTable({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

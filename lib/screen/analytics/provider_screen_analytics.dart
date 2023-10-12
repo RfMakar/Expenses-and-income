@@ -3,35 +3,33 @@ import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAnalytics extends ChangeNotifier {
-  Future getListYear() async {
-    final listAnaliticsYear = await DBFinance.getListAnaliticsYear();
+  List<Analitics> list = [];
 
-    for (var analiticsYear in listAnaliticsYear) {
-      final listAnaliticsMonth =
-          await DBFinance.getListAnaliticsMonth(analiticsYear.year);
-      for (var element in listAnaliticsMonth) {
+  String titleTable(int index) {
+    return list[index].year.toString();
+  }
+
+  Future getListYear() async {
+    final listYear = await DBFinance.getListAnaliticsYear();
+
+    for (var year in listYear) {
+      for (var i = 0; i <= 12; i++) {
+        final listAnaliticsMonth =
+            await DBFinance.getListAnaliticsMonth(year.year, i);
+        if (listAnaliticsMonth.isNotEmpty) {
+          final analitics = Analitics(
+              year: year.year, listAnaliticsMonth: listAnaliticsMonth);
+          list.add(analitics);
+        }
+      }
+    }
+
+    for (var analitics in list) {
+      print('Year: ${analitics.year}');
+      for (var element in analitics.listAnaliticsMonth) {
         print(
-            'Year: ${analiticsYear.year} Month: ${element.month} Exp: ${element.expense} Inc: ${element.income} total: ${element.total}');
+            'Month: ${element.month} Exp: ${element.expense} Inc: ${element.income} total: ${element.total}');
       }
     }
   }
 }
-
-
-// for (var year in listYear) {
-    //   final listMont = await DBFinance.getListMonth(year);
-
-    //   //
-    //   for (var month in listMont) {
-    //     final listAnaliticMonth =
-    //         await DBFinance.getListAnaliticMonth(year, month);
-
-    //     final Map<int, AnaliticMonth> mapAnaliticMonth = {month:};
-    //     final Analitics analitics =
-    //         Analitics(year: year, mapAnaliticMonth: mapAnaliticMonth);
-        // for (var analiticMonth in listAnaliticMonth) {
-
-          // print(
-          //     'Year: $year, Month: $month Расход: ${analiticMonth.expense} Доход: ${analiticMonth.income} Итого: ${analiticMonth.total}');
-       // }
-    //   }
