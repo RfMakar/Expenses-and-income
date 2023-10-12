@@ -484,7 +484,7 @@ abstract class DBFinance {
                     ),
     
           exptable AS
-                    (SELECT IFNULL(ROUND(-SUM(value),2),-0.0) AS expense
+                    (SELECT IFNULL(ROUND(-SUM(value)),-0.0) AS expense
                     FROM ${TableDB.operations}
                     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
                     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
@@ -493,7 +493,7 @@ abstract class DBFinance {
                     
                     ),
           inctable AS
-                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) AS income
+                    (SELECT IFNULL(ROUND(SUM(value)),0.0) AS income
                     FROM ${TableDB.operations}
                     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
                     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
@@ -502,7 +502,7 @@ abstract class DBFinance {
                     
                     ),
           tottable AS 
-                    (SELECT (expense + income) AS total
+                    (SELECT ROUND((expense + income)) AS total
                     FROM exptable, inctable
                     )
 

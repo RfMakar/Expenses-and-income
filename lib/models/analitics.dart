@@ -1,8 +1,34 @@
+import 'package:intl/intl.dart';
+
 class Analitics {
   final int year;
   final List<AnaliticsMonth> listAnaliticsMonth;
 
   Analitics({required this.year, required this.listAnaliticsMonth});
+
+  String totalExpencec(int index) {
+    var expenses = 0.0;
+    for (var analiticsMonth in listAnaliticsMonth) {
+      expenses += analiticsMonth.expense;
+    }
+    return NumberFormat.compact(locale: 'ru-RU').format(expenses);
+  }
+
+  String totalIncome(int index) {
+    var income = 0.0;
+    for (var analiticsMonth in listAnaliticsMonth) {
+      income += analiticsMonth.income;
+    }
+    return NumberFormat.compact(locale: 'ru-RU').format(income);
+  }
+
+  String totalTotal(int index) {
+    var total = 0.0;
+    for (var analiticsMonth in listAnaliticsMonth) {
+      total += analiticsMonth.total;
+    }
+    return NumberFormat.compact(locale: 'ru-RU').format(total);
+  }
 }
 
 class AnaliticsMonth {
@@ -25,6 +51,22 @@ class AnaliticsMonth {
         income: json['income'],
         total: json['total'],
       );
+  String getMonth(int year) {
+    final dateTime = DateTime(year, month);
+    return DateFormat.MMMM().format(dateTime);
+  }
+
+  String getExpence() {
+    return NumberFormat.compact(locale: 'ru-RU').format(expense);
+  }
+
+  String getIncome() {
+    return NumberFormat.compact(locale: 'ru-RU').format(income);
+  }
+
+  String getTotal() {
+    return NumberFormat.compact(locale: 'ru-RU').format(total);
+  }
 }
 
 class AnaliticsYear {
