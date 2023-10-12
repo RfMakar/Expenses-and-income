@@ -474,79 +474,89 @@ abstract class DBFinance {
 
   static Future<List<AnaliticsMonth>> getListAnaliticsMonth(int year) async {
     final db = await database;
-    var maps = await db.rawQuery('''
-    SELECT 
-      month,
-      CASE 
-        WHEN ${TableDB.finance}.id = 0
-          THEN IFNULL(ROUND(SUM(value),2),0.0) END AS expense ,
-      IFNULL(ROUND(SUM(value),2),0.0)  AS income ,
-      IFNULL(ROUND(SUM(value),2),0.0) AS total
-    FROM ${TableDB.operations}
-    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-    WHERE year = ?
-    GROUP BY month
-    ORDER BY year
+    var maps = await db.rawQuery(
+      '''
+    WITH 
+                    (SELECT DISTINCT month
+                    FROM ${TableDB.operations}
+                    WHERE year = $year
+                    ORDER BY month) AS month,
+          
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0)
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year AND idfinance = 0
+                    GROUP BY month
+                    ORDER BY month) AS expense,
+         
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) 
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year AND idfinance = 1
+                    GROUP BY month
+                    ORDER BY month) AS income,
+         
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) 
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year
+                    GROUP BY month
+                    ORDER BY month) 
+    SELECT * FROM monthtable UNION SELECT * FROM exptable UNION SELECT * FROM inctable UNION SELECT * FROM tottable
     ;
-    ''', [year]);
+    ''',
+    );
 
     return maps.isNotEmpty
         ? maps.map((e) => AnaliticsMonth.fromMap(e)).toList()
         : [];
   }
 
-  // static Future<List<int>> getListMonth(int year) async {
-  //   final db = await database;
-  //   var maps = await db.rawQuery('''
-  //   SELECT DISTINCT month
-  //   FROM ${TableDB.operations}
-  //   WHERE year = ?
-  //   ORDER BY month
-  //   ;
-  //   ''', [year]);
-  //   return maps.isNotEmpty ? maps.map((e) => e['month'] as int).toList() : [];
-  // }
+  /*
 
-  // static Future<AnaliticMonth?> getListAnaliticMonth(
-  //     int year, int month) async {
-  //   final db = await database;
-  //   var maps = await db.rawQuery('''
-  //   SELECT (
-  //     SELECT IFNULL( ROUND(SUM(value), 1),0.0)
-  //     FROM ${TableDB.operations}
-  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-  //     WHERE year = ? AND month = ? AND ${TableDB.finance}.id = 0) AS expense ,
+WITH monthtable AS 
+                    (SELECT DISTINCT month
+                    FROM ${TableDB.operations}
+                    WHERE year = $year
+                    ORDER BY month),
+          exptable AS
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) AS expense
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year AND idfinance = 0
+                    GROUP BY month
+                    ORDER BY month),
+          inctable AS
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) AS income
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year AND idfinance = 1
+                    GROUP BY month
+                    ORDER BY month),
+          tottable AS
+                    (SELECT IFNULL(ROUND(SUM(value),2),0.0) AS total
+                    FROM ${TableDB.operations}
+                    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+                    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+                    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+                    WHERE year = $year
+                    GROUP BY month
+                    ORDER BY month)
+    SELECT * FROM monthtable UNION SELECT * FROM exptable UNION SELECT * FROM inctable UNION SELECT * FROM tottable
+    ;
+    ''',
 
-  //     (SELECT IFNULL( ROUND(SUM(value), 1),0.0)
-  //     FROM ${TableDB.operations}
-  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-  //     WHERE year = ? AND month = ? AND ${TableDB.finance}.id = 1 )  AS income ,
-
-  //     (SELECT IFNULL( ROUND(SUM(value), 1),0.0)
-  //     FROM ${TableDB.operations}
-  //     JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-  //     JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-  //     JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-  //     WHERE year = ? AND month = ?)  AS total
-
-  //   FROM ${TableDB.operations}
-  //   ;
-  //   ''', [
-  //     year,
-  //     month,
-  //     year,
-  //     month,
-  //     year,
-  //     month,
-  //   ]);
-  //   return maps.isNotEmpty ? maps.forEach((element) {}) : null;
-  // }
+  */
 
   //Запись в БД
 

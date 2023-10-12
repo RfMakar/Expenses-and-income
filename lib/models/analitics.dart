@@ -19,10 +19,10 @@ class AnaliticsYear {
 }
 
 class AnaliticsMonth {
-  final int month;
+  final num month;
   final double? expense;
   final double? income;
-  final double total;
+  final double? total;
 
   AnaliticsMonth({
     required this.month,

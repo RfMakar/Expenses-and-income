@@ -11,11 +11,7 @@ class ProviderScreenAnalytics extends ChangeNotifier {
           await DBFinance.getListAnaliticsMonth(analiticsYear.year);
       for (var element in listAnaliticsMonth) {
         print(
-            'Year: ${analiticsYear.year} Month: ${element.month} Exp: ${element.expense}');
-        print(
-            'Year: ${analiticsYear.year} Month: ${element.month} Inc: ${element.income}');
-        print(
-            'Year: ${analiticsYear.year} Month: ${element.month} Tot: ${element.total}');
+            'Year: ${analiticsYear.year} Month: ${element.month} Exp: ${element.expense} Inc: ${element.income} total: ${element.total}');
       }
     }
   }
