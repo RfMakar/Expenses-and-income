@@ -94,7 +94,7 @@ class WidgetTextRowTable extends StatelessWidget {
     return Center(
         child: Text(
       text,
-      style: const TextStyle(fontSize: 11),
+      style: const TextStyle(fontSize: 12),
     ));
   }
 }

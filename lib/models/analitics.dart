@@ -11,7 +11,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       expenses += analiticsMonth.expense;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(expenses);
+    return NumberFormat.compactSimpleCurrency(locale: 'ru-RU').format(expenses);
   }
 
   String totalIncome(int index) {
@@ -19,7 +19,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       income += analiticsMonth.income;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(income);
+    return NumberFormat.compactSimpleCurrency(locale: 'ru-RU').format(income);
   }
 
   String totalTotal(int index) {
@@ -27,7 +27,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       total += analiticsMonth.total;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(total);
+    return NumberFormat.compactSimpleCurrency(locale: 'ru-RU').format(total);
   }
 }
 

@@ -513,7 +513,9 @@ abstract class DBFinance {
 
     return maps.isNotEmpty
         ? maps.map((e) => AnaliticsMonth.fromMap(e)).toList()
-        : [];
+        : [
+            AnaliticsMonth(month: month, expense: -0.0, income: 0.0, total: 0.0)
+          ];
   }
 
   //Запись в БД

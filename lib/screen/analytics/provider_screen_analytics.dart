@@ -38,7 +38,7 @@ class ProviderScreenAnalytics extends ChangeNotifier {
 
     for (var year in listYear) {
       final analitics = Analitics(year: year.year, listAnaliticsMonth: []);
-      for (var i = 0; i <= 12; i++) {
+      for (var i = 1; i <= 12; i++) {
         final listAnalitics =
             await DBFinance.getListAnaliticsMonth(year.year, i);
 
