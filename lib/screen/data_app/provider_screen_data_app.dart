@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class ProviderScreenDataApp extends ChangeNotifier {
   Future<void> onTapDeleteAll() async {
     //Удалить всё
-    await DBFinance.deleteAll();
+    await DBFinance.deleteCatgory();
+    await DBFinance.deleteAllOperation();
   }
 
   Future<void> onTapDeleteAllOperation() async {

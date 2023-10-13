@@ -34,11 +34,20 @@ class ScreenFinance extends StatelessWidget {
                 children: [
                   ListView(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                    children: const [
-                      WidgetSwitchFinance(),
-                      WidgetInfo(),
-                      WidgetListGroupCategory(),
-                      WidgetListHistoryAllOperation(),
+                    children: [
+                      const WidgetSwitchFinance(),
+                      const WidgetInfo(),
+                      provider.listGroupCategory.isEmpty
+                          ? const SizedBox(
+                              height: 150,
+                              child: Center(
+                                  child: Text(
+                                      'В этом месяце нет данных, нажмите "+".')),
+                            )
+                          : const WidgetListGroupCategory(),
+                      provider.listGroupCategory.isEmpty
+                          ? const SizedBox()
+                          : const WidgetListHistoryAllOperation(),
                     ],
                   ),
                   const ButtonAddFinance(),
@@ -105,40 +114,34 @@ class WidgetListGroupCategory extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        provider.listGroupCategory.isEmpty
-            ? const SizedBox(
-                height: 60,
-                child: Center(
-                    child: Text('В этом месяце нет данных, нажмите "+".')),
-              )
-            : GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemCount: provider.listGroupCategory.length,
-                itemBuilder: (context, index) {
-                  return WidgetGroupCategory(
-                    color: provider.colorGroupCategory(index),
-                    name: provider.titleGroupCategory(index),
-                    percent: provider.percentGroupCategory(index),
-                    value: provider.valueGroupCategory(index),
-                    onTap: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ScreenCategory(
-                            finance: provider.finance,
-                            dateTime: provider.dateTime,
-                            groupCategory: provider.groupCategory(index),
-                          ),
-                        ),
-                      );
-                      provider.updateScreen();
-                    },
-                  );
-                },
-              ),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
+          itemCount: provider.listGroupCategory.length,
+          itemBuilder: (context, index) {
+            return WidgetGroupCategory(
+              color: provider.colorGroupCategory(index),
+              name: provider.titleGroupCategory(index),
+              percent: provider.percentGroupCategory(index),
+              value: provider.valueGroupCategory(index),
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScreenCategory(
+                      finance: provider.finance,
+                      dateTime: provider.dateTime,
+                      groupCategory: provider.groupCategory(index),
+                    ),
+                  ),
+                );
+                provider.updateScreen();
+              },
+            );
+          },
+        ),
       ],
     );
   }

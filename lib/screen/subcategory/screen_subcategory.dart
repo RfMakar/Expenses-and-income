@@ -37,10 +37,16 @@ class ScreenSubCategory extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               }
               return ListView(
-                children: const [
-                  SizedBox(height: 4),
-                  WidgetInfo(),
-                  WidgetListHistoryOperationSubCategory(),
+                children: [
+                  const SizedBox(height: 4),
+                  const WidgetInfo(),
+                  provider.listHistoryOperation.isEmpty
+                      ? const SizedBox(
+                          height: 60,
+                          child:
+                              Center(child: Text('В этом месяце нет данных')),
+                        )
+                      : const WidgetListHistoryOperationSubCategory(),
                 ],
               );
             },

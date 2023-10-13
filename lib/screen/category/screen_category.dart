@@ -39,11 +39,19 @@ class ScreenCategory extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return ListView(
-                  children: const [
-                    SizedBox(height: 4),
-                    WidgetInfo(),
-                    WidgetListGroupSubCategory(),
-                    WidgetListHistoryOperationCategory(),
+                  children: [
+                    const SizedBox(height: 4),
+                    const WidgetInfo(),
+                    provider.listGroupSubCategory.isEmpty
+                        ? const SizedBox(
+                            height: 60,
+                            child:
+                                Center(child: Text('В этом месяце нет данных')),
+                          )
+                        : const WidgetListGroupSubCategory(),
+                    provider.listHistoryOperation.isEmpty
+                        ? const SizedBox()
+                        : const WidgetListHistoryOperationCategory(),
                   ],
                 );
               },
@@ -83,37 +91,32 @@ class WidgetListGroupSubCategory extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        provider.listGroupSubCategory.isEmpty
-            ? const SizedBox(
-                height: 60,
-                child: Center(child: Text('В этом месяце нет данных')),
-              )
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: provider.listGroupSubCategory.length,
-                itemBuilder: (context, index) {
-                  return WidgetGroupSubCategory(
-                    name: provider.titleGroupSubCategory(index),
-                    value: provider.valueGroupSubCategory(index),
-                    percent: provider.percentGroupSubCategory(index),
-                    color: provider.colorGroupSubCategory(index),
-                    onTap: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ScreenSubCategory(
-                            finance: provider.finance,
-                            dateTime: provider.dateTime,
-                            groupSubCategory: provider.groupSubCategory(index),
-                          ),
-                        ),
-                      );
-                      provider.updateScreen();
-                    },
-                  );
-                },
-              ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: provider.listGroupSubCategory.length,
+          itemBuilder: (context, index) {
+            return WidgetGroupSubCategory(
+              name: provider.titleGroupSubCategory(index),
+              value: provider.valueGroupSubCategory(index),
+              percent: provider.percentGroupSubCategory(index),
+              color: provider.colorGroupSubCategory(index),
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScreenSubCategory(
+                      finance: provider.finance,
+                      dateTime: provider.dateTime,
+                      groupSubCategory: provider.groupSubCategory(index),
+                    ),
+                  ),
+                );
+                provider.updateScreen();
+              },
+            );
+          },
+        ),
       ],
     );
   }

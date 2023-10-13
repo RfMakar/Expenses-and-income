@@ -19,65 +19,70 @@ class ScreenAnalytics extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: provider.listAnalitics.length,
-                itemBuilder: (context, index) {
-                  final listTableRow = provider
-                      .getListAnaliticsMonth(index)
-                      .map(
-                        (analiticsMonth) => TableRow(
+              return provider.listAnalitics.isNotEmpty
+                  ? ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: provider.listAnalitics.length,
+                      itemBuilder: (context, index) {
+                        final listTableRow = provider
+                            .getListAnaliticsMonth(index)
+                            .map(
+                              (analiticsMonth) => TableRow(
+                                children: [
+                                  WidgetTextRowTable(
+                                    text: analiticsMonth
+                                        .getMonth(provider.year(index)),
+                                  ),
+                                  WidgetTextRowTable(
+                                      text: analiticsMonth.getExpence()),
+                                  WidgetTextRowTable(
+                                      text: analiticsMonth.getIncome()),
+                                  WidgetTextRowTable(
+                                      text: analiticsMonth.getTotal()),
+                                ],
+                              ),
+                            )
+                            .toList();
+                        listTableRow.insert(
+                          0,
+                          const TableRow(
+                            children: [
+                              WidgetTextColumnTable(text: 'Месяц'),
+                              WidgetTextColumnTable(text: 'Расход'),
+                              WidgetTextColumnTable(text: 'Доход'),
+                              WidgetTextColumnTable(text: 'Итого'),
+                            ],
+                          ),
+                        );
+                        listTableRow.add(
+                          TableRow(
+                            children: [
+                              const WidgetTextColumnTable(text: 'Итого'),
+                              WidgetTextColumnTable(
+                                  text: provider.totalExpencec(index)),
+                              WidgetTextColumnTable(
+                                  text: provider.totalIncome(index)),
+                              WidgetTextColumnTable(
+                                  text: provider.totalTotal(index)),
+                            ],
+                          ),
+                        );
+                        return Column(
                           children: [
-                            WidgetTextRowTable(
-                              text:
-                                  analiticsMonth.getMonth(provider.year(index)),
+                            WidgetTextTitleTable(
+                                text: provider.titleTable(index)),
+                            Table(
+                              border: TableBorder.all(
+                                  color: Colors.yellow,
+                                  width: 1,
+                                  borderRadius: BorderRadius.circular(4)),
+                              children: listTableRow,
                             ),
-                            WidgetTextRowTable(
-                                text: analiticsMonth.getExpence()),
-                            WidgetTextRowTable(
-                                text: analiticsMonth.getIncome()),
-                            WidgetTextRowTable(text: analiticsMonth.getTotal()),
                           ],
-                        ),
-                      )
-                      .toList();
-                  listTableRow.insert(
-                    0,
-                    const TableRow(
-                      children: [
-                        WidgetTextColumnTable(text: 'Месяц'),
-                        WidgetTextColumnTable(text: 'Расход'),
-                        WidgetTextColumnTable(text: 'Доход'),
-                        WidgetTextColumnTable(text: 'Итого'),
-                      ],
-                    ),
-                  );
-                  listTableRow.add(
-                    TableRow(
-                      children: [
-                        const WidgetTextColumnTable(text: 'Итого'),
-                        WidgetTextColumnTable(
-                            text: provider.totalExpencec(index)),
-                        WidgetTextColumnTable(
-                            text: provider.totalIncome(index)),
-                        WidgetTextColumnTable(text: provider.totalTotal(index)),
-                      ],
-                    ),
-                  );
-                  return Column(
-                    children: [
-                      WidgetTextTitleTable(text: provider.titleTable(index)),
-                      Table(
-                        border: TableBorder.all(
-                            color: Colors.yellow,
-                            width: 1,
-                            borderRadius: BorderRadius.circular(4)),
-                        children: listTableRow,
-                      ),
-                    ],
-                  );
-                },
-              );
+                        );
+                      },
+                    )
+                  : const Center(child: Text('Данных пока нет'));
             },
           );
         },

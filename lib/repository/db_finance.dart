@@ -574,7 +574,7 @@ abstract class DBFinance {
     ''');
   }
 
-  static Future<int> deleteAll() async {
+  static Future<int> deleteCatgory() async {
     final db = await database;
     return await db.rawDelete('''
     DELETE
