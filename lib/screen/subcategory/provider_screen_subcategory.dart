@@ -1,17 +1,29 @@
 import 'package:budget/models/operations.dart';
 import 'package:budget/models/subcategories.dart';
+import 'package:budget/models/switch_date.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenSubCategory extends ChangeNotifier {
-  ProviderScreenSubCategory(this.finance, this.dateTime, this.groupSubCategory);
+  ProviderScreenSubCategory(
+      this.finance, this.switchDate, this.groupSubCategory);
   final int finance;
-  DateTime dateTime;
+  final SwitchDate switchDate;
   final GroupSubCategory groupSubCategory;
   late SumOperation sumOperation;
   late List<HistoryOperation> listHistoryOperation;
 
   void updateScreen() {
+    notifyListeners();
+  }
+
+  void onPressedButBackDate() {
+    switchDate.backDate();
+    notifyListeners();
+  }
+
+  void onPressedButNextDate() {
+    switchDate.nextDate();
     notifyListeners();
   }
 
@@ -21,12 +33,6 @@ class ProviderScreenSubCategory extends ChangeNotifier {
 
   String titleSumOperation() {
     return sumOperation.getValue(finance);
-  }
-
-  //Переключает дату
-  void onPressedSwitchDate(DateTime switchDateTime) {
-    dateTime = switchDateTime;
-    notifyListeners();
   }
 
   String titleHistoryOperation(int index) {
@@ -64,14 +70,14 @@ class ProviderScreenSubCategory extends ChangeNotifier {
 
   Future getSumOperationSubCategory() async {
     final list = await DBFinance.getListSumOperationSubCategory(
-        dateTime, finance, groupSubCategory.id);
+        switchDate.getDateTime(), finance, groupSubCategory.id);
 
     sumOperation = list[0];
   }
 
   Future getListHistoryOperationSubCategory() async {
     final list = await DBFinance.getListHistoryOperationSubCategory(
-        dateTime, finance, groupSubCategory.id);
+        switchDate.getDateTime(), finance, groupSubCategory.id);
     for (var historyOperation in list) {
       historyOperation.listOperation =
           await DBFinance.getListOperationSubCategory(

@@ -1,4 +1,4 @@
-import 'package:budget/models/finance.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screen/home/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -48,14 +48,5 @@ class App extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class ProviderApp extends ChangeNotifier {
-  var finance = Finance();
-
-  void onPressedButFinance(int index) {
-    finance.onPressed(index);
-    notifyListeners();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/add_category/dialog_add_category.dart';
-import 'package:budget/main.dart';
 import 'package:budget/models/categories.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/provider_screen_add_finance.dart';
-import 'package:budget/screen/widget/switch_finance.dart';
+import 'package:budget/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_category/sheet_menu_category.dart';
 import 'package:budget/sheets/menu_subcategory/sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';

@@ -1,26 +1,22 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/subcategories.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screen/subcategory/provider_screen_subcategory.dart';
-import 'package:budget/screen/widget/switch_date.dart';
-import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
+import 'package:budget/widget/switch_date.dart';
+import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ScreenSubCategory extends StatelessWidget {
-  const ScreenSubCategory({
-    super.key,
-    required this.finance,
-    required this.dateTime,
-    required this.groupSubCategory,
-  });
-  final int finance;
-  final DateTime dateTime;
+  const ScreenSubCategory({super.key, required this.groupSubCategory});
+
   final GroupSubCategory groupSubCategory;
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
-      create: (context) =>
-          ProviderScreenSubCategory(finance, dateTime, groupSubCategory),
+      create: (context) => ProviderScreenSubCategory(
+          providerApp.finance.id, providerApp.switchDate, groupSubCategory),
       builder: (context, child) => Consumer<ProviderScreenSubCategory>(
           builder: (context, provider, child) {
         return Scaffold(
@@ -62,10 +58,10 @@ class WidgetInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenSubCategory>(context);
-    return SwitchDate(
-      onPressedCallBack: provider.onPressedSwitchDate,
-      dateTime: provider.dateTime,
-      value: provider.titleSumOperation(),
+    return WidgetSwitchDate(
+      titleValue: provider.titleSumOperation(),
+      onPressedButBackDate: provider.onPressedButBackDate,
+      onPressedButNextDate: provider.onPressedButNextDate,
     );
   }
 }

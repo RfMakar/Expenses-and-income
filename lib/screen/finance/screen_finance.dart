@@ -1,11 +1,11 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/main.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
-import 'package:budget/screen/widget/switch_date.dart';
-import 'package:budget/screen/widget/switch_finance.dart';
-import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
+import 'package:budget/widget/switch_date.dart';
+import 'package:budget/widget/switch_finance.dart';
+import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class ScreenFinance extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
-      create: (context) => ProviderScreenFinance(),
+      create: (context) => ProviderScreenFinance(providerApp.switchDate),
       builder: (context, child) => Consumer<ProviderScreenFinance>(
         builder: (context, provider, _) {
           return FutureBuilder(
@@ -91,10 +91,10 @@ class WidgetInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenFinance>(context);
 
-    return SwitchDate(
-      onPressedCallBack: provider.onPressedSwitchDate,
-      dateTime: provider.dateTime,
-      value: provider.titleSumOperation(),
+    return WidgetSwitchDate(
+      titleValue: provider.titleSumOperation(),
+      onPressedButBackDate: provider.onPressedButBackDate,
+      onPressedButNextDate: provider.onPressedButNextDate,
     );
   }
 }
@@ -130,8 +130,6 @@ class WidgetListGroupCategory extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScreenCategory(
-                      finance: provider.finance,
-                      dateTime: provider.dateTime,
                       groupCategory: provider.groupCategory(index),
                     ),
                   ),

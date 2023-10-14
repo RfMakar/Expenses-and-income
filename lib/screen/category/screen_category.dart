@@ -1,28 +1,25 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/categories.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screen/category/provider_screen_category.dart';
 import 'package:budget/screen/subcategory/screen_subcategory.dart';
-import 'package:budget/screen/widget/switch_date.dart';
-import 'package:budget/sheets/menu_operation/sheet_menu_operration.dart';
+import 'package:budget/widget/switch_date.dart';
+import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenCategory extends StatelessWidget {
-  const ScreenCategory(
-      {super.key,
-      required this.finance,
-      required this.dateTime,
-      required this.groupCategory});
-  final int finance;
-  final DateTime dateTime;
+  const ScreenCategory({super.key, required this.groupCategory});
+
   final GroupCategory groupCategory;
 
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
-      create: (context) =>
-          ProviderScreenCategory(finance, dateTime, groupCategory),
+      create: (context) => ProviderScreenCategory(
+          providerApp.finance.id, providerApp.switchDate, groupCategory),
       builder: (context, child) => Consumer<ProviderScreenCategory>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -68,10 +65,10 @@ class WidgetInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenCategory>(context);
-    return SwitchDate(
-      onPressedCallBack: provider.onPressedSwitchDate,
-      dateTime: provider.dateTime,
-      value: provider.titleSumOperation(),
+    return WidgetSwitchDate(
+      titleValue: provider.titleSumOperation(),
+      onPressedButBackDate: provider.onPressedButBackDate,
+      onPressedButNextDate: provider.onPressedButNextDate,
     );
   }
 }
@@ -105,8 +102,6 @@ class WidgetListGroupSubCategory extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScreenSubCategory(
-                      finance: provider.finance,
-                      dateTime: provider.dateTime,
                       groupSubCategory: provider.groupSubCategory(index),
                     ),
                   ),

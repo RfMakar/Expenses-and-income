@@ -1,13 +1,14 @@
 import 'package:budget/models/categories.dart';
 import 'package:budget/models/operations.dart';
 import 'package:budget/models/subcategories.dart';
+import 'package:budget/models/switch_date.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenCategory extends ChangeNotifier {
-  ProviderScreenCategory(this.finance, this.dateTime, this.groupCategory);
+  ProviderScreenCategory(this.finance, this.switchDate, this.groupCategory);
   final int finance;
-  DateTime dateTime;
+  final SwitchDate switchDate;
   final GroupCategory groupCategory;
   late SumOperation sumOperation;
   late List<GroupSubCategory> listGroupSubCategory;
@@ -17,18 +18,22 @@ class ProviderScreenCategory extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onPressedButBackDate() {
+    switchDate.backDate();
+    notifyListeners();
+  }
+
+  void onPressedButNextDate() {
+    switchDate.nextDate();
+    notifyListeners();
+  }
+
   String titleAppBar() {
     return groupCategory.name;
   }
 
   String titleSumOperation() {
     return sumOperation.getValue(finance);
-  }
-
-  //Переключает дату
-  void onPressedSwitchDate(DateTime switchDateTime) {
-    dateTime = switchDateTime;
-    notifyListeners();
   }
 
   Color colorGroupSubCategory(int index) {
@@ -87,20 +92,20 @@ class ProviderScreenCategory extends ChangeNotifier {
 
   Future getSumOperationCategory() async {
     final list = await DBFinance.getListSumOperationCategory(
-        dateTime, finance, groupCategory.id);
+        switchDate.getDateTime(), finance, groupCategory.id);
 
     sumOperation = list[0];
   }
 
   Future getListGroupSubCategory() async {
     final list = await DBFinance.getListGroupSubCategory(
-        dateTime, finance, groupCategory.id);
+        switchDate.getDateTime(), finance, groupCategory.id);
     listGroupSubCategory = list;
   }
 
   Future getListHistoryOperationCategory() async {
     final list = await DBFinance.getListHistoryOperationCategory(
-        dateTime, finance, groupCategory.id);
+        switchDate.getDateTime(), finance, groupCategory.id);
     for (var historyOperation in list) {
       historyOperation.listOperation = await DBFinance.getListOperationCategory(
           DateTime.tryParse(historyOperation.date)!, finance, groupCategory.id);

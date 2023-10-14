@@ -1,6 +1,6 @@
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/add_category/provider_dialog_add_category.dart';
-import 'package:budget/main.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
