@@ -39,7 +39,6 @@ class ScreenFinance extends StatelessWidget {
                       const WidgetInfo(),
                       provider.listGroupCategory.isEmpty
                           ? const SizedBox(
-                              height: 150,
                               child: Center(
                                   child: Text(
                                       'В этом месяце нет данных, нажмите "+".')),

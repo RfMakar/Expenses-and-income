@@ -42,7 +42,6 @@ class ScreenSubCategory extends StatelessWidget {
                   const WidgetInfo(),
                   provider.listHistoryOperation.isEmpty
                       ? const SizedBox(
-                          height: 60,
                           child:
                               Center(child: Text('В этом месяце нет данных')),
                         )
