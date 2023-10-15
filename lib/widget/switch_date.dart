@@ -1,4 +1,5 @@
 import 'package:budget/provider_app.dart';
+import 'package:budget/sheets/history/sheet_history.dart';
 import 'package:budget/sheets/select_period/sheet_select_period.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class WidgetSwitchDate extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => const SheetSelectPeriod(),
+                    builder: (context) => const SheetHistory(),
                   );
                 },
                 icon: const Icon(Icons.history_outlined),

@@ -23,19 +23,16 @@ class SheetMenuOperation extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          provider.titleSheet(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                          ),
-                        )
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        provider.titleSheet(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                        ),
+                      )
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
