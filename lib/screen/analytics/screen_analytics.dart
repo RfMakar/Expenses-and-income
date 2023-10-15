@@ -11,7 +11,7 @@ class ScreenAnalytics extends StatelessWidget {
       builder: (context, child) => Consumer<ProviderScreenAnalytics>(
         builder: (context, provider, _) {
           return FutureBuilder(
-            future: provider.getListYear(),
+            future: provider.getListAnalitics(),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(child: CircularProgressIndicator());
@@ -21,63 +21,22 @@ class ScreenAnalytics extends StatelessWidget {
               }
               return provider.listAnalitics.isNotEmpty
                   ? ListView.builder(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(16),
                       itemCount: provider.listAnalitics.length,
                       itemBuilder: (context, index) {
-                        final listTableRow = provider
-                            .getListAnaliticsMonth(index)
-                            .map(
-                              (analiticsMonth) => TableRow(
-                                children: [
-                                  WidgetTextRowTable(
-                                    text: analiticsMonth
-                                        .getMonth(provider.year(index)),
-                                  ),
-                                  WidgetTextRowTable(
-                                      text: analiticsMonth.getExpence()),
-                                  WidgetTextRowTable(
-                                      text: analiticsMonth.getIncome()),
-                                  WidgetTextRowTable(
-                                      text: analiticsMonth.getTotal()),
-                                ],
-                              ),
-                            )
-                            .toList();
-                        listTableRow.insert(
-                          0,
-                          const TableRow(
-                            children: [
-                              WidgetTextColumnTable(text: 'Месяц'),
-                              WidgetTextColumnTable(text: 'Расход'),
-                              WidgetTextColumnTable(text: 'Доход'),
-                              WidgetTextColumnTable(text: 'Итого'),
-                            ],
-                          ),
-                        );
-                        listTableRow.add(
-                          TableRow(
-                            children: [
-                              const WidgetTextColumnTable(text: 'Итого'),
-                              WidgetTextColumnTable(
-                                  text: provider.totalExpencec(index)),
-                              WidgetTextColumnTable(
-                                  text: provider.totalIncome(index)),
-                              WidgetTextColumnTable(
-                                  text: provider.totalTotal(index)),
-                            ],
-                          ),
-                        );
                         return Column(
                           children: [
-                            WidgetTextTitleTable(
-                                text: provider.titleTable(index)),
-                            Table(
-                              border: TableBorder.all(
-                                  color: Colors.yellow,
-                                  width: 1,
-                                  borderRadius: BorderRadius.circular(4)),
-                              children: listTableRow,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                provider.year(index).toString(),
+                                style: const TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
                             ),
+                            WidgetTableAnaliticsMonth(index: index),
+                            WidgetTableAnaliticsAVGMonthExp(index: index),
+                            WidgetTableAnaliticsAVGMonthInc(index: index),
                           ],
                         );
                       },
@@ -87,6 +46,156 @@ class ScreenAnalytics extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class WidgetTableAnaliticsMonth extends StatelessWidget {
+  const WidgetTableAnaliticsMonth({super.key, required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final listTableRow = provider
+        .getListAnaliticsMonth(index)
+        .map(
+          (analiticsMonth) => TableRow(
+            children: [
+              WidgetTextRowTable(
+                text: analiticsMonth.getMonth(provider.year(index)),
+              ),
+              WidgetTextRowTable(text: analiticsMonth.getExpence()),
+              WidgetTextRowTable(text: analiticsMonth.getIncome()),
+              WidgetTextRowTable(text: analiticsMonth.getTotal()),
+            ],
+          ),
+        )
+        .toList();
+    listTableRow.insert(
+      0,
+      const TableRow(
+        children: [
+          WidgetTextColumnTable(text: 'Месяц'),
+          WidgetTextColumnTable(text: 'Расход'),
+          WidgetTextColumnTable(text: 'Доход'),
+          WidgetTextColumnTable(text: 'Итого'),
+        ],
+      ),
+    );
+    listTableRow.add(
+      TableRow(
+        children: [
+          const WidgetTextColumnTable(text: 'Итого'),
+          WidgetTextColumnTable(text: provider.totalExpencec(index)),
+          WidgetTextColumnTable(text: provider.totalIncome(index)),
+          WidgetTextColumnTable(text: provider.totalTotal(index)),
+        ],
+      ),
+    );
+
+    return Column(
+      children: [
+        WidgetTextTitleTable(text: provider.titleTableMonth(index)),
+        Table(
+          border: TableBorder.all(
+              color: Colors.yellow,
+              width: 1,
+              borderRadius: BorderRadius.circular(4)),
+          children: listTableRow,
+        ),
+      ],
+    );
+  }
+}
+
+class WidgetTableAnaliticsAVGMonthExp extends StatelessWidget {
+  const WidgetTableAnaliticsAVGMonthExp({super.key, required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final listTableRow = provider
+        .getListAnaliticsAVGMonthExp(index)
+        .map(
+          (analiticsAVGMonth) => TableRow(
+            children: [
+              WidgetTextRowTable(
+                text: analiticsAVGMonth.namecategory,
+              ),
+              WidgetTextRowTable(
+                text: analiticsAVGMonth.getAVGCategory(),
+              ),
+            ],
+          ),
+        )
+        .toList();
+    listTableRow.insert(
+      0,
+      const TableRow(
+        children: [
+          WidgetTextColumnTable(text: 'Категория'),
+          WidgetTextColumnTable(text: 'Среднее'),
+        ],
+      ),
+    );
+
+    return Column(
+      children: [
+        WidgetTextTitleTable(text: provider.titleTableAVGMonthExp(index)),
+        Table(
+          border: TableBorder.all(
+              color: Colors.yellow,
+              width: 1,
+              borderRadius: BorderRadius.circular(4)),
+          children: listTableRow,
+        ),
+      ],
+    );
+  }
+}
+
+class WidgetTableAnaliticsAVGMonthInc extends StatelessWidget {
+  const WidgetTableAnaliticsAVGMonthInc({super.key, required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final listTableRow = provider
+        .getListAnaliticsAVGMonthInc(index)
+        .map(
+          (analiticsAVGMonth) => TableRow(
+            children: [
+              WidgetTextRowTable(
+                text: analiticsAVGMonth.namecategory,
+              ),
+              WidgetTextRowTable(
+                text: analiticsAVGMonth.getAVGCategory(),
+              ),
+            ],
+          ),
+        )
+        .toList();
+    listTableRow.insert(
+      0,
+      const TableRow(
+        children: [
+          WidgetTextColumnTable(text: 'Категория'),
+          WidgetTextColumnTable(text: 'Среднее'),
+        ],
+      ),
+    );
+
+    return Column(
+      children: [
+        WidgetTextTitleTable(text: provider.titleTableAVGMonthInc(index)),
+        Table(
+          border: TableBorder.all(
+              color: Colors.yellow,
+              width: 1,
+              borderRadius: BorderRadius.circular(4)),
+          children: listTableRow,
+        ),
+      ],
     );
   }
 }

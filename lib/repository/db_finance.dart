@@ -548,7 +548,6 @@ abstract class DBFinance {
     var maps = await db.rawQuery('''
     SELECT DISTINCT year
     FROM ${TableDB.operations}
-    
     ;
     ''');
 
@@ -599,8 +598,35 @@ abstract class DBFinance {
     return maps.isNotEmpty
         ? maps.map((e) => AnaliticsMonth.fromMap(e)).toList()
         : [
-            AnaliticsMonth(month: month, expense: -0.0, income: 0.0, total: 0.0)
+            // AnaliticsMonth(month: month, expense: -0.0, income: 0.0, total: 0.0)
           ];
+  }
+
+  static Future<List<AnaliticsAVGMonth>> getListAnaliticsAVGMonth(
+      int year, int finance) async {
+    final db = await database;
+    var maps = await db.rawQuery(
+      '''
+  
+    SELECT 
+    ${TableDB.categories}.name AS namecategory,
+    ROUND(SUM(value)/(SELECT COUNT(DISTINCT month)
+                    FROM ${TableDB.operations}
+                    WHERE year = $year),1) AS avgcategory
+    FROM ${TableDB.operations}
+    JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+    JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+    JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+    WHERE year = $year AND idfinance = $finance
+    GROUP BY namecategory
+    ORDER BY avgcategory DESC
+    ;
+    ''',
+    );
+
+    return maps.isNotEmpty
+        ? maps.map((e) => AnaliticsAVGMonth.fromMap(e)).toList()
+        : [];
   }
 
   //Запись в БД
@@ -659,7 +685,7 @@ abstract class DBFinance {
     ''');
   }
 
-  static Future<int> deleteCatgory() async {
+  static Future<int> deleteTableCategory() async {
     final db = await database;
     return await db.rawDelete('''
     DELETE
