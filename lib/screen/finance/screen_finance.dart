@@ -44,7 +44,7 @@ class ScreenFinance extends StatelessWidget {
                                       'В этом месяце нет данных, нажмите "+".')),
                             )
                           : const WidgetListGroupCategory(),
-                      provider.listGroupCategory.isEmpty
+                      provider.listHistoryOperation.isEmpty
                           ? const SizedBox()
                           : const WidgetListHistoryAllOperation(),
                     ],

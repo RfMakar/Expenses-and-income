@@ -12,6 +12,31 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   final GroupSubCategory groupSubCategory;
   late SumOperation sumOperation;
   late List<HistoryOperation> listHistoryOperation;
+  Future loadData() async {
+    await getSumOperationSubCategory();
+    await getListHistoryOperationSubCategory();
+  }
+
+  Future getSumOperationSubCategory() async {
+    sumOperation = await DBFinance.getSumOperationSubCategoryInPeriod(
+        switchDate, finance, groupSubCategory.id);
+  }
+
+  Future getListHistoryOperationSubCategory() async {
+    if (switchDate.state == 0) {
+      listHistoryOperation = await DBFinance.getListHistoryOperationSubCategory(
+          switchDate.getDateTime(), finance, groupSubCategory.id);
+      for (var historyOperation in listHistoryOperation) {
+        historyOperation.listOperation =
+            await DBFinance.getListOperationSubCategory(
+                DateTime.tryParse(historyOperation.date)!,
+                finance,
+                groupSubCategory.id);
+      }
+    } else if (switchDate.state == 1) {
+      listHistoryOperation = [];
+    }
+  }
 
   void updateScreen() {
     notifyListeners();
@@ -61,31 +86,5 @@ class ProviderScreenSubCategory extends ChangeNotifier {
 
   String trailingOperation(int indexHistory, int indexOperation) {
     return listOperation(indexHistory)[indexOperation].getValue(finance);
-  }
-
-  Future loadData() async {
-    await getSumOperationSubCategory();
-    await getListHistoryOperationSubCategory();
-  }
-
-  Future getSumOperationSubCategory() async {
-    final list = await DBFinance.getListSumOperationSubCategory(
-        switchDate.getDateTime(), finance, groupSubCategory.id);
-
-    sumOperation = list[0];
-  }
-
-  Future getListHistoryOperationSubCategory() async {
-    final list = await DBFinance.getListHistoryOperationSubCategory(
-        switchDate.getDateTime(), finance, groupSubCategory.id);
-    for (var historyOperation in list) {
-      historyOperation.listOperation =
-          await DBFinance.getListOperationSubCategory(
-              DateTime.tryParse(historyOperation.date)!,
-              finance,
-              groupSubCategory.id);
-    }
-
-    listHistoryOperation = list;
   }
 }

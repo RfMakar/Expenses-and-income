@@ -19,6 +19,30 @@ class ProviderScreenFinance extends ChangeNotifier {
     await getListHistoryAllOperation();
   }
 
+  Future getSumAllOperation() async {
+    sumOperation =
+        await DBFinance.getSumAllOperationInPeriod(switchDate, finance);
+  }
+
+  Future getListGroupCategory() async {
+    listGroupCategory =
+        await DBFinance.getListGroupCategoryInPeriod(switchDate, finance);
+  }
+
+  Future getListHistoryAllOperation() async {
+    //Если период месяц, то история операций будет, если год то не будет
+    if (switchDate.state == 0) {
+      listHistoryOperation = await DBFinance.getListHistoryAllOperation(
+          switchDate.getDateTime(), finance);
+      for (var historyOperation in listHistoryOperation) {
+        historyOperation.listOperation = await DBFinance.getListAllOperation(
+            DateTime.tryParse(historyOperation.date)!, finance);
+      }
+    } else if (switchDate.state == 1) {
+      listHistoryOperation = [];
+    }
+  }
+
   void onPressedButBackDate() {
     switchDate.backDate();
     notifyListeners();
@@ -83,30 +107,5 @@ class ProviderScreenFinance extends ChangeNotifier {
 
   String trailingOperation(int indexHistory, int indexOperation) {
     return listOperation(indexHistory)[indexOperation].getValue(finance);
-  }
-
-  Future getSumAllOperation() async {
-    final list = await DBFinance.getListSumAllOperation(
-        switchDate.getDateTime(), finance);
-
-    sumOperation = list[0];
-  }
-
-  Future getListGroupCategory() async {
-    final list =
-        await DBFinance.getListGroupCategory(switchDate.getDateTime(), finance);
-
-    listGroupCategory = list;
-  }
-
-  Future getListHistoryAllOperation() async {
-    final list = await DBFinance.getListHistoryAllOperation(
-        switchDate.getDateTime(), finance);
-    for (var historyOperation in list) {
-      historyOperation.listOperation = await DBFinance.getListAllOperation(
-          DateTime.tryParse(historyOperation.date)!, finance);
-    }
-
-    listHistoryOperation = list;
   }
 }

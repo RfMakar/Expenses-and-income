@@ -14,6 +14,39 @@ class ProviderScreenCategory extends ChangeNotifier {
   late List<GroupSubCategory> listGroupSubCategory;
   late List<HistoryOperation> listHistoryOperation;
 
+  Future loadData() async {
+    await getSumOperationCategory();
+    await getListGroupSubCategory();
+    await getListHistoryOperationCategory();
+  }
+
+  Future getSumOperationCategory() async {
+    sumOperation = await DBFinance.getSumOperationCategoryInPeriod(
+        switchDate, finance, groupCategory.id);
+  }
+
+  Future getListGroupSubCategory() async {
+    listGroupSubCategory = await DBFinance.getListGroupSubCategoryInPeriod(
+        switchDate, finance, groupCategory.id);
+  }
+
+  Future getListHistoryOperationCategory() async {
+    //Если период месяц, то история операций будет, если год то не будет
+    if (switchDate.state == 0) {
+      listHistoryOperation = await DBFinance.getListHistoryOperationCategory(
+          switchDate.getDateTime(), finance, groupCategory.id);
+      for (var historyOperation in listHistoryOperation) {
+        historyOperation.listOperation =
+            await DBFinance.getListOperationCategory(
+                DateTime.tryParse(historyOperation.date)!,
+                finance,
+                groupCategory.id);
+      }
+    } else if (switchDate.state == 1) {
+      listHistoryOperation = [];
+    }
+  }
+
   void updateScreen() {
     notifyListeners();
   }
@@ -82,35 +115,5 @@ class ProviderScreenCategory extends ChangeNotifier {
 
   GroupSubCategory groupSubCategory(int index) {
     return listGroupSubCategory[index];
-  }
-
-  Future loadData() async {
-    await getSumOperationCategory();
-    await getListGroupSubCategory();
-    await getListHistoryOperationCategory();
-  }
-
-  Future getSumOperationCategory() async {
-    final list = await DBFinance.getListSumOperationCategory(
-        switchDate.getDateTime(), finance, groupCategory.id);
-
-    sumOperation = list[0];
-  }
-
-  Future getListGroupSubCategory() async {
-    final list = await DBFinance.getListGroupSubCategory(
-        switchDate.getDateTime(), finance, groupCategory.id);
-    listGroupSubCategory = list;
-  }
-
-  Future getListHistoryOperationCategory() async {
-    final list = await DBFinance.getListHistoryOperationCategory(
-        switchDate.getDateTime(), finance, groupCategory.id);
-    for (var historyOperation in list) {
-      historyOperation.listOperation = await DBFinance.getListOperationCategory(
-          DateTime.tryParse(historyOperation.date)!, finance, groupCategory.id);
-    }
-
-    listHistoryOperation = list;
   }
 }

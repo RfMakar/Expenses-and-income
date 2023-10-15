@@ -2,6 +2,7 @@ import 'package:budget/models/analitics.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/models/operations.dart';
+import 'package:budget/models/switch_date.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -174,11 +175,14 @@ abstract class DBFinance {
         : [];
   }
 
-  static Future<List<GroupCategory>> getListGroupCategory(
-      DateTime dateTime, int finance) async {
+  static Future<List<GroupCategory>> getListGroupCategoryInPeriod(
+    SwitchDate switchDate,
+    int finance,
+  ) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''
       SELECT ${TableDB.categories}.id AS id,
       ${TableDB.categories}.name AS name,
       ${TableDB.categories}.color AS color,
@@ -188,37 +192,52 @@ abstract class DBFinance {
           FROM ${TableDB.operations} 
           JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
           JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
-          WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? 
+          WHERE year = ${switchDate.getDateTime().year} AND month = ${switchDate.getDateTime().month} AND ${TableDB.categories}.idfinance = $finance
         )*100.0, 1 ) as percent,
       ROUND(SUM(value), 1) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ?
+      WHERE year = ${switchDate.getDateTime().year} AND month = ${switchDate.getDateTime().month} AND ${TableDB.categories}.idfinance = $finance
       GROUP BY ${TableDB.categories}.id
       ORDER BY value DESC
       ;
-        ''',
-      [
-        dateTime.year,
-        dateTime.month,
-        finance,
-        dateTime.year,
-        dateTime.month,
-        finance
-      ],
-    );
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''
+      SELECT ${TableDB.categories}.id AS id,
+      ${TableDB.categories}.name AS name,
+      ${TableDB.categories}.color AS color,
+      ROUND(
+        SUM(value)/(
+          SELECT SUM(value) 
+          FROM ${TableDB.operations} 
+          JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+          JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
+          WHERE year = ${switchDate.getDateTime().year} AND ${TableDB.categories}.idfinance = $finance
+        )*100.0, 1 ) as percent,
+      ROUND(SUM(value), 1) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      WHERE year = ${switchDate.getDateTime().year}  AND ${TableDB.categories}.idfinance = $finance
+      GROUP BY ${TableDB.categories}.id
+      ORDER BY value DESC
+      ;
+        ''');
+    }
+
     return maps.isNotEmpty
         ? maps.map((e) => GroupCategory.fromMap(e)).toList()
         : [];
   }
 
-  static Future<List<GroupSubCategory>> getListGroupSubCategory(
-      DateTime dateTime, int finance, int idCategory) async {
+  static Future<List<GroupSubCategory>> getListGroupSubCategoryInPeriod(
+      SwitchDate switchDate, int finance, int idCategory) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
-      SELECT ${TableDB.subcategories}.id AS id,
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''SELECT ${TableDB.subcategories}.id AS id,
       ${TableDB.subcategories}.name AS name,
       ROUND(
         SUM(value)/(
@@ -226,28 +245,49 @@ abstract class DBFinance {
           FROM ${TableDB.operations} 
           JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
           JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
-          WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? AND ${TableDB.subcategories}.idcategory = ? 
+          WHERE year = ${switchDate.getDateTime().year} 
+            AND month = ${switchDate.getDateTime().month} 
+            AND ${TableDB.categories}.idfinance = $finance 
+            AND ${TableDB.subcategories}.idcategory = $idCategory
         )*100.0, 1 ) as percent,
       ROUND(SUM(value), 1) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? AND ${TableDB.subcategories}.idcategory = ? 
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND month = ${switchDate.getDateTime().month} 
+        AND ${TableDB.categories}.idfinance = $finance
+        AND ${TableDB.subcategories}.idcategory = $idCategory
       GROUP BY ${TableDB.subcategories}.id
       ORDER BY value DESC
       ;
-        ''',
-      [
-        dateTime.year,
-        dateTime.month,
-        finance,
-        idCategory,
-        dateTime.year,
-        dateTime.month,
-        finance,
-        idCategory,
-      ],
-    );
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''SELECT ${TableDB.subcategories}.id AS id,
+      ${TableDB.subcategories}.name AS name,
+      ROUND(
+        SUM(value)/(
+          SELECT SUM(value) 
+          FROM ${TableDB.operations} 
+          JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+          JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
+          WHERE year = ${switchDate.getDateTime().year} 
+            AND ${TableDB.categories}.idfinance = $finance 
+            AND ${TableDB.subcategories}.idcategory = $idCategory
+        )*100.0, 1 ) as percent,
+      ROUND(SUM(value), 1) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND ${TableDB.categories}.idfinance = $finance
+        AND ${TableDB.subcategories}.idcategory = $idCategory
+      GROUP BY ${TableDB.subcategories}.id
+      ORDER BY value DESC
+      ;
+        ''');
+    }
+
     return maps.isNotEmpty
         ? maps.map((e) => GroupSubCategory.fromMap(e)).toList()
         : [];
@@ -400,61 +440,106 @@ abstract class DBFinance {
         : [];
   }
 
-  static Future<List<SumOperation>> getListSumAllOperation(
-      DateTime dateTime, int finance) async {
+  static Future<SumOperation> getSumAllOperationInPeriod(
+      SwitchDate switchDate, int finance) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''
       SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
-      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ?
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND month = ${switchDate.getDateTime().month} 
+        AND ${TableDB.categories}.idfinance = $finance
       ;
-        ''',
-      [dateTime.year, dateTime.month, finance],
-    );
-    return maps.isNotEmpty
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''
+      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND ${TableDB.categories}.idfinance = $finance
+      ;
+        ''');
+    }
+    List<SumOperation> listSumOperation = maps.isNotEmpty
         ? maps.map((e) => SumOperation.fromMap(e)).toList()
         : [];
+    return listSumOperation[0];
   }
 
-  static Future<List<SumOperation>> getListSumOperationCategory(
-      DateTime dateTime, int finance, int idCategory) async {
+  static Future<SumOperation> getSumOperationCategoryInPeriod(
+      SwitchDate switchDate, int finance, int idCategory) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''
       SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
-      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? AND ${TableDB.categories}.id = ?
+      WHERE year = ${switchDate.getDateTime().year}  
+        AND month = ${switchDate.getDateTime().month}  
+        AND ${TableDB.categories}.idfinance = $finance 
+        AND ${TableDB.categories}.id = $idCategory
       ;
-        ''',
-      [dateTime.year, dateTime.month, finance, idCategory],
-    );
-    return maps.isNotEmpty
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''
+      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
+      WHERE year = ${switchDate.getDateTime().year}  
+        AND ${TableDB.categories}.idfinance = $finance 
+        AND ${TableDB.categories}.id = $idCategory
+      ;
+        ''');
+    }
+
+    List<SumOperation> listSumOperationCategory = maps.isNotEmpty
         ? maps.map((e) => SumOperation.fromMap(e)).toList()
         : [];
+    return listSumOperationCategory[0];
   }
 
-  static Future<List<SumOperation>> getListSumOperationSubCategory(
-      DateTime dateTime, int finance, int idSubCategory) async {
+  static Future<SumOperation> getSumOperationSubCategoryInPeriod(
+      SwitchDate switchDate, int finance, int idSubCategory) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
-      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps =
+          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
-      WHERE year = ? AND month = ? AND ${TableDB.categories}.idfinance = ? AND ${TableDB.subcategories}.id = ?
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND month = ${switchDate.getDateTime().month}
+        AND ${TableDB.categories}.idfinance = $finance
+        AND ${TableDB.subcategories}.id = $idSubCategory
       ;
-        ''',
-      [dateTime.year, dateTime.month, finance, idSubCategory],
-    );
-    return maps.isNotEmpty
+        ''');
+    } else if (switchDate.state == 1) {
+      maps =
+          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
+      WHERE year = ${switchDate.getDateTime().year} 
+        AND ${TableDB.categories}.idfinance = $finance
+        AND ${TableDB.subcategories}.id = $idSubCategory
+      ;
+        ''');
+    }
+
+    List<SumOperation> listSumOperationSubCategory = maps.isNotEmpty
         ? maps.map((e) => SumOperation.fromMap(e)).toList()
         : [];
+    return listSumOperationSubCategory[0];
   }
 
   //Получение данных для Аналитики

@@ -8,7 +8,7 @@ class SheetSelectPeriod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final providerApp = Provider.of<ProviderApp>(context);
-
+    final stateApp = providerApp.switchDate.state;
     return Wrap(
       children: [
         const ListTile(
@@ -20,19 +20,25 @@ class SheetSelectPeriod extends StatelessWidget {
         )),
         const Divider(),
         ListTile(
-          title: const Text('Год'),
+          title: const Text('Месяц'),
+          trailing: stateApp == 0 ? const Icon(Icons.check) : null,
           onTap: () {
-            Navigator.pop(context);
-            providerApp.switchDate.stateYear();
-            providerApp.updateApp();
+            if (stateApp == 1) {
+              Navigator.pop(context);
+              providerApp.switchDate.stateMonth();
+              providerApp.updateApp();
+            }
           },
         ),
         ListTile(
-          title: const Text('Месяц'),
+          title: const Text('Год'),
+          trailing: stateApp == 1 ? const Icon(Icons.check) : null,
           onTap: () {
-            Navigator.pop(context);
-            providerApp.switchDate.stateMonth();
-            providerApp.updateApp();
+            if (stateApp == 0) {
+              Navigator.pop(context);
+              providerApp.switchDate.stateYear();
+              providerApp.updateApp();
+            }
           },
         ),
       ],
