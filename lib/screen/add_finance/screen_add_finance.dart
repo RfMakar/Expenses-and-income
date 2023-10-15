@@ -109,56 +109,54 @@ class WidgetCardCategory extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return Card(
-                child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.more_vert),
-                    onPressed: () async {
-                      final ActionsUpdate? actionsUpdate =
-                          await showModalBottomSheet(
-                        context: context,
-                        builder: (context) => SheetMenuCategory(
-                          category: provider.category,
-                        ),
-                      );
-                      if (actionsUpdate == ActionsUpdate.updateWidget) {
-                        provider.updateWidget();
-                      } else if (actionsUpdate == ActionsUpdate.updateScreen) {
-                        providerScreen.updateScreen();
-                      }
-                    },
-                  ),
-                  key: PageStorageKey(provider.key()),
-                  textColor: provider.colorCategories(),
-                  iconColor: provider.colorCategories(),
-                  title: Text(provider.nameCategories()),
-                  children: provider
-                      .listNameSubcategories()
-                      .map(
-                        (subCategories) => ListTile(
-                          textColor: provider.colorCategories(),
-                          iconColor: provider.colorCategories(),
-                          leading: const Icon(Icons.arrow_right),
-                          title: Text(subCategories.name),
-                          onTap: () async {
-                            final ActionsUpdate? actionsUpdate =
-                                await showModalBottomSheet(
-                              context: context,
-                              builder: (context) => SheetMenuSubCategory(
-                                  subCategory: subCategories),
-                            );
-                            if (actionsUpdate == ActionsUpdate.updateWidget) {
-                              provider.updateWidget();
-                            }
-                          },
-                        ),
-                      )
-                      .toList(),
+              return ExpansionTile(
+                childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () async {
+                    final ActionsUpdate? actionsUpdate =
+                        await showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SheetMenuCategory(
+                        category: provider.category,
+                      ),
+                    );
+                    if (actionsUpdate == ActionsUpdate.updateWidget) {
+                      provider.updateWidget();
+                    } else if (actionsUpdate == ActionsUpdate.updateScreen) {
+                      providerScreen.updateScreen();
+                    }
+                  },
+                ),
+                key: PageStorageKey(provider.key()),
+                textColor: provider.colorCategories(),
+                iconColor: provider.colorCategories(),
+                title: Text(provider.nameCategories()),
+                children: provider
+                    .listNameSubcategories()
+                    .map(
+                      (subCategories) => ListTile(
+                        textColor: provider.colorCategories(),
+                        iconColor: provider.colorCategories(),
+                        leading: const Icon(Icons.arrow_right),
+                        title: Text(subCategories.name),
+                        onTap: () async {
+                          final ActionsUpdate? actionsUpdate =
+                              await showModalBottomSheet(
+                            context: context,
+                            builder: (context) => SheetMenuSubCategory(
+                                subCategory: subCategories),
+                          );
+                          if (actionsUpdate == ActionsUpdate.updateWidget) {
+                            provider.updateWidget();
+                          }
+                        },
+                      ),
+                    )
+                    .toList(),
               );
             },
           );
