@@ -42,6 +42,9 @@ class App extends StatelessWidget {
                   Radius.circular(16),
                 ),
               ),
+              bottomSheetTheme: const BottomSheetThemeData(
+                showDragHandle: true,
+              ),
             ),
             home: const ScreenHome(),
           );

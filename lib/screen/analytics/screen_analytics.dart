@@ -21,18 +21,15 @@ class ScreenAnalytics extends StatelessWidget {
               }
               return provider.listAnalitics.isNotEmpty
                   ? ListView.builder(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
                       itemCount: provider.listAnalitics.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                provider.year(index).toString(),
-                                style: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
+                            Text(
+                              provider.year(index).toString(),
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             WidgetTableAnaliticsMonth(index: index),
                             WidgetTableAnaliticsAVGMonthExp(index: index),
@@ -98,7 +95,7 @@ class WidgetTableAnaliticsMonth extends StatelessWidget {
         WidgetTextTitleTable(text: provider.titleTableMonth(index)),
         Table(
           border: TableBorder.all(
-              color: Colors.yellow,
+              color: Colors.grey,
               width: 1,
               borderRadius: BorderRadius.circular(4)),
           children: listTableRow,
@@ -144,7 +141,7 @@ class WidgetTableAnaliticsAVGMonthExp extends StatelessWidget {
         WidgetTextTitleTable(text: provider.titleTableAVGMonthExp(index)),
         Table(
           border: TableBorder.all(
-              color: Colors.yellow,
+              color: Colors.grey,
               width: 1,
               borderRadius: BorderRadius.circular(4)),
           children: listTableRow,
@@ -190,7 +187,7 @@ class WidgetTableAnaliticsAVGMonthInc extends StatelessWidget {
         WidgetTextTitleTable(text: provider.titleTableAVGMonthInc(index)),
         Table(
           border: TableBorder.all(
-              color: Colors.yellow,
+              color: Colors.grey,
               width: 1,
               borderRadius: BorderRadius.circular(4)),
           children: listTableRow,
@@ -205,11 +202,7 @@ class WidgetTextRowTable extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Text(
-      text,
-      style: const TextStyle(fontSize: 12),
-    ));
+    return Center(child: Text(text));
   }
 }
 
@@ -234,12 +227,11 @@ class WidgetTextTitleTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Center(
-          child: Text(
+      child: Text(
         text,
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(fontWeight: FontWeight.bold),
-      )),
+      ),
     );
   }
 }

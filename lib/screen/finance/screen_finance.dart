@@ -3,6 +3,7 @@ import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
+import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
 import 'package:budget/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
@@ -38,11 +39,7 @@ class ScreenFinance extends StatelessWidget {
                       const WidgetSwitchFinance(),
                       const WidgetInfo(),
                       provider.listGroupCategory.isEmpty
-                          ? const SizedBox(
-                              child: Center(
-                                  child: Text(
-                                      'В этом месяце нет данных, нажмите "+".')),
-                            )
+                          ? const WidgetNoData()
                           : const WidgetListGroupCategory(),
                       provider.listHistoryOperation.isEmpty
                           ? const SizedBox()

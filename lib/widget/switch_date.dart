@@ -30,7 +30,15 @@ class WidgetSwitchDate extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(width: 40),
+              IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SheetSelectPeriod(),
+                  );
+                },
+                icon: const Icon(Icons.history_outlined),
+              ),
               Row(
                 children: [
                   IconButton(
@@ -57,7 +65,6 @@ class WidgetSwitchDate extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.date_range_outlined),
-                // iconSize: 30,
               ),
             ],
           ),

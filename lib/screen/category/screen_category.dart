@@ -3,6 +3,7 @@ import 'package:budget/models/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/category/provider_screen_category.dart';
 import 'package:budget/screen/subcategory/screen_subcategory.dart';
+import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +41,7 @@ class ScreenCategory extends StatelessWidget {
                     const SizedBox(height: 4),
                     const WidgetInfo(),
                     provider.listGroupSubCategory.isEmpty
-                        ? const SizedBox(
-                            child:
-                                Center(child: Text('В этом месяце нет данных')),
-                          )
+                        ? const WidgetNoData()
                         : const WidgetListGroupSubCategory(),
                     provider.listHistoryOperation.isEmpty
                         ? const SizedBox()

@@ -18,7 +18,6 @@ class SheetSelectPeriod extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         )),
-        const Divider(),
         ListTile(
           title: const Text('Месяц'),
           trailing: stateApp == 0 ? const Icon(Icons.check) : null,
