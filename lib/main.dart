@@ -30,11 +30,9 @@ class App extends StatelessWidget {
             supportedLocales: const [
               Locale('ru', 'RU'),
             ],
-            theme: MyThemeApp.light(const Color.fromRGBO(255, 215, 0, 1))
-                .themeLight,
-            darkTheme: MyThemeApp.dark(const Color.fromRGBO(255, 215, 0, 1))
-                .themeLight,
-            themeMode: true ? ThemeMode.dark : ThemeMode.light,
+            theme: MyThemeApp.themeLight,
+            darkTheme: MyThemeApp.themeDark,
+            themeMode: ThemeMode.system,
             home: const ScreenHome(),
           );
         },
@@ -44,64 +42,38 @@ class App extends StatelessWidget {
 }
 
 class MyThemeApp {
-  late ThemeData themeLight;
-  late ThemeData themeDark;
-
-  MyThemeApp.light(Color colorTheme) {
-    themeLight = ThemeData(
-      brightness: Brightness.light,
-      colorSchemeSeed: colorTheme,
-      useMaterial3: true,
-      appBarTheme: AppBarTheme(
-        color: colorTheme,
-        centerTitle: true,
+  static const colorTheme = Color.fromRGBO(255, 215, 0, 1);
+  static ThemeData themeLight = ThemeData(
+    brightness: Brightness.light,
+    colorSchemeSeed: colorTheme,
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      color: colorTheme,
+      centerTitle: true,
+    ),
+    toggleButtonsTheme: const ToggleButtonsThemeData(
+      borderRadius: BorderRadius.all(
+        Radius.circular(16),
       ),
-      toggleButtonsTheme: const ToggleButtonsThemeData(
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      showDragHandle: true,
+    ),
+  );
+  static ThemeData themeDark = ThemeData(
+    brightness: Brightness.dark,
+    colorSchemeSeed: colorTheme,
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+    ),
+    toggleButtonsTheme: const ToggleButtonsThemeData(
+      borderRadius: BorderRadius.all(
+        Radius.circular(16),
       ),
-      bottomSheetTheme: const BottomSheetThemeData(
-        showDragHandle: true,
-      ),
-    );
-  }
-  MyThemeApp.dark(Color colorTheme) {
-    themeLight = ThemeData(
-      brightness: Brightness.dark,
-      colorSchemeSeed: colorTheme,
-      useMaterial3: true,
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-      ),
-      toggleButtonsTheme: const ToggleButtonsThemeData(
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
-      ),
-      bottomSheetTheme: const BottomSheetThemeData(
-        showDragHandle: true,
-      ),
-    );
-  }
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      showDragHandle: true,
+    ),
+  );
 }
-/*
-
-theme: ThemeData(
-              useMaterial3: true,
-              colorSchemeSeed: const Color.fromRGBO(255, 215, 0, 1),
-              appBarTheme: const AppBarTheme(
-                color: Color.fromRGBO(255, 215, 0, 1),
-                centerTitle: true,
-              ),
-              toggleButtonsTheme: const ToggleButtonsThemeData(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16),
-                ),
-              ),
-              bottomSheetTheme: const BottomSheetThemeData(
-                showDragHandle: true,
-              ),
-            ),
-
-*/

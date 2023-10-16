@@ -33,7 +33,7 @@ class ScreenFinance extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
                   ListView(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                    padding: const EdgeInsets.fromLTRB(4, 20, 4, 50),
                     children: [
                       const WidgetSwitchFinance(),
                       const WidgetInfo(),
@@ -116,7 +116,8 @@ class WidgetListGroupCategory extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
+            crossAxisCount: 3,
+          ),
           itemCount: provider.listGroupCategory.length,
           itemBuilder: (context, index) {
             return WidgetGroupCategory(
@@ -160,32 +161,21 @@ class WidgetGroupCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: color,
-          ),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color, width: 1),
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: color,
-              blurRadius: 3,
-              offset: const Offset(0.5, 0.5), // Shadow position
-            ),
-          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              //height: 50,
               decoration: BoxDecoration(
                   color: color,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(6),
-                      topRight: Radius.circular(6))),
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
@@ -198,23 +188,23 @@ class WidgetGroupCategory extends StatelessWidget {
               ),
             ),
             CircularPercentIndicator(
-              radius: 26.0,
-              lineWidth: 4.0,
+              radius: 24.0,
+              lineWidth: 6.0,
               percent: percent / 100,
               animation: true,
               center: Text(
                 '$percent %',
-                style: TextStyle(fontSize: 10, color: color),
+                style: const TextStyle(fontSize: 10),
               ),
               progressColor: color,
             ),
             Container(
-              // height: 25,
+              height: 25,
               decoration: BoxDecoration(
                   color: color,
                   borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(6),
-                      bottomRight: Radius.circular(6))),
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
@@ -232,84 +222,3 @@ class WidgetGroupCategory extends StatelessWidget {
     );
   }
 }
-
-
-/*
-class WidgetListHistoryAllOperation extends StatelessWidget {
-  const WidgetListHistoryAllOperation({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenFinance>(context);
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        const Text(
-          'История операций',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: provider.listHistoryOperation.length,
-          itemBuilder: (context, indexHistory) {
-            return Column(
-              children: [
-                ListTile(
-                  title: Text(
-                    provider.titleHistoryOperation(indexHistory),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Text(
-                    provider.valueHistory(indexHistory),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: provider.listOperation(indexHistory).length,
-                  itemBuilder: (context, indexOperation) {
-                    return ListTile(
-                      title: Text(
-                        provider.titleOperation(indexHistory, indexOperation),
-                      ),
-                      subtitle: Text(
-                        provider.subtitlegOperation(
-                            indexHistory, indexOperation),
-                      ),
-                      trailing: Text(
-                        provider.trailingOperation(
-                            indexHistory, indexOperation),
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      onTap: () async {
-                        final ActionsUpdate? actionsUpdate =
-                            await showModalBottomSheet(
-                          context: context,
-                          builder: (context) => SheetMenuOperation(
-                            operation: provider.operation(
-                                indexHistory, indexOperation),
-                            finance: provider.finance,
-                          ),
-                        );
-                        if (actionsUpdate == ActionsUpdate.updateScreen) {
-                          provider.updateScreen();
-                        }
-                      },
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-*/

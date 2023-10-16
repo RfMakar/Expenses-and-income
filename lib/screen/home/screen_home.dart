@@ -61,14 +61,6 @@ class WidgetDrawer extends StatelessWidget {
               provider.onItemTapped(2);
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text('Настройки'),
-            onTap: () {
-              Navigator.pop(context);
-              provider.onItemTapped(3);
-            },
-          ),
           const Center(child: Text('О приложении')),
           const Divider(),
           const ListTile(
