@@ -11,7 +11,7 @@ class ScreenDataApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenDataApp(),
-      builder: (context, child) => Consumer<ProviderScreenDataApp>(
+      child: Consumer<ProviderScreenDataApp>(
         builder: (context, provider, _) {
           return ListView(
             children: [

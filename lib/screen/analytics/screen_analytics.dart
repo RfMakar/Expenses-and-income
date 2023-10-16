@@ -8,7 +8,7 @@ class ScreenAnalytics extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenAnalytics(),
-      builder: (context, child) => Consumer<ProviderScreenAnalytics>(
+      child: Consumer<ProviderScreenAnalytics>(
         builder: (context, provider, _) {
           return FutureBuilder(
             future: provider.getListAnalitics(),

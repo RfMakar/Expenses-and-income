@@ -16,7 +16,7 @@ class WidgetHistory extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) =>
           ProviderWidgetHistory(listHistoryOperation, providerApp.finance.id),
-      builder: (context, child) => Consumer<ProviderWidgetHistory>(
+      child: Consumer<ProviderWidgetHistory>(
         builder: (context, provider, child) {
           return Column(
             children: [

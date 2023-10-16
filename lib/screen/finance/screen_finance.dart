@@ -18,7 +18,7 @@ class ScreenFinance extends StatelessWidget {
     final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenFinance(providerApp.switchDate),
-      builder: (context, child) => Consumer<ProviderScreenFinance>(
+      child: Consumer<ProviderScreenFinance>(
         builder: (context, provider, _) {
           return FutureBuilder(
             future: provider.loadData(providerApp.finance.id),

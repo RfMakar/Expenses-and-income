@@ -20,7 +20,7 @@ class ScreenCategory extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenCategory(
           providerApp.finance.id, providerApp.switchDate, groupCategory),
-      builder: (context, child) => Consumer<ProviderScreenCategory>(
+      child: Consumer<ProviderScreenCategory>(
         builder: (context, provider, child) {
           return Scaffold(
             appBar: AppBar(

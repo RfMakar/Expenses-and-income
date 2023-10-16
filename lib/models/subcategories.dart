@@ -56,8 +56,7 @@ class GroupSubCategory extends ReadSubCategory {
       );
   String getValue(int finance) {
     return finance == 0
-        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}'
-        : NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1)
-            .format(value);
+        ? '-${NumberFormat.compact(locale: 'ru-RU').format(value)}'
+        : NumberFormat.compact(locale: 'ru-RU').format(value);
   }
 }

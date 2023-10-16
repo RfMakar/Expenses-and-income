@@ -10,7 +10,7 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenHome(),
-      builder: (context, child) => Consumer<ProviderScreenHome>(
+      child: Consumer<ProviderScreenHome>(
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
