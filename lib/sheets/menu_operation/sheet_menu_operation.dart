@@ -19,7 +19,7 @@ class SheetMenuOperation extends StatelessWidget {
       create: (context) => ProviderSheetMenuOperation(operation, finance),
       child: Consumer<ProviderSheetMenuOperation>(
         builder: (context, provider, child) {
-          return Wrap(
+          return ListView(
             children: [
               Column(
                 children: [

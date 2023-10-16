@@ -47,10 +47,6 @@ class ProviderScreenCategory extends ChangeNotifier {
     }
   }
 
-  void updateScreen() {
-    notifyListeners();
-  }
-
   void onPressedButBackDate() {
     switchDate.backDate();
     notifyListeners();
@@ -83,34 +79,6 @@ class ProviderScreenCategory extends ChangeNotifier {
 
   String valueGroupSubCategory(int index) {
     return listGroupSubCategory[index].getValue(finance);
-  }
-
-  String titleHistoryOperation(int index) {
-    return listHistoryOperation[index].getDateFormat();
-  }
-
-  String valueHistory(int index) {
-    return listHistoryOperation[index].getValue(finance);
-  }
-
-  List<Operation> listOperation(int index) {
-    return listHistoryOperation[index].listOperation ?? [];
-  }
-
-  Operation operation(int indexHistory, int indexOperation) {
-    return listOperation(indexHistory)[indexOperation];
-  }
-
-  String titleOperation(int indexHistory, int indexOperation) {
-    return listOperation(indexHistory)[indexOperation].nameCategory;
-  }
-
-  String subtitlegOperation(int indexHistory, int indexOperation) {
-    return listOperation(indexHistory)[indexOperation].nameSubCategory;
-  }
-
-  String trailingOperation(int indexHistory, int indexOperation) {
-    return listOperation(indexHistory)[indexOperation].getValue(finance);
   }
 
   GroupSubCategory groupSubCategory(int index) {

@@ -8,7 +8,7 @@ class WidgetNoData extends StatelessWidget {
     return const Center(
         child: Padding(
       padding: EdgeInsets.all(8.0),
-      child: Text('Нету данных'),
+      child: Text('Нет данных'),
     ));
   }
 }
