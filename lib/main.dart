@@ -30,7 +30,64 @@ class App extends StatelessWidget {
             supportedLocales: const [
               Locale('ru', 'RU'),
             ],
-            theme: ThemeData(
+            theme: MyThemeApp.light(const Color.fromRGBO(255, 215, 0, 1))
+                .themeLight,
+            darkTheme: MyThemeApp.dark(const Color.fromRGBO(255, 215, 0, 1))
+                .themeLight,
+            themeMode: true ? ThemeMode.dark : ThemeMode.light,
+            home: const ScreenHome(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class MyThemeApp {
+  late ThemeData themeLight;
+  late ThemeData themeDark;
+
+  MyThemeApp.light(Color colorTheme) {
+    themeLight = ThemeData(
+      brightness: Brightness.light,
+      colorSchemeSeed: colorTheme,
+      useMaterial3: true,
+      appBarTheme: AppBarTheme(
+        color: colorTheme,
+        centerTitle: true,
+      ),
+      toggleButtonsTheme: const ToggleButtonsThemeData(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        showDragHandle: true,
+      ),
+    );
+  }
+  MyThemeApp.dark(Color colorTheme) {
+    themeLight = ThemeData(
+      brightness: Brightness.dark,
+      colorSchemeSeed: colorTheme,
+      useMaterial3: true,
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+      ),
+      toggleButtonsTheme: const ToggleButtonsThemeData(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        showDragHandle: true,
+      ),
+    );
+  }
+}
+/*
+
+theme: ThemeData(
               useMaterial3: true,
               colorSchemeSeed: const Color.fromRGBO(255, 215, 0, 1),
               appBarTheme: const AppBarTheme(
@@ -46,10 +103,5 @@ class App extends StatelessWidget {
                 showDragHandle: true,
               ),
             ),
-            home: const ScreenHome(),
-          );
-        },
-      ),
-    );
-  }
-}
+
+*/

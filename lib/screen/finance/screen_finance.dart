@@ -198,13 +198,13 @@ class WidgetGroupCategory extends StatelessWidget {
               ),
             ),
             CircularPercentIndicator(
-              radius: 25.0,
+              radius: 26.0,
               lineWidth: 4.0,
               percent: percent / 100,
               animation: true,
               center: Text(
                 '$percent %',
-                style: const TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 10, color: color),
               ),
               progressColor: color,
             ),
