@@ -66,7 +66,7 @@ class WidgetDrawer extends StatelessWidget {
           const ListTile(
             leading: Icon(Icons.app_shortcut_outlined),
             title: Text('Версия'),
-            subtitle: Text('1.0.6'),
+            subtitle: Text('1.0.7'),
           ),
           ListTile(
             leading: const Icon(Icons.security_outlined),

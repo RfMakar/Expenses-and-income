@@ -33,7 +33,7 @@ class ScreenFinance extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
                   ListView(
-                    padding: const EdgeInsets.fromLTRB(4, 20, 4, 50),
+                    padding: const EdgeInsets.fromLTRB(4, 4, 4, 50),
                     children: [
                       const WidgetSwitchFinance(),
                       const WidgetInfo(),
@@ -188,7 +188,7 @@ class WidgetGroupCategory extends StatelessWidget {
               ),
             ),
             CircularPercentIndicator(
-              radius: 24.0,
+              radius: 26.0,
               lineWidth: 6.0,
               percent: percent / 100,
               animation: true,
