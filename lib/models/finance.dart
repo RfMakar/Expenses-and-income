@@ -24,4 +24,12 @@ class Finance {
       return income;
     }
   }
+
+  String titleAddFinance() {
+    if (id == 0) {
+      return 'Добавить ${expense.toLowerCase()}';
+    } else {
+      return 'Добавить ${income.toLowerCase()}';
+    }
+  }
 }

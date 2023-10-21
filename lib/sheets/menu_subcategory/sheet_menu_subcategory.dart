@@ -3,6 +3,7 @@ import 'package:budget/dialogs/add_operation/dialog_add_operation.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
 import 'package:budget/models/subcategories.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/sheets/menu_subcategory/provider_sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class SheetMenuSubCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     void navigatorUpdateWidget() =>
         Navigator.pop(context, ActionsUpdate.updateWidget);
     void navigatorPop() => Navigator.pop(context);
@@ -33,7 +35,7 @@ class SheetMenuSubCategory extends StatelessWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.add),
-                title: const Text('Добавить'),
+                title: Text(providerApp.finance.titleAddFinance()),
                 onTap: () async {
                   final bool? update = await showDialog(
                     context: context,

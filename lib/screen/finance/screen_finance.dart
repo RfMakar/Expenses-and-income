@@ -159,29 +159,33 @@ class WidgetGroupCategory extends StatelessWidget {
   final void Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: color, width: 1),
-          borderRadius: BorderRadius.circular(8),
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          width: 2,
+          color: color,
         ),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      child: InkWell(
+        onTap: onTap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              // decoration: BoxDecoration(
-              //     color: color,
-              //     borderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(8),
-              //         topRight: Radius.circular(8))),
+              decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
                     name,
-                    //style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -199,18 +203,18 @@ class WidgetGroupCategory extends StatelessWidget {
               progressColor: color,
             ),
             Container(
-              // height: 25,
-              // decoration: BoxDecoration(
-              //     color: color,
-              //     borderRadius: const BorderRadius.only(
-              //         bottomLeft: Radius.circular(8),
-              //         bottomRight: Radius.circular(8))),
+              //height: 25,
+              decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
                     value,
-                    //style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
