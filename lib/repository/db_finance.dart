@@ -194,7 +194,7 @@ abstract class DBFinance {
           JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
           WHERE year = ${switchDate.getDateTime().year} AND month = ${switchDate.getDateTime().month} AND ${TableDB.categories}.idfinance = $finance
         )*100.0, 1 ) as percent,
-      ROUND(SUM(value), 1) AS value
+      ROUND(SUM(value), 2) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
@@ -216,7 +216,7 @@ abstract class DBFinance {
           JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory 
           WHERE year = ${switchDate.getDateTime().year} AND ${TableDB.categories}.idfinance = $finance
         )*100.0, 1 ) as percent,
-      ROUND(SUM(value), 1) AS value
+      ROUND(SUM(value), 2) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
@@ -250,7 +250,7 @@ abstract class DBFinance {
             AND ${TableDB.categories}.idfinance = $finance 
             AND ${TableDB.subcategories}.idcategory = $idCategory
         )*100.0, 1 ) as percent,
-      ROUND(SUM(value), 1) AS value
+      ROUND(SUM(value), 2) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
@@ -446,7 +446,7 @@ abstract class DBFinance {
     late List<Map<String, Object?>> maps;
     if (switchDate.state == 0) {
       maps = await db.rawQuery('''
-      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
@@ -457,7 +457,7 @@ abstract class DBFinance {
         ''');
     } else if (switchDate.state == 1) {
       maps = await db.rawQuery('''
-      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
@@ -478,7 +478,7 @@ abstract class DBFinance {
     late List<Map<String, Object?>> maps;
     if (switchDate.state == 0) {
       maps = await db.rawQuery('''
-      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
@@ -490,7 +490,7 @@ abstract class DBFinance {
         ''');
     } else if (switchDate.state == 1) {
       maps = await db.rawQuery('''
-      SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+      SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
@@ -513,7 +513,7 @@ abstract class DBFinance {
     late List<Map<String, Object?>> maps;
     if (switchDate.state == 0) {
       maps =
-          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  
@@ -525,7 +525,7 @@ abstract class DBFinance {
         ''');
     } else if (switchDate.state == 1) {
       maps =
-          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 1),0.0) AS value
+          await db.rawQuery('''SELECT IFNULL( ROUND(SUM(value), 2),0.0) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory  

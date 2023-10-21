@@ -171,17 +171,17 @@ class WidgetGroupCategory extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
+              // decoration: BoxDecoration(
+              //     color: color,
+              //     borderRadius: const BorderRadius.only(
+              //         topLeft: Radius.circular(8),
+              //         topRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
                     name,
-                    style: const TextStyle(color: Colors.white),
+                    //style: const TextStyle(color: Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -199,18 +199,18 @@ class WidgetGroupCategory extends StatelessWidget {
               progressColor: color,
             ),
             Container(
-              height: 25,
-              decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8))),
+              // height: 25,
+              // decoration: BoxDecoration(
+              //     color: color,
+              //     borderRadius: const BorderRadius.only(
+              //         bottomLeft: Radius.circular(8),
+              //         bottomRight: Radius.circular(8))),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
                     value,
-                    style: const TextStyle(color: Colors.white),
+                    //style: const TextStyle(color: Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

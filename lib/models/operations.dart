@@ -6,8 +6,8 @@ abstract class Operations {
   Operations({required this.value});
   String getValue(int finance) {
     return finance == 0
-        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1).format(value)}'
-        : NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 1)
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 2).format(value)}'
+        : NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 2)
             .format(value);
   }
 }
