@@ -130,11 +130,13 @@ class WidgetGroupSubCategory extends StatelessWidget {
   final void Function() onTap;
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width * 0.5;
     return ListTile(
       onTap: onTap,
       title: Text(name),
       trailing: Text(value, style: const TextStyle(fontSize: 14)),
       subtitle: LinearPercentIndicator(
+        width: width,
         animation: true,
         lineHeight: 16.0,
         animationDuration: 500,

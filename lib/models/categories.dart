@@ -75,8 +75,8 @@ class GroupCategory extends ReadCategory {
       );
   String getValue(int finance) {
     return finance == 0
-        ? '-${NumberFormat.compactSimpleCurrency(locale: 'ru-RU', decimalDigits: 2).format(value)}'
-        : NumberFormat.compactSimpleCurrency(locale: 'ru-RU', decimalDigits: 2)
+        ? '-${NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 2).format(value)}'
+        : NumberFormat.simpleCurrency(locale: 'ru-RU', decimalDigits: 2)
             .format(value);
   }
 }
