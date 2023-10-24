@@ -3,7 +3,6 @@ import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
 import 'package:budget/widget/group_categories.dart';
-import 'package:budget/widget/history/widget_history.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
 import 'package:budget/widget/switch_finance.dart';
@@ -40,12 +39,12 @@ class ScreenFinance extends StatelessWidget {
                       provider.listGroupCategory.isEmpty
                           ? const WidgetNoData()
                           : const WidgetListGroupCategory(),
-                      provider.listHistoryOperation.isEmpty
-                          ? const SizedBox()
-                          : WidgetHistory(
-                              listHistoryOperation:
-                                  provider.listHistoryOperation,
-                            ),
+                      // provider.listHistoryOperation.isEmpty
+                      //     ? const SizedBox()
+                      //     : WidgetHistory(
+                      //         listHistoryOperation:
+                      //             provider.listHistoryOperation,
+                      //       ),
                     ],
                   ),
                   const ButtonAddFinance(),

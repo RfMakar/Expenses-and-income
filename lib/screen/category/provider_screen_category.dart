@@ -31,19 +31,15 @@ class ProviderScreenCategory extends ChangeNotifier {
   }
 
   Future getListHistoryOperationCategory() async {
-    //Если период месяц, то история операций будет, если год то не будет
-    if (switchDate.state == 0) {
-      listHistoryOperation = await DBFinance.getListHistoryOperationCategory(
-          switchDate.getDateTime(), finance, groupCategory.id);
-      for (var historyOperation in listHistoryOperation) {
-        historyOperation.listOperation =
-            await DBFinance.getListOperationCategory(
-                DateTime.tryParse(historyOperation.date)!,
-                finance,
-                groupCategory.id);
-      }
-    } else if (switchDate.state == 1) {
-      listHistoryOperation = [];
+    listHistoryOperation = await DBFinance.getListHistoryOperationCategory(
+      switchDate,
+      switchDate.getDateTime(),
+      finance,
+      groupCategory.id,
+    );
+    for (var historyOperation in listHistoryOperation) {
+      historyOperation.listOperation = await DBFinance.getListOperationCategory(
+          DateTime.tryParse(historyOperation.date)!, finance, groupCategory.id);
     }
   }
 

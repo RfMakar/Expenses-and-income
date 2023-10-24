@@ -293,106 +293,106 @@ abstract class DBFinance {
         : [];
   }
 
-  static Future<List<HistoryOperation>> getListHistoryAllOperation(
-      DateTime dateTime, int finance) async {
-    final db = await database;
-    var maps = await db.rawQuery(
-      '''
-      SELECT date,
-      ROUND(SUM(value),2) AS value
-      FROM ${TableDB.operations}
-      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND ${TableDB.finance}.id = ?
-      GROUP BY day
-      ORDER BY day DESC
-      ;
-        ''',
-      [dateTime.year, dateTime.month, finance],
-    );
-    return maps.isNotEmpty
-        ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
-        : [];
-  }
-
+  //Возращает лист HistoryOperation определенной категории
   static Future<List<HistoryOperation>> getListHistoryOperationCategory(
-      DateTime dateTime, int finance, int idCategory) async {
+    SwitchDate switchDate,
+    DateTime dateTime,
+    int finance,
+    int idCategory,
+  ) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    late List<Map<String, Object?>> maps;
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''
       SELECT date,
       ROUND(SUM(value),2) AS value
       FROM ${TableDB.operations}
-      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND ${TableDB.finance}.id = ? AND ${TableDB.categories}.id = ? 
+        JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+        JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+        JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ${dateTime.year} 
+        AND month = ${dateTime.month} 
+        AND ${TableDB.finance}.id = $finance 
+        AND ${TableDB.categories}.id = $idCategory 
       GROUP BY day
       ORDER BY day DESC
       ;
-        ''',
-      [dateTime.year, dateTime.month, finance, idCategory],
-    );
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''
+      SELECT date,
+      ROUND(SUM(value),2) AS value
+      FROM ${TableDB.operations}
+        JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+        JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+        JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ${dateTime.year} 
+        AND ${TableDB.finance}.id = $finance 
+        AND ${TableDB.categories}.id = $idCategory 
+      GROUP BY day, month
+      ORDER BY month DESC,day DESC
+      ;
+        ''');
+    }
+
     return maps.isNotEmpty
         ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
         : [];
   }
 
+  //Возращает лист HistoryOperation определенной подкатегории
   static Future<List<HistoryOperation>> getListHistoryOperationSubCategory(
-      DateTime dateTime, int finance, int idSubCategory) async {
+    SwitchDate switchDate,
+    DateTime dateTime,
+    int finance,
+    int idSubCategory,
+  ) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    late List<Map<String, Object?>> maps;
+
+    if (switchDate.state == 0) {
+      maps = await db.rawQuery('''
       SELECT date,
       ROUND(SUM(value),2) AS value
       FROM ${TableDB.operations}
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND ${TableDB.finance}.id = ? AND ${TableDB.subcategories}.id = ? 
+      WHERE year = ${dateTime.year} 
+        AND month = ${dateTime.month} 
+        AND ${TableDB.finance}.id = $finance 
+        AND ${TableDB.subcategories}.id = $idSubCategory 
       GROUP BY day
       ORDER BY day DESC
       ;
-        ''',
-      [dateTime.year, dateTime.month, finance, idSubCategory],
-    );
+        ''');
+    } else if (switchDate.state == 1) {
+      maps = await db.rawQuery('''
+      SELECT date,
+      ROUND(SUM(value),2) AS value
+      FROM ${TableDB.operations}
+      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
+      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
+      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
+      WHERE year = ${dateTime.year} 
+        AND ${TableDB.finance}.id = $finance 
+        AND ${TableDB.subcategories}.id = $idSubCategory 
+      GROUP BY day, month
+      ORDER BY month DESC,day DESC
+      ;
+        ''');
+    }
+
     return maps.isNotEmpty
         ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
         : [];
   }
 
-  static Future<List<Operation>> getListAllOperation(
-      DateTime dateTime, int finance) async {
-    final db = await database;
-    var maps = await db.rawQuery(
-      '''
-      SELECT ${TableDB.operations}.id AS id,
-      ${TableDB.categories}.name AS namecategory,
-      ${TableDB.subcategories}.name AS namesubcategory,
-      note,
-      date,
-      ROUND(value, 2) as value
-      FROM ${TableDB.operations}
-      JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-      JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-      JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? 
-      ORDER BY date DESC
-      ;
-        ''',
-      [dateTime.year, dateTime.month, dateTime.day, finance],
-    );
-    return maps.isNotEmpty
-        ? maps.map((e) => Operation.fromMap(e)).toList()
-        : [];
-  }
-
+  //Возращает лист операций определенной категории и даты
   static Future<List<Operation>> getListOperationCategory(
       DateTime dateTime, int finance, int idCategory) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    var maps = await db.rawQuery('''
       SELECT ${TableDB.operations}.id AS id,
       ${TableDB.categories}.name AS namecategory,
       ${TableDB.subcategories}.name AS namesubcategory,
@@ -403,22 +403,24 @@ abstract class DBFinance {
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? AND ${TableDB.categories}.id = ? 
+      WHERE year = ${dateTime.year} 
+        AND month = ${dateTime.month} 
+        AND day = ${dateTime.day} 
+        AND ${TableDB.finance}.id = $finance
+        AND ${TableDB.categories}.id = $idCategory 
       ORDER BY date DESC
       ;
-        ''',
-      [dateTime.year, dateTime.month, dateTime.day, finance, idCategory],
-    );
+        ''');
     return maps.isNotEmpty
         ? maps.map((e) => Operation.fromMap(e)).toList()
         : [];
   }
 
+  //Возращает лист операций определенной подкатегории и даты
   static Future<List<Operation>> getListOperationSubCategory(
       DateTime dateTime, int finance, int idSubCategory) async {
     final db = await database;
-    var maps = await db.rawQuery(
-      '''
+    var maps = await db.rawQuery('''
       SELECT ${TableDB.operations}.id AS id,
       ${TableDB.categories}.name AS namecategory,
       ${TableDB.subcategories}.name AS namesubcategory,
@@ -429,12 +431,14 @@ abstract class DBFinance {
       JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
       JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
       JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ? AND month = ? AND day = ? AND ${TableDB.finance}.id = ? AND ${TableDB.subcategories}.id = ? 
+      WHERE year = ${dateTime.year} 
+        AND month = ${dateTime.month} 
+        AND day = ${dateTime.day}  
+        AND ${TableDB.finance}.id = $finance 
+        AND ${TableDB.subcategories}.id = $idSubCategory 
       ORDER BY date DESC
       ;
-        ''',
-      [dateTime.year, dateTime.month, dateTime.day, finance, idSubCategory],
-    );
+        ''');
     return maps.isNotEmpty
         ? maps.map((e) => Operation.fromMap(e)).toList()
         : [];

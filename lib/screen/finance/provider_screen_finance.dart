@@ -10,13 +10,13 @@ class ProviderScreenFinance extends ChangeNotifier {
   final SwitchDate switchDate;
   late SumOperation sumOperation;
   late List<GroupCategory> listGroupCategory;
-  late List<HistoryOperation> listHistoryOperation;
+  // late List<HistoryOperation> listHistoryOperation;
 
   Future loadData(int idFinance) async {
     finance = idFinance;
     await getSumAllOperation();
     await getListGroupCategory();
-    await getListHistoryAllOperation();
+    // await getListHistoryAllOperation();
   }
 
   Future getSumAllOperation() async {
@@ -29,19 +29,19 @@ class ProviderScreenFinance extends ChangeNotifier {
         await DBFinance.getListGroupCategoryInPeriod(switchDate, finance);
   }
 
-  Future getListHistoryAllOperation() async {
-    //Если период месяц, то история операций будет, если год то не будет
-    if (switchDate.state == 0) {
-      listHistoryOperation = await DBFinance.getListHistoryAllOperation(
-          switchDate.getDateTime(), finance);
-      for (var historyOperation in listHistoryOperation) {
-        historyOperation.listOperation = await DBFinance.getListAllOperation(
-            DateTime.tryParse(historyOperation.date)!, finance);
-      }
-    } else if (switchDate.state == 1) {
-      listHistoryOperation = [];
-    }
-  }
+  // Future getListHistoryAllOperation() async {
+  //   //Если период месяц, то история операций будет, если год то не будет
+  //   if (switchDate.state == 0) {
+  //     listHistoryOperation = await DBFinance.getListHistoryAllOperation(
+  //         switchDate.getDateTime(), finance);
+  //     for (var historyOperation in listHistoryOperation) {
+  //       historyOperation.listOperation = await DBFinance.getListAllOperation(
+  //           DateTime.tryParse(historyOperation.date)!, finance);
+  //     }
+  //   } else if (switchDate.state == 1) {
+  //     listHistoryOperation = [];
+  //   }
+  // }
 
   void onPressedButBackDate() {
     switchDate.backDate();

@@ -23,18 +23,18 @@ class ProviderScreenSubCategory extends ChangeNotifier {
   }
 
   Future getListHistoryOperationSubCategory() async {
-    if (switchDate.state == 0) {
-      listHistoryOperation = await DBFinance.getListHistoryOperationSubCategory(
-          switchDate.getDateTime(), finance, groupSubCategory.id);
-      for (var historyOperation in listHistoryOperation) {
-        historyOperation.listOperation =
-            await DBFinance.getListOperationSubCategory(
-                DateTime.tryParse(historyOperation.date)!,
-                finance,
-                groupSubCategory.id);
-      }
-    } else if (switchDate.state == 1) {
-      listHistoryOperation = [];
+    listHistoryOperation = await DBFinance.getListHistoryOperationSubCategory(
+      switchDate,
+      switchDate.getDateTime(),
+      finance,
+      groupSubCategory.id,
+    );
+    for (var historyOperation in listHistoryOperation) {
+      historyOperation.listOperation =
+          await DBFinance.getListOperationSubCategory(
+              DateTime.tryParse(historyOperation.date)!,
+              finance,
+              groupSubCategory.id);
     }
   }
 
