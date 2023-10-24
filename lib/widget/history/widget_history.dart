@@ -23,7 +23,7 @@ class WidgetHistory extends StatelessWidget {
               const SizedBox(height: 20),
               const Text(
                 'История операций',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               ListView.builder(
                 shrinkWrap: true,

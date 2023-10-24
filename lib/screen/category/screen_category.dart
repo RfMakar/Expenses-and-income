@@ -2,11 +2,11 @@ import 'package:budget/models/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/category/provider_screen_category.dart';
 import 'package:budget/screen/subcategory/screen_subcategory.dart';
+import 'package:budget/widget/group_categories.dart';
 import 'package:budget/widget/history/widget_history.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenCategory extends StatelessWidget {
@@ -83,7 +83,7 @@ class WidgetListGroupSubCategory extends StatelessWidget {
         const SizedBox(height: 10),
         const Text(
           'Подкатегории',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         const SizedBox(height: 10),
         ListView.builder(
@@ -91,7 +91,7 @@ class WidgetListGroupSubCategory extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: provider.listGroupSubCategory.length,
           itemBuilder: (context, index) {
-            return WidgetGroupSubCategory(
+            return WidgetGroupCategories(
               name: provider.titleGroupSubCategory(index),
               value: provider.valueGroupSubCategory(index),
               percent: provider.percentGroupSubCategory(index),
@@ -114,40 +114,40 @@ class WidgetListGroupSubCategory extends StatelessWidget {
   }
 }
 
-class WidgetGroupSubCategory extends StatelessWidget {
-  const WidgetGroupSubCategory({
-    super.key,
-    required this.name,
-    required this.value,
-    required this.percent,
-    required this.color,
-    required this.onTap,
-  });
-  final String name;
-  final String value;
-  final double percent;
-  final Color color;
-  final void Function() onTap;
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * 0.5;
-    return ListTile(
-      onTap: onTap,
-      title: Text(name),
-      trailing: Text(value, style: const TextStyle(fontSize: 14)),
-      subtitle: LinearPercentIndicator(
-        width: width,
-        animation: true,
-        lineHeight: 16.0,
-        animationDuration: 500,
-        percent: percent / 100,
-        center: Text(
-          '$percent %',
-          style: const TextStyle(fontSize: 10, color: Colors.white),
-        ),
-        barRadius: const Radius.circular(8),
-        progressColor: color,
-      ),
-    );
-  }
-}
+// class WidgetGroupSubCategory extends StatelessWidget {
+//   const WidgetGroupSubCategory({
+//     super.key,
+//     required this.name,
+//     required this.value,
+//     required this.percent,
+//     required this.color,
+//     required this.onTap,
+//   });
+//   final String name;
+//   final String value;
+//   final double percent;
+//   final Color color;
+//   final void Function() onTap;
+//   @override
+//   Widget build(BuildContext context) {
+//     final width = MediaQuery.of(context).size.width * 0.5;
+//     return ListTile(
+//       onTap: onTap,
+//       title: Text(name),
+//       trailing: Text(value, style: const TextStyle(fontSize: 14)),
+//       subtitle: LinearPercentIndicator(
+//         width: width,
+//         animation: true,
+//         lineHeight: 16.0,
+//         animationDuration: 500,
+//         percent: percent / 100,
+//         center: Text(
+//           '$percent %',
+//           style: const TextStyle(fontSize: 10, color: Colors.white),
+//         ),
+//         barRadius: const Radius.circular(8),
+//         progressColor: color,
+//       ),
+//     );
+//   }
+// }

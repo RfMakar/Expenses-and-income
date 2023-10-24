@@ -2,12 +2,12 @@ import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
+import 'package:budget/widget/group_categories.dart';
 import 'package:budget/widget/history/widget_history.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
 import 'package:budget/widget/switch_finance.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ScreenFinance extends StatelessWidget {
@@ -109,18 +109,15 @@ class WidgetListGroupCategory extends StatelessWidget {
         const SizedBox(height: 10),
         const Text(
           'Категории',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         const SizedBox(height: 10),
-        GridView.builder(
+        ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-          ),
           itemCount: provider.listGroupCategory.length,
           itemBuilder: (context, index) {
-            return WidgetGroupCategory(
+            return WidgetGroupCategories(
               color: provider.colorGroupCategory(index),
               name: provider.titleGroupCategory(index),
               percent: provider.percentGroupCategory(index),
@@ -139,90 +136,6 @@ class WidgetListGroupCategory extends StatelessWidget {
           },
         ),
       ],
-    );
-  }
-}
-
-class WidgetGroupCategory extends StatelessWidget {
-  const WidgetGroupCategory({
-    super.key,
-    required this.color,
-    required this.name,
-    required this.percent,
-    required this.value,
-    required this.onTap,
-  });
-  final Color color;
-  final String name;
-  final double percent;
-  final String value;
-  final void Function() onTap;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 2,
-          color: color,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text(
-                    name,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ),
-            CircularPercentIndicator(
-              radius: 26.0,
-              lineWidth: 6.0,
-              percent: percent / 100,
-              animation: true,
-              center: Text(
-                '$percent %',
-                style: const TextStyle(fontSize: 10),
-              ),
-              progressColor: color,
-            ),
-            Container(
-              //height: 25,
-              decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8))),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text(
-                    value,
-                    style: const TextStyle(color: Colors.white),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
