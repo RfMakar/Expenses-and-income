@@ -32,8 +32,16 @@ class WidgetGroupCategories extends StatelessWidget {
                   children: [
                     Text(
                       name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    Text(value),
+                    Text(
+                      value,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
               ),
