@@ -81,16 +81,20 @@ class WidgetHistory extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        provider.titleOperation(
-                                            indexHistory, indexOperation),
+                                      Expanded(
+                                        child: Text(
+                                          provider.titleOperation(
+                                              indexHistory, indexOperation),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                       Text(
                                         provider.trailingOperation(
                                           indexHistory,
                                           indexOperation,
                                         ),
-                                        style: TextStyle(color: Colors.grey),
+                                        style:
+                                            const TextStyle(color: Colors.grey),
                                       ),
                                     ],
                                   ),
@@ -101,7 +105,10 @@ class WidgetHistory extends StatelessWidget {
                                         provider.subtitlegOperation(
                                             indexHistory, indexOperation),
                                         style: const TextStyle(
-                                            color: Colors.grey, fontSize: 12),
+                                          color: Colors.grey,
+                                          fontSize: 12,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
@@ -122,65 +129,3 @@ class WidgetHistory extends StatelessWidget {
     );
   }
 }
-
-
-/*
-
-
-ListTile(
-                            title: Text(
-                              provider.titleOperation(
-                                  indexHistory, indexOperation),
-                            ),
-                            subtitle: Text(
-                              provider.subtitlegOperation(
-                                  indexHistory, indexOperation),
-                            ),
-                            trailing: Text(
-                              provider.trailingOperation(
-                                  indexHistory, indexOperation),
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            onTap: () async {
-                              final ActionsUpdate? actionsUpdate =
-                                  await showModalBottomSheet(
-                                context: context,
-                                builder: (context) => SheetMenuOperation(
-                                  operation: provider.operation(
-                                      indexHistory, indexOperation),
-                                  finance: providerApp.finance.id,
-                                ),
-                              );
-                              if (actionsUpdate == ActionsUpdate.updateScreen) {
-                                providerApp.updateApp();
-                              }
-                            },
-                          );
-InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 8, 10),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      name,
-                    ),
-                    Text(value),
-                  ],
-                ),
-              ),
-              Text(
-                  '$percent %',
-                  style: const TextStyle(color: Colors.grey),
-                ),
-            ],
-          ),
-        ),
-      ),
-
-*/

@@ -30,10 +30,13 @@ class WidgetGroupCategories extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Text(
+                        name,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     Text(
