@@ -1,6 +1,8 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/subcategories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/subcategory/provider_screen_subcategory.dart';
+import 'package:budget/sheets/select_period/sheet_select_period.dart';
 import 'package:budget/widget/history/widget_history.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
@@ -39,7 +41,9 @@ class ScreenSubCategory extends StatelessWidget {
                   provider.listHistoryOperation.isEmpty
                       ? const WidgetNoData()
                       : WidgetHistory(
-                          listHistoryOperation: provider.listHistoryOperation),
+                          listHistoryOperation: provider.listHistoryOperation,
+                          updateScreen: provider.updateScreen,
+                        ),
                 ],
               );
             },
@@ -60,6 +64,15 @@ class WidgetInfo extends StatelessWidget {
       titleValue: provider.titleSumOperation(),
       onPressedButBackDate: provider.onPressedButBackDate,
       onPressedButNextDate: provider.onPressedButNextDate,
+      onPressedButSelPeriod: () async {
+        final update = await showModalBottomSheet(
+          context: context,
+          builder: (context) => const SheetSelectPeriod(),
+        );
+        if (update == ActionsUpdate.updateScreen) {
+          provider.updateScreen();
+        }
+      },
     );
   }
 }

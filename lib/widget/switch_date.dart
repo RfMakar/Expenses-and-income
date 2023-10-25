@@ -1,5 +1,4 @@
 import 'package:budget/provider_app.dart';
-import 'package:budget/sheets/select_period/sheet_select_period.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +8,12 @@ class WidgetSwitchDate extends StatelessWidget {
     required this.titleValue,
     required this.onPressedButBackDate,
     required this.onPressedButNextDate,
+    required this.onPressedButSelPeriod,
   });
   final String titleValue;
   final void Function() onPressedButBackDate;
   final void Function() onPressedButNextDate;
+  final void Function() onPressedButSelPeriod;
   @override
   Widget build(BuildContext context) {
     final providerApp = Provider.of<ProviderApp>(context);
@@ -52,12 +53,7 @@ class WidgetSwitchDate extends StatelessWidget {
                 ],
               ),
               IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SheetSelectPeriod(),
-                  );
-                },
+                onPressed: onPressedButSelPeriod,
                 icon: const Icon(Icons.date_range_outlined),
               ),
             ],

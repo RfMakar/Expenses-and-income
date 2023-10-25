@@ -12,7 +12,7 @@ class ProviderApp extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateApp() {
-    notifyListeners();
-  }
+  // void updateApp() {
+  //   notifyListeners();
+  // }
 }

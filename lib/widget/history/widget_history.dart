@@ -7,8 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WidgetHistory extends StatelessWidget {
-  const WidgetHistory({super.key, required this.listHistoryOperation});
+  const WidgetHistory({
+    super.key,
+    required this.listHistoryOperation,
+    required this.updateScreen,
+  });
   final List<HistoryOperation> listHistoryOperation;
+  final void Function() updateScreen;
   @override
   Widget build(BuildContext context) {
     final providerApp = Provider.of<ProviderApp>(context);
@@ -70,7 +75,7 @@ class WidgetHistory extends StatelessWidget {
                                 ),
                               );
                               if (actionsUpdate == ActionsUpdate.updateScreen) {
-                                providerApp.updateApp();
+                                updateScreen();
                               }
                             },
                             child: Padding(

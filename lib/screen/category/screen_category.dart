@@ -1,7 +1,9 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/category/provider_screen_category.dart';
 import 'package:budget/screen/subcategory/screen_subcategory.dart';
+import 'package:budget/sheets/select_period/sheet_select_period.dart';
 import 'package:budget/widget/group_categories.dart';
 import 'package:budget/widget/history/widget_history.dart';
 import 'package:budget/widget/no_data.dart';
@@ -45,8 +47,9 @@ class ScreenCategory extends StatelessWidget {
                     provider.listHistoryOperation.isEmpty
                         ? const SizedBox()
                         : WidgetHistory(
-                            listHistoryOperation:
-                                provider.listHistoryOperation),
+                            listHistoryOperation: provider.listHistoryOperation,
+                            updateScreen: provider.updateScreen,
+                          ),
                   ],
                 );
               },
@@ -68,6 +71,15 @@ class WidgetInfo extends StatelessWidget {
       titleValue: provider.titleSumOperation(),
       onPressedButBackDate: provider.onPressedButBackDate,
       onPressedButNextDate: provider.onPressedButNextDate,
+      onPressedButSelPeriod: () async {
+        final update = await showModalBottomSheet(
+          context: context,
+          builder: (context) => const SheetSelectPeriod(),
+        );
+        if (update == ActionsUpdate.updateScreen) {
+          provider.updateScreen();
+        }
+      },
     );
   }
 }
@@ -96,8 +108,8 @@ class WidgetListGroupSubCategory extends StatelessWidget {
               value: provider.valueGroupSubCategory(index),
               percent: provider.percentGroupSubCategory(index),
               color: provider.colorGroupSubCategory(index),
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScreenSubCategory(
@@ -105,6 +117,7 @@ class WidgetListGroupSubCategory extends StatelessWidget {
                     ),
                   ),
                 );
+                provider.updateScreen();
               },
             );
           },

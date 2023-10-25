@@ -1,3 +1,4 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/provider_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +24,8 @@ class SheetSelectPeriod extends StatelessWidget {
           trailing: stateApp == 0 ? const Icon(Icons.check) : null,
           onTap: () {
             if (stateApp == 1) {
-              Navigator.pop(context);
+              Navigator.pop(context, ActionsUpdate.updateScreen);
               providerApp.switchDate.stateMonth();
-              providerApp.updateApp();
             }
           },
         ),
@@ -34,9 +34,8 @@ class SheetSelectPeriod extends StatelessWidget {
           trailing: stateApp == 1 ? const Icon(Icons.check) : null,
           onTap: () {
             if (stateApp == 0) {
-              Navigator.pop(context);
+              Navigator.pop(context, ActionsUpdate.updateScreen);
               providerApp.switchDate.stateYear();
-              providerApp.updateApp();
             }
           },
         ),

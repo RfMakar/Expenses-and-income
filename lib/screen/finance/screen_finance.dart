@@ -1,7 +1,9 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/screen_add_finance.dart';
 import 'package:budget/screen/category/screen_category.dart';
 import 'package:budget/screen/finance/provider_screen_finance.dart';
+import 'package:budget/sheets/select_period/sheet_select_period.dart';
 import 'package:budget/widget/group_categories.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';
@@ -39,12 +41,6 @@ class ScreenFinance extends StatelessWidget {
                       provider.listGroupCategory.isEmpty
                           ? const WidgetNoData()
                           : const WidgetListGroupCategory(),
-                      // provider.listHistoryOperation.isEmpty
-                      //     ? const SizedBox()
-                      //     : WidgetHistory(
-                      //         listHistoryOperation:
-                      //             provider.listHistoryOperation,
-                      //       ),
                     ],
                   ),
                   const ButtonAddFinance(),
@@ -93,6 +89,15 @@ class WidgetInfo extends StatelessWidget {
       titleValue: provider.titleSumOperation(),
       onPressedButBackDate: provider.onPressedButBackDate,
       onPressedButNextDate: provider.onPressedButNextDate,
+      onPressedButSelPeriod: () async {
+        final update = await showModalBottomSheet(
+          context: context,
+          builder: (context) => const SheetSelectPeriod(),
+        );
+        if (update == ActionsUpdate.updateScreen) {
+          provider.updateScreen();
+        }
+      },
     );
   }
 }
@@ -121,8 +126,8 @@ class WidgetListGroupCategory extends StatelessWidget {
               name: provider.titleGroupCategory(index),
               percent: provider.percentGroupCategory(index),
               value: provider.valueGroupCategory(index),
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ScreenCategory(
@@ -130,6 +135,7 @@ class WidgetListGroupCategory extends StatelessWidget {
                     ),
                   ),
                 );
+                provider.updateScreen();
               },
             );
           },

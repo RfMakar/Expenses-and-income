@@ -43,6 +43,10 @@ class ProviderScreenCategory extends ChangeNotifier {
     }
   }
 
+  void updateScreen() async {
+    notifyListeners();
+  }
+
   void onPressedButBackDate() {
     switchDate.backDate();
     notifyListeners();
