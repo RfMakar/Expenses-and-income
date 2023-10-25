@@ -35,8 +35,9 @@ class ScreenDataApp extends StatelessWidget {
                     context: context,
                     builder: (context) => const DialodgDelete(),
                   );
-                  if (result == true) {}
-                  provider.onTapDeleteAllOperation();
+                  if (result == true) {
+                    provider.onTapDeleteAllOperation();
+                  }
                 },
               ),
               ListTile(
