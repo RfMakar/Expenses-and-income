@@ -3,6 +3,7 @@ import 'package:budget/dialogs/add_category/dialog_add_category.dart';
 import 'package:budget/models/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screen/add_finance/provider_screen_add_finance.dart';
+import 'package:budget/screen/add_finance/provider_widget_card_category.dart';
 import 'package:budget/widget/switch_finance.dart';
 import 'package:budget/sheets/menu_category/sheet_menu_category.dart';
 import 'package:budget/sheets/menu_subcategory/sheet_menu_subcategory.dart';
@@ -26,7 +27,7 @@ class ScreenAddFinance extends StatelessWidget {
               children: const [
                 WidgetSwitchFinance(),
                 WidgetButtonAddCateory(),
-                WidgetCategories(),
+                WidgetListCategory(),
               ],
             ),
           );
@@ -59,8 +60,8 @@ class WidgetButtonAddCateory extends StatelessWidget {
   }
 }
 
-class WidgetCategories extends StatelessWidget {
-  const WidgetCategories({super.key});
+class WidgetListCategory extends StatelessWidget {
+  const WidgetListCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,54 +110,63 @@ class WidgetCardCategory extends StatelessWidget {
               if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return ExpansionTile(
-                childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              return Card(
+                elevation: 0.5,
+                child: ExpansionTile(
+                  childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () async {
+                      final ActionsUpdate? actionsUpdate =
+                          await showModalBottomSheet(
+                        context: context,
+                        builder: (context) => SheetMenuCategory(
+                          category: provider.category,
+                        ),
+                      );
+                      if (actionsUpdate == ActionsUpdate.updateWidget) {
+                        provider.updateWidget();
+                      } else if (actionsUpdate == ActionsUpdate.updateScreen) {
+                        providerScreen.updateScreen();
+                      }
+                    },
+                  ),
+                  key: PageStorageKey(provider.key()),
+                  textColor: provider.colorCategories(),
+                  iconColor: provider.colorCategories(),
+                  title: Text(provider.nameCategories()),
+                  children: provider
+                      .listNameSubcategories()
+                      .map(
+                        (subCategories) => ListTile(
+                          textColor: provider.colorCategories(),
+                          iconColor: provider.colorCategories(),
+                          leading: const Text(
+                            '-',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          title: Text(subCategories.name),
+                          onTap: () async {
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SheetMenuSubCategory(
+                                  subCategory: subCategories),
+                            );
+                            if (actionsUpdate == ActionsUpdate.updateWidget) {
+                              provider.updateWidget();
+                            }
+                          },
+                        ),
+                      )
+                      .toList(),
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () async {
-                    final ActionsUpdate? actionsUpdate =
-                        await showModalBottomSheet(
-                      context: context,
-                      builder: (context) => SheetMenuCategory(
-                        category: provider.category,
-                      ),
-                    );
-                    if (actionsUpdate == ActionsUpdate.updateWidget) {
-                      provider.updateWidget();
-                    } else if (actionsUpdate == ActionsUpdate.updateScreen) {
-                      providerScreen.updateScreen();
-                    }
-                  },
-                ),
-                key: PageStorageKey(provider.key()),
-                textColor: provider.colorCategories(),
-                iconColor: provider.colorCategories(),
-                title: Text(provider.nameCategories()),
-                children: provider
-                    .listNameSubcategories()
-                    .map(
-                      (subCategories) => ListTile(
-                        textColor: provider.colorCategories(),
-                        iconColor: provider.colorCategories(),
-                        leading: const Icon(Icons.arrow_right),
-                        title: Text(subCategories.name),
-                        onTap: () async {
-                          final ActionsUpdate? actionsUpdate =
-                              await showModalBottomSheet(
-                            context: context,
-                            builder: (context) => SheetMenuSubCategory(
-                                subCategory: subCategories),
-                          );
-                          if (actionsUpdate == ActionsUpdate.updateWidget) {
-                            provider.updateWidget();
-                          }
-                        },
-                      ),
-                    )
-                    .toList(),
               );
             },
           );
