@@ -1,5 +1,5 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/models/operations.dart';
+import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:budget/widget/history/provider_widget_history.dart';

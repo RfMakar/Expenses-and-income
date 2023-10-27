@@ -1,4 +1,4 @@
-import 'package:budget/models/operations.dart';
+import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/repository/db_finance.dart';
 import 'package:flutter/widgets.dart';
 

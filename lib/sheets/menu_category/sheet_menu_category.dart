@@ -1,8 +1,8 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/add_subcategory/dialog_add_subcategory.dart';
+import 'package:budget/dialogs/app_finance/add_subcategory/dialog_add_subcategory.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
-import 'package:budget/models/categories.dart';
+import 'package:budget/models/app_finance/categories.dart';
 import 'package:budget/sheets/colors/sheet_colors.dart';
 import 'package:budget/sheets/menu_category/provider_sheet_menu.category.dart';
 import 'package:flutter/material.dart';
