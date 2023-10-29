@@ -3,7 +3,7 @@ import 'package:budget/provider_app.dart';
 import 'package:budget/screens/app_finance/add_finance/screen_add_finance.dart';
 import 'package:budget/screens/app_finance/category/screen_category.dart';
 import 'package:budget/screens/app_finance/finance/provider_screen_finance.dart';
-import 'package:budget/sheets/select_period/sheet_select_period.dart';
+import 'package:budget/sheets/app_finance/select_period/sheet_select_period.dart';
 import 'package:budget/widget/group_categories.dart';
 import 'package:budget/widget/no_data.dart';
 import 'package:budget/widget/switch_date.dart';

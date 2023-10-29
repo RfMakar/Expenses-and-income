@@ -4,9 +4,9 @@ import 'package:budget/models/app_finance/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_widget_card_category.dart';
+import 'package:budget/sheets/app_finance/menu_category/sheet_menu_category.dart';
+import 'package:budget/sheets/app_finance/menu_subcategory/sheet_menu_subcategory.dart';
 import 'package:budget/widget/switch_finance.dart';
-import 'package:budget/sheets/menu_category/sheet_menu_category.dart';
-import 'package:budget/sheets/menu_subcategory/sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

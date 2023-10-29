@@ -12,8 +12,7 @@ class ProviderScreenAddFinance extends ChangeNotifier {
 
   Future getListCategory(int idFinance) async {
     finance = idFinance;
-    final list = await DBFinance.getListCategory(finance);
-    listCategory = list;
+    listCategory = await DBFinance.getListCategory(finance);
   }
 
   void updateScreen() async {

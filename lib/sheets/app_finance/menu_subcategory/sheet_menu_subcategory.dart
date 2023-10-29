@@ -4,7 +4,7 @@ import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
 import 'package:budget/models/app_finance/subcategories.dart';
 import 'package:budget/provider_app.dart';
-import 'package:budget/sheets/menu_subcategory/provider_sheet_menu_subcategory.dart';
+import 'package:budget/sheets/app_finance/menu_subcategory/provider_sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,3 +1,5 @@
+import 'package:budget/models/app_shop_list/shop_list.dart';
+import 'package:budget/repository/db_shop_list.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddShopList extends ChangeNotifier {
@@ -8,17 +10,14 @@ class ProviderDialogAddShopList extends ChangeNotifier {
     if (!formKey.currentState!.validate()) {
       return false;
     } else {
-      insertDBCategory();
+      insertDBShopList();
       return true;
     }
   }
 
-  void insertDBCategory() {
-    // final writeCategory = WriteCategory(
-    //   idfinance: finance.id,
-    //   name: textEditingControllerName.text.trim(),
-    //   color: colorDialog.value.toString(),
-    // );
-    // DBFinance.insertCategory(writeCategory);
+  void insertDBShopList() {
+    final writeShopList =
+        WriteShopList(name: textEditingControllerName.text.trim());
+    DBShopList.insertCategory(writeShopList);
   }
 }
