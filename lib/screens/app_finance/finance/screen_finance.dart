@@ -62,7 +62,7 @@ class ButtonAddFinance extends StatelessWidget {
     final provider = Provider.of<ProviderScreenFinance>(context);
     final providerApp = Provider.of<ProviderApp>(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: FloatingActionButton.extended(
         onPressed: () async {
           await Navigator.push(

@@ -80,8 +80,8 @@ class ButtonAddShoppList extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenShopList>(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: FloatingActionButton(
+      padding: const EdgeInsets.all(16.0),
+      child: FloatingActionButton.extended(
         onPressed: () async {
           bool result = await showDialog(
             context: context,
@@ -91,7 +91,8 @@ class ButtonAddShoppList extends StatelessWidget {
             provider.updateScreen();
           }
         },
-        child: const Icon(Icons.add),
+        label: const Text('Список'),
+        icon: const Icon(Icons.add),
       ),
     );
   }

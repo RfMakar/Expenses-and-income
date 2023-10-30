@@ -13,92 +13,75 @@ class ScreenRecordList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (context) => ProviderScreenRecordlist(shopList),
-        child: Scaffold(
-          appBar: AppBar(title: Text(shopList.name)),
-          body: ListView(children: const [
-            ButtonAddRecordList(),
-            WidgetRecordList(),
-          ]),
-        ));
-  }
-}
-
-class WidgetRecordList extends StatelessWidget {
-  const WidgetRecordList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenRecordlist>(context);
-    return FutureBuilder(
-      future: provider.getListRecord(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: provider.listRecordList.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 0.5,
-              child: ListTile(
-                title: Text(
-                  provider.titleRecordList(index),
-                  style: TextStyle(
-                    decoration: provider.valueSelectRecordList(index)
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
-                  ),
-                ),
-                trailing: Checkbox(
-                  value: provider.valueSelectRecordList(index),
-                  onChanged: (select) {
-                    provider.onChangedListTile(select!, index);
-                  },
-                ),
-                onLongPress: () async {
-                  final ActionsUpdate? actionsUpdate =
-                      await showModalBottomSheet(
+        child: Consumer<ProviderScreenRecordlist>(
+          builder: (context, provider, child) {
+            return Scaffold(
+              appBar: AppBar(title: Text(shopList.name)),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () async {
+                  bool result = await showDialog(
                     context: context,
-                    builder: (context) => SheetMenuRecordList(
-                        recordList: provider.recordList(index)),
+                    builder: (context) =>
+                        DialogAddRecordList(shopList: provider.shopList),
                   );
-                  if (actionsUpdate == ActionsUpdate.updateScreen) {
+                  if (result) {
                     provider.updateScreen();
                   }
                 },
-                onTap: () => provider.onTapSelectListTile(index),
+                label: const Text('Запись'),
+                icon: const Icon(Icons.add),
+              ),
+              body: FutureBuilder(
+                future: provider.getListRecord(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: provider.listRecordList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 0.5,
+                        child: ListTile(
+                          title: Text(
+                            provider.titleRecordList(index),
+                            style: TextStyle(
+                              decoration: provider.valueSelectRecordList(index)
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
+                          ),
+                          trailing: Checkbox(
+                            value: provider.valueSelectRecordList(index),
+                            onChanged: (select) {
+                              provider.onChangedListTile(select!, index);
+                            },
+                          ),
+                          onLongPress: () async {
+                            final ActionsUpdate? actionsUpdate =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SheetMenuRecordList(
+                                  recordList: provider.recordList(index)),
+                            );
+                            if (actionsUpdate == ActionsUpdate.updateScreen) {
+                              provider.updateScreen();
+                            }
+                          },
+                          onTap: () => provider.onTapSelectListTile(index),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             );
           },
-        );
-      },
-    );
-  }
-}
-
-class ButtonAddRecordList extends StatelessWidget {
-  const ButtonAddRecordList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenRecordlist>(context);
-    return TextButton.icon(
-        onPressed: () async {
-          bool result = await showDialog(
-            context: context,
-            builder: (context) =>
-                DialogAddRecordList(shopList: provider.shopList),
-          );
-          if (result) {
-            provider.updateScreen();
-          }
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('Добавить запись'));
+        ));
   }
 }

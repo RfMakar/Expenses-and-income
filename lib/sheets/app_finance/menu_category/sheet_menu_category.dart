@@ -1,5 +1,4 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/app_finance/add_subcategory/dialog_add_subcategory.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
 import 'package:budget/models/app_finance/categories.dart';
@@ -15,8 +14,6 @@ class SheetMenuCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     void navigatorUpdateScreen() =>
         Navigator.pop(context, ActionsUpdate.updateScreen);
-    void navigatorUpdateWidget() =>
-        Navigator.pop(context, ActionsUpdate.updateWidget);
     return ChangeNotifierProvider(
       create: (context) => ProviderSheetMenuCategory(category),
       child: Consumer<ProviderSheetMenuCategory>(
@@ -29,21 +26,6 @@ class SheetMenuCategory extends StatelessWidget {
                   'Категория',
                   style: TextStyle(fontSize: 10),
                 ),
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.add),
-                title: const Text('Добавить подкатегорию'),
-                onTap: () async {
-                  final bool? update = await showDialog(
-                    context: context,
-                    builder: (context) =>
-                        DialogAddSubCategory(category: provider.category),
-                  );
-                  if (update == true) {
-                    navigatorUpdateWidget();
-                  }
-                },
               ),
               const Divider(),
               ListTile(
