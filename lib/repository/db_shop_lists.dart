@@ -57,7 +57,7 @@ abstract class DBShopList {
     var maps = await db.rawQuery('''
     SELECT id, name
     FROM ${TableDB.shopList}
-    ORDER BY name;
+    ORDER BY id DESC;
     ''');
     return maps.isNotEmpty ? maps.map((e) => ShopList.fromMap(e)).toList() : [];
   }
@@ -68,7 +68,7 @@ abstract class DBShopList {
     SELECT id, name, isselected
     FROM ${TableDB.recordList}
     WHERE idshoplist = $idShopList 
-    ORDER BY  id DESC ;
+    ORDER BY isselected, id DESC;
     ''');
     return maps.isNotEmpty
         ? maps.map((e) => RecordList.fromMap(e)).toList()

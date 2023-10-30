@@ -60,7 +60,7 @@ class WidgetDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.list_outlined),
+            leading: const Icon(Icons.receipt_long_outlined),
             title: const Text('Списки'),
             onTap: () {
               Navigator.pop(context);

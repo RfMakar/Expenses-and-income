@@ -71,7 +71,7 @@ class WidgetRecordList extends StatelessWidget {
                     provider.updateScreen();
                   }
                 },
-                onTap: null,
+                onTap: () => provider.onTapSelectListTile(index),
               ),
             );
           },

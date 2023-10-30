@@ -27,6 +27,13 @@ class ProviderScreenRecordlist extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onTapSelectListTile(int index) {
+    final selected = listRecordList[index].isselected == 0 ? 1 : 0;
+    final idRecordList = listRecordList[index].id;
+    DBShopList.updateSelectedRecordList(selected, idRecordList);
+    notifyListeners();
+  }
+
   String titleRecordList(int index) {
     return listRecordList[index].name;
   }
