@@ -14,10 +14,10 @@ class SheetMenuSubCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ProviderApp>(context);
+    // final providerApp = Provider.of<ProviderApp>(context);
     void navigatorUpdateWidget() =>
         Navigator.pop(context, ActionsUpdate.updateWidget);
-    void navigatorPop() => Navigator.pop(context);
+    //void navigatorPop() => Navigator.pop(context);
 
     return ChangeNotifierProvider(
       create: (context) => ProviderSheetMenuSubCategory(subCategory),
@@ -32,21 +32,21 @@ class SheetMenuSubCategory extends StatelessWidget {
                   style: TextStyle(fontSize: 10),
                 ),
               ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.add),
-                title: Text(providerApp.finance.titleAddFinance()),
-                onTap: () async {
-                  final bool? update = await showDialog(
-                    context: context,
-                    builder: (context) =>
-                        DialogAddOperation(subCategory: provider.subCategory),
-                  );
-                  if (update == true) {
-                    navigatorPop();
-                  }
-                },
-              ),
+              // const Divider(),
+              // ListTile(
+              //   leading: const Icon(Icons.add),
+              //   title: Text(providerApp.finance.titleAddFinance()),
+              //   onTap: () async {
+              //     final bool? update = await showDialog(
+              //       context: context,
+              //       builder: (context) =>
+              //           DialogAddOperation(subCategory: provider.subCategory),
+              //     );
+              //     if (update == true) {
+              //       navigatorPop();
+              //     }
+              //   },
+              // ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.edit),

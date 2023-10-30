@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_finance/add_category/dialog_add_category.dart';
+import 'package:budget/dialogs/app_finance/add_operation/dialog_add_operation.dart';
 import 'package:budget/models/app_finance/categories.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_screen_add_finance.dart';
@@ -112,112 +113,83 @@ class WidgetCardCategory extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               }
               return Card(
-                elevation: 0.5,
-                child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  // trailing: IconButton(
-                  //   icon: const Icon(Icons.more_vert),
-                  //   onPressed: () async {
-                  //     final ActionsUpdate? actionsUpdate =
-                  //         await showModalBottomSheet(
-                  //       context: context,
-                  //       builder: (context) => SheetMenuCategory(
-                  //         category: provider.category,
-                  //       ),
-                  //     );
-                  //     if (actionsUpdate == ActionsUpdate.updateWidget) {
-                  //       provider.updateWidget();
-                  //     } else if (actionsUpdate == ActionsUpdate.updateScreen) {
-                  //       providerScreen.updateScreen();
-                  //     }
-                  //   },
-                  // ),
-                  key: PageStorageKey(provider.key()),
-                  //textColor: provider.colorCategories(),
-                  //iconColor: provider.colorCategories(),
-                  title: Text(
-                    provider.nameCategories(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 14),
-                  ),
-                  children: [
-                    // ListTile(
-                    //   title: Text(
-                    //     'Добавить подкатегорию',
-                    //     style: TextStyle(
-                    //       fontSize: 14,
-                    //       color: provider.colorCategories(),
-                    //     ),
-                    //   ),
-                    //   onTap: () async {
-                    //     final ActionsUpdate? actionsUpdate =
-                    //         await showModalBottomSheet(
-                    //       context: context,
-                    //       builder: (context) => SheetMenuCategory(
-                    //         category: provider.category,
-                    //       ),
-                    //     );
-                    //     if (actionsUpdate == ActionsUpdate.updateWidget) {
-                    //       provider.updateWidget();
-                    //     } else if (actionsUpdate ==
-                    //         ActionsUpdate.updateScreen) {
-                    //       providerScreen.updateScreen();
-                    //     }
-                    //   },
-                    // ),
-
-                    ...provider
-                        .listNameSubcategories()
-                        .map(
-                          (subCategories) => ListTile(
-                            //textColor: provider.colorCategories(),
-                            //iconColor: provider.colorCategories(),
-
-                            //leading: const Icon(Icons.remove),
-                            title: Text(
-                              subCategories.name,
-                              style: TextStyle(
-                                fontSize: 14,
-                                //color: provider.colorCategories(),
-                              ),
-                            ),
-                            contentPadding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                            onTap: () async {
-                              final ActionsUpdate? actionsUpdate =
-                                  await showModalBottomSheet(
-                                context: context,
-                                builder: (context) => SheetMenuSubCategory(
-                                    subCategory: subCategories),
-                              );
-                              if (actionsUpdate == ActionsUpdate.updateWidget) {
-                                provider.updateWidget();
-                              }
-                            },
-                          ),
-                        )
-                        .toList(),
-                    TextButton(
-                      onPressed: () async {
-                        final ActionsUpdate? actionsUpdate =
-                            await showModalBottomSheet(
-                          context: context,
-                          builder: (context) => SheetMenuCategory(
-                            category: provider.category,
-                          ),
-                        );
-                        if (actionsUpdate == ActionsUpdate.updateWidget) {
-                          provider.updateWidget();
-                        } else if (actionsUpdate ==
-                            ActionsUpdate.updateScreen) {
-                          providerScreen.updateScreen();
-                        }
-                      },
-                      child: const Text('Добавить подкатегорию'),
+                elevation: 1,
+                child: InkWell(
+                  onLongPress: () {
+                    print('taplongexp');
+                  },
+                  child: ExpansionTile(
+                    childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ],
+                    key: PageStorageKey(provider.key()),
+                    textColor: provider.colorCategories(),
+                    iconColor: provider.colorCategories(),
+                    title: Text(
+                      provider.nameCategories(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 14),
+                    ),
+                    children: [
+                      ...provider
+                          .listNameSubcategories()
+                          .map(
+                            (subCategories) => ListTile(
+                              leading: const Icon(
+                                Icons.remove,
+                                size: 10,
+                              ),
+                              title: Text(
+                                subCategories.name,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              onTap: () async {
+                                final bool? update = await showDialog(
+                                  context: context,
+                                  builder: (context) => DialogAddOperation(
+                                      subCategory: subCategories),
+                                );
+                                if (update == true) {
+                                  //navigatorPop();
+                                }
+                              },
+                              onLongPress: () async {
+                                final ActionsUpdate? actionsUpdate =
+                                    await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => SheetMenuSubCategory(
+                                      subCategory: subCategories),
+                                );
+                                if (actionsUpdate ==
+                                    ActionsUpdate.updateWidget) {
+                                  provider.updateWidget();
+                                }
+                              },
+                            ),
+                          )
+                          .toList(),
+                      TextButton.icon(
+                        onPressed: () async {
+                          final ActionsUpdate? actionsUpdate =
+                              await showModalBottomSheet(
+                            context: context,
+                            builder: (context) => SheetMenuCategory(
+                              category: provider.category,
+                            ),
+                          );
+                          if (actionsUpdate == ActionsUpdate.updateWidget) {
+                            provider.updateWidget();
+                          } else if (actionsUpdate ==
+                              ActionsUpdate.updateScreen) {
+                            providerScreen.updateScreen();
+                          }
+                        },
+                        label: const Text('Добавить подкатегорию'),
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
