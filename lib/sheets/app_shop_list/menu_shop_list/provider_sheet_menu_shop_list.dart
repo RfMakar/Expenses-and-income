@@ -1,5 +1,5 @@
 import 'package:budget/models/app_shop_list/shop_list.dart';
-import 'package:budget/repository/db_shop_list.dart';
+import 'package:budget/repository/db_shop_lists.dart';
 import 'package:flutter/foundation.dart';
 
 class ProviderSheetMenuShopList extends ChangeNotifier {
@@ -10,7 +10,7 @@ class ProviderSheetMenuShopList extends ChangeNotifier {
     return shopList.name;
   }
 
-  void onTapRenamedCategory(String newName) async {
+  void onTapRenamedShopList(String newName) async {
     await DBShopList.updateShopListName(newName, shopList.id);
   }
 

@@ -1,5 +1,5 @@
 import 'package:budget/models/app_shop_list/shop_list.dart';
-import 'package:budget/repository/db_shop_list.dart';
+import 'package:budget/repository/db_shop_lists.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDialogAddShopList extends ChangeNotifier {
@@ -15,9 +15,9 @@ class ProviderDialogAddShopList extends ChangeNotifier {
     }
   }
 
-  void insertDBShopList() {
+  void insertDBShopList() async {
     final writeShopList =
         WriteShopList(name: textEditingControllerName.text.trim());
-    DBShopList.insertCategory(writeShopList);
+    DBShopList.insertShopList(writeShopList);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:budget/models/app_shop_list/shop_list.dart';
-import 'package:budget/repository/db_shop_list.dart';
+import 'package:budget/repository/db_shop_lists.dart';
 import 'package:flutter/foundation.dart';
 
 class ProviderScreenShopList extends ChangeNotifier {

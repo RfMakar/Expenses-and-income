@@ -1,29 +1,28 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
-import 'package:budget/models/app_shop_list/shop_list.dart';
-import 'package:budget/sheets/app_shop_list/menu_shop_list/provider_sheet_menu_shop_list.dart';
+import 'package:budget/models/app_shop_list/record_list.dart';
+import 'package:budget/sheets/app_shop_list/menu_record_list/provider_sheet_menu_record_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SheetMenuShopList extends StatelessWidget {
-  const SheetMenuShopList({super.key, required this.shopList});
-  final ShopList shopList;
+class SheetMenuRecordList extends StatelessWidget {
+  const SheetMenuRecordList({super.key, required this.recordList});
+  final RecordList recordList;
   @override
   Widget build(BuildContext context) {
     void navigatorUpdateScreen() =>
         Navigator.pop(context, ActionsUpdate.updateScreen);
-
     return ChangeNotifierProvider(
-      create: (context) => ProviderSheetMenuShopList(shopList),
-      child: Consumer<ProviderSheetMenuShopList>(
+      create: (context) => ProviderSheetMenuRecordList(recordList),
+      child: Consumer<ProviderSheetMenuRecordList>(
         builder: (context, provider, child) {
           return Wrap(
             children: [
               ListTile(
                 title: Text(provider.nameSheet()),
                 subtitle: const Text(
-                  'Список',
+                  'Запись',
                   style: TextStyle(fontSize: 10),
                 ),
               ),
@@ -38,7 +37,7 @@ class SheetMenuShopList extends StatelessWidget {
                         DialogEditName(name: provider.nameSheet()),
                   );
                   if (newName != null) {
-                    provider.onTapRenamedShopList(newName);
+                    provider.onTapRenamedRecodList(newName);
                     navigatorUpdateScreen();
                   }
                 },
@@ -52,7 +51,7 @@ class SheetMenuShopList extends StatelessWidget {
                     builder: (context) => const DialodgDelete(),
                   );
                   if (result == true) {
-                    provider.onTapDeletedShopList();
+                    provider.onTapDeletedRecordList();
                     navigatorUpdateScreen();
                   }
                 },

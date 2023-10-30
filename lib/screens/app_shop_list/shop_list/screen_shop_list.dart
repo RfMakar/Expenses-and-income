@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_shop_list/add_shop_list/dialog_add_shop_list.dart';
+import 'package:budget/screens/app_shop_list/record_list/screen_record_list.dart';
 import 'package:budget/screens/app_shop_list/shop_list/provider_screen_shop_list.dart';
 import 'package:budget/sheets/app_shop_list/menu_shop_list/sheet_menu_shop_list.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,16 @@ class ScreenShopList extends StatelessWidget {
                               provider.updateScreen();
                             }
                           },
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScreenRecordList(
+                                  shopList: provider.shopList(index),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
