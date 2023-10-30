@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class ProviderScreenShopList extends ChangeNotifier {
   late List<ShopList> listShopList;
+
   void updateScreen() async {
     notifyListeners();
   }

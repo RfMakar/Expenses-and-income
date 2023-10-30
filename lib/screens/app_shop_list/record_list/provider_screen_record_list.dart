@@ -4,11 +4,11 @@ import 'package:budget/repository/db_shop_lists.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenRecordlist extends ChangeNotifier {
+  ProviderScreenRecordlist(this.shopList);
   final ShopList shopList;
   late List<RecordList> listRecordList;
-  ProviderScreenRecordlist(this.shopList);
 
-  String titleShopList() {
+  String titleAppBar() {
     return shopList.name;
   }
 
@@ -34,7 +34,7 @@ class ProviderScreenRecordlist extends ChangeNotifier {
     notifyListeners();
   }
 
-  String titleRecordList(int index) {
+  String titleCardRecordList(int index) {
     return listRecordList[index].name;
   }
 

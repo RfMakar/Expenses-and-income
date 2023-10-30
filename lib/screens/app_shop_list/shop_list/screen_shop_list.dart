@@ -12,63 +12,68 @@ class ScreenShopList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderScreenShopList(),
-      child: Consumer<ProviderScreenShopList>(
-        builder: (context, provider, _) {
-          return FutureBuilder(
-            future: provider.getListShopList(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return Stack(
-                alignment: AlignmentDirectional.bottomEnd,
-                children: [
-                  ListView.builder(
-                    itemCount: provider.listShopList.length,
-                    padding: const EdgeInsets.fromLTRB(4, 4, 4, 50),
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 0.5,
-                        child: ListTile(
-                          title: Text(provider.titleListShop(index)),
-                          trailing: const Icon(Icons.navigate_next_outlined),
-                          onLongPress: () async {
-                            final ActionsUpdate? actionsUpdate =
-                                await showModalBottomSheet(
-                              context: context,
-                              builder: (context) => SheetMenuShopList(
-                                shopList: provider.shopList(index),
-                              ),
-                            );
-                            if (actionsUpdate == ActionsUpdate.updateScreen) {
-                              provider.updateScreen();
-                            }
-                          },
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ScreenRecordList(
-                                  shopList: provider.shopList(index),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const ButtonAddShoppList(),
-                ],
-              );
-            },
-          );
-        },
-      ),
+        create: (context) => ProviderScreenShopList(),
+        child: const Stack(
+          alignment: AlignmentDirectional.bottomEnd,
+          children: [
+            ListShopList(),
+            ButtonAddShoppList(),
+          ],
+        ));
+  }
+}
+
+class ListShopList extends StatelessWidget {
+  const ListShopList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ProviderScreenShopList>(context);
+    return FutureBuilder(
+      future: provider.getListShopList(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return ListView.builder(
+          itemCount: provider.listShopList.length,
+          padding: const EdgeInsets.fromLTRB(4, 4, 4, 50),
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 0.5,
+              child: ListTile(
+                title: Text(provider.titleListShop(index)),
+                trailing: const Icon(Icons.navigate_next_outlined),
+                onLongPress: () async {
+                  final ActionsUpdate? actionsUpdate =
+                      await showModalBottomSheet(
+                    context: context,
+                    builder: (context) => SheetMenuShopList(
+                      shopList: provider.shopList(index),
+                    ),
+                  );
+                  if (actionsUpdate == ActionsUpdate.updateScreen) {
+                    provider.updateScreen();
+                  }
+                },
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScreenRecordList(
+                        shopList: provider.shopList(index),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -78,10 +83,12 @@ class ButtonAddShoppList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenShopList>(context);
+    final provider = context.read<ProviderScreenShopList>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FloatingActionButton.extended(
+        label: const Text('Список'),
+        icon: const Icon(Icons.add),
         onPressed: () async {
           bool result = await showDialog(
             context: context,
@@ -91,8 +98,6 @@ class ButtonAddShoppList extends StatelessWidget {
             provider.updateScreen();
           }
         },
-        label: const Text('Список'),
-        icon: const Icon(Icons.add),
       ),
     );
   }

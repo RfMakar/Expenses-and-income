@@ -59,6 +59,14 @@ class MyThemeApp {
     bottomSheetTheme: const BottomSheetThemeData(
       showDragHandle: true,
     ),
+    snackBarTheme: const SnackBarThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+    ),
   );
   static ThemeData themeDark = ThemeData(
     brightness: Brightness.dark,
@@ -74,6 +82,14 @@ class MyThemeApp {
     ),
     bottomSheetTheme: const BottomSheetThemeData(
       showDragHandle: true,
+    ),
+    snackBarTheme: const SnackBarThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
     ),
   );
 }
