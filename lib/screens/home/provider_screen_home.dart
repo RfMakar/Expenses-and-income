@@ -15,7 +15,7 @@ class ProviderScreenHome extends ChangeNotifier {
     loadDB(nameExptab, 0);
     loadDB(nameInctab, 1);
   }
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   final List<Widget> _listWidgetScreen = const [
     ScreenFinance(),
     ScreenShopList(),

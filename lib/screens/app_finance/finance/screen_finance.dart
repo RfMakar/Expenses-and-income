@@ -60,9 +60,10 @@ class ButtonAddFinance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderScreenFinance>(context);
+    final providerApp = Provider.of<ProviderApp>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FloatingActionButton(
+      child: FloatingActionButton.extended(
         onPressed: () async {
           await Navigator.push(
             context,
@@ -72,7 +73,8 @@ class ButtonAddFinance extends StatelessWidget {
           );
           provider.updateScreen();
         },
-        child: const Icon(Icons.add),
+        label: Text(providerApp.finance.titleFinance()),
+        icon: const Icon(Icons.add),
       ),
     );
   }

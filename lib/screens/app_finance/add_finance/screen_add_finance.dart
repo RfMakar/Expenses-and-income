@@ -26,8 +26,8 @@ class ScreenAddFinance extends StatelessWidget {
             body: ListView(
               children: const [
                 WidgetSwitchFinance(),
-                WidgetButtonAddCateory(),
                 WidgetListCategory(),
+                WidgetButtonAddCateory(),
               ],
             ),
           );
@@ -45,18 +45,19 @@ class WidgetButtonAddCateory extends StatelessWidget {
     final provider = Provider.of<ProviderScreenAddFinance>(context);
 
     return TextButton.icon(
-        onPressed: () async {
-          final bool? update = await showDialog(
-            context: context,
-            builder: (context) => const DialogAddCategory(),
-          );
+      onPressed: () async {
+        final bool? update = await showDialog(
+          context: context,
+          builder: (context) => const DialogAddCategory(),
+        );
 
-          if (update == true) {
-            provider.updateScreen();
-          }
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('Добавить категорию'));
+        if (update == true) {
+          provider.updateScreen();
+        }
+      },
+      icon: const Icon(Icons.add),
+      label: const Text('Добавить категорию'),
+    );
   }
 }
 
@@ -117,55 +118,106 @@ class WidgetCardCategory extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.more_vert),
-                    onPressed: () async {
-                      final ActionsUpdate? actionsUpdate =
-                          await showModalBottomSheet(
-                        context: context,
-                        builder: (context) => SheetMenuCategory(
-                          category: provider.category,
-                        ),
-                      );
-                      if (actionsUpdate == ActionsUpdate.updateWidget) {
-                        provider.updateWidget();
-                      } else if (actionsUpdate == ActionsUpdate.updateScreen) {
-                        providerScreen.updateScreen();
-                      }
-                    },
-                  ),
+                  // trailing: IconButton(
+                  //   icon: const Icon(Icons.more_vert),
+                  //   onPressed: () async {
+                  //     final ActionsUpdate? actionsUpdate =
+                  //         await showModalBottomSheet(
+                  //       context: context,
+                  //       builder: (context) => SheetMenuCategory(
+                  //         category: provider.category,
+                  //       ),
+                  //     );
+                  //     if (actionsUpdate == ActionsUpdate.updateWidget) {
+                  //       provider.updateWidget();
+                  //     } else if (actionsUpdate == ActionsUpdate.updateScreen) {
+                  //       providerScreen.updateScreen();
+                  //     }
+                  //   },
+                  // ),
                   key: PageStorageKey(provider.key()),
-                  textColor: provider.colorCategories(),
-                  iconColor: provider.colorCategories(),
-                  title: Text(provider.nameCategories()),
-                  children: provider
-                      .listNameSubcategories()
-                      .map(
-                        (subCategories) => ListTile(
-                          textColor: provider.colorCategories(),
-                          iconColor: provider.colorCategories(),
-                          leading: const Text(
-                            '-',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                  //textColor: provider.colorCategories(),
+                  //iconColor: provider.colorCategories(),
+                  title: Text(
+                    provider.nameCategories(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
+                  children: [
+                    // ListTile(
+                    //   title: Text(
+                    //     'Добавить подкатегорию',
+                    //     style: TextStyle(
+                    //       fontSize: 14,
+                    //       color: provider.colorCategories(),
+                    //     ),
+                    //   ),
+                    //   onTap: () async {
+                    //     final ActionsUpdate? actionsUpdate =
+                    //         await showModalBottomSheet(
+                    //       context: context,
+                    //       builder: (context) => SheetMenuCategory(
+                    //         category: provider.category,
+                    //       ),
+                    //     );
+                    //     if (actionsUpdate == ActionsUpdate.updateWidget) {
+                    //       provider.updateWidget();
+                    //     } else if (actionsUpdate ==
+                    //         ActionsUpdate.updateScreen) {
+                    //       providerScreen.updateScreen();
+                    //     }
+                    //   },
+                    // ),
+
+                    ...provider
+                        .listNameSubcategories()
+                        .map(
+                          (subCategories) => ListTile(
+                            //textColor: provider.colorCategories(),
+                            //iconColor: provider.colorCategories(),
+
+                            //leading: const Icon(Icons.remove),
+                            title: Text(
+                              subCategories.name,
+                              style: TextStyle(
+                                fontSize: 14,
+                                //color: provider.colorCategories(),
+                              ),
                             ),
+                            contentPadding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                            onTap: () async {
+                              final ActionsUpdate? actionsUpdate =
+                                  await showModalBottomSheet(
+                                context: context,
+                                builder: (context) => SheetMenuSubCategory(
+                                    subCategory: subCategories),
+                              );
+                              if (actionsUpdate == ActionsUpdate.updateWidget) {
+                                provider.updateWidget();
+                              }
+                            },
                           ),
-                          title: Text(subCategories.name),
-                          onTap: () async {
-                            final ActionsUpdate? actionsUpdate =
-                                await showModalBottomSheet(
-                              context: context,
-                              builder: (context) => SheetMenuSubCategory(
-                                  subCategory: subCategories),
-                            );
-                            if (actionsUpdate == ActionsUpdate.updateWidget) {
-                              provider.updateWidget();
-                            }
-                          },
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                    TextButton(
+                      onPressed: () async {
+                        final ActionsUpdate? actionsUpdate =
+                            await showModalBottomSheet(
+                          context: context,
+                          builder: (context) => SheetMenuCategory(
+                            category: provider.category,
+                          ),
+                        );
+                        if (actionsUpdate == ActionsUpdate.updateWidget) {
+                          provider.updateWidget();
+                        } else if (actionsUpdate ==
+                            ActionsUpdate.updateScreen) {
+                          providerScreen.updateScreen();
+                        }
+                      },
+                      child: const Text('Добавить подкатегорию'),
+                    ),
+                  ],
                 ),
               );
             },
