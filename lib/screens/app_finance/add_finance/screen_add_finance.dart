@@ -147,13 +147,13 @@ class WidgetCardCategory extends StatelessWidget {
                         .listNameSubcategories()
                         .map(
                           (subCategories) => ListTile(
-                            //iconColor: provider.colorCategories(),
-                            // leading: const Icon(Icons.navigate_next_outlined),
+                            iconColor: provider.colorCategories(),
+                            leading: const Icon(Icons.navigate_next_outlined),
                             title: Text(
                               subCategories.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                //color: provider.colorCategories(),
+                                color: provider.colorCategories(),
                               ),
                             ),
                             onTap: () {

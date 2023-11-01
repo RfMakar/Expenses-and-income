@@ -16,16 +16,20 @@ class DialogAddCategory extends StatelessWidget {
       child: Consumer<ProviderDialogAddCategory>(
         builder: (context, provider, child) {
           return AlertDialog(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(width: 40),
-                Text(provider.titleDialog()),
-                Container(
-                  decoration: BoxDecoration(
-                      color: provider.colorDialog, shape: BoxShape.circle),
-                  child: IconButton(
-                    icon: const Icon(Icons.brush, color: Colors.white),
+            title: Center(child: Text(provider.titleDialog())),
+            content: Form(
+              key: provider.formKey,
+              child: TextFormField(
+                autofocus: true,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
+                controller: provider.textEditingControllerName,
+                autovalidateMode: AutovalidateMode.always,
+                validator: ValidatorTextField.text,
+                decoration: InputDecoration(
+                  hintText: 'Новая категория',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.brush, color: provider.colorDialog),
                     onPressed: () async {
                       final Color? color = await showModalBottomSheet(
                         context: context,
@@ -36,20 +40,6 @@ class DialogAddCategory extends StatelessWidget {
                       }
                     },
                   ),
-                ),
-              ],
-            ),
-            content: Form(
-              key: provider.formKey,
-              child: TextFormField(
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                textCapitalization: TextCapitalization.sentences,
-                controller: provider.textEditingControllerName,
-                autovalidateMode: AutovalidateMode.always,
-                validator: ValidatorTextField.text,
-                decoration: const InputDecoration(
-                  hintText: 'Новая категория',
                 ),
               ),
             ),

@@ -22,7 +22,7 @@ class SheetOperation extends StatelessWidget {
                 title: Text(
                   provider.titleSheet(),
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24),
+                      fontWeight: FontWeight.bold, fontSize: 22),
                 ),
                 subtitle: Text(
                   provider.subtitleSheet(),
