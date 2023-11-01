@@ -2,6 +2,7 @@ import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/app_finance/edit_operation/provider_dialog_edit_operation.dart';
 import 'package:budget/models/app_finance/operations.dart';
+import 'package:budget/widget/buttons_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,6 +41,10 @@ class DialogEditOperation extends StatelessWidget {
                         hintText: 'Заметка',
                         suffixIcon: Icon(Icons.comment),
                       ),
+                    ),
+                    WidgetButtonsDateTime(
+                      dateTime: provider.dateTime,
+                      onChangedDateTime: provider.onChangedDate,
                     ),
                   ],
                 )),

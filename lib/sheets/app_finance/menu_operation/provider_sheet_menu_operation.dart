@@ -1,6 +1,6 @@
 import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/repository/db_finance.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ProviderSheetMenuOperation extends ChangeNotifier {
   ProviderSheetMenuOperation(this.operation, this.finance);
@@ -8,23 +8,11 @@ class ProviderSheetMenuOperation extends ChangeNotifier {
   final int finance;
 
   String titleSheet() {
-    return operation.getValue(finance);
+    return '${operation.nameCategory} / ${operation.nameSubCategory}';
   }
 
-  String subtitleSheet() {
-    return operation.getDateFormat();
-  }
-
-  String titleCategoty() {
-    return operation.nameCategory;
-  }
-
-  String titleSubCategory() {
-    return operation.nameSubCategory;
-  }
-
-  String titleNote() {
-    return operation.getNote();
+  String subTitleSheet() {
+    return 'Операция от ${operation.getDateFormat()}';
   }
 
   void onTapDeletedOperation() async {

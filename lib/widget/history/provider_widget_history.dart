@@ -27,7 +27,7 @@ class ProviderWidgetHistory extends ChangeNotifier {
     return listOperation(indexHistory)[indexOperation].nameCategory;
   }
 
-  String subtitlegOperation(int indexHistory, int indexOperation) {
+  String subTitleOperation(int indexHistory, int indexOperation) {
     return listOperation(indexHistory)[indexOperation].nameSubCategory;
   }
 

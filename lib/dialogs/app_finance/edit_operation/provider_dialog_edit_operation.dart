@@ -6,11 +6,17 @@ class ProviderDialogEditOperation extends ChangeNotifier {
   ProviderDialogEditOperation(this.operation) {
     textEditingControllerValue.text = operation.value.toString();
     textEditingControllerNote.text = operation.note;
+    dateTime = DateTime.parse(operation.date);
   }
   final Operation operation;
   final formKey = GlobalKey<FormState>();
   final textEditingControllerValue = TextEditingController();
   final textEditingControllerNote = TextEditingController();
+  late DateTime dateTime;
+
+  void onChangedDate(DateTime newDateTime) {
+    dateTime = newDateTime;
+  }
 
   bool onPressedButtonEditOperation() {
     if (!formKey.currentState!.validate()) {
@@ -25,6 +31,6 @@ class ProviderDialogEditOperation extends ChangeNotifier {
     final newValue = double.parse(textEditingControllerValue.text.trim());
     final newNote = textEditingControllerNote.text.trim();
 
-    await DBFinance.updateOperation(newValue, newNote, operation);
+    await DBFinance.updateOperation(dateTime, newValue, newNote, operation);
   }
 }

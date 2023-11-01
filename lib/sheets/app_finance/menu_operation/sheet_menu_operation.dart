@@ -2,69 +2,31 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_finance/edit_operation/dialog_edit_operation.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/models/app_finance/operations.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/sheets/app_finance/menu_operation/provider_sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SheetMenuOperation extends StatelessWidget {
-  const SheetMenuOperation(
-      {super.key, required this.operation, required this.finance});
+  const SheetMenuOperation({super.key, required this.operation});
   final Operation operation;
-  final int finance;
   @override
   Widget build(BuildContext context) {
     void navigatorUpdateScreen() =>
         Navigator.pop(context, ActionsUpdate.updateScreen);
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
-      create: (context) => ProviderSheetMenuOperation(operation, finance),
+      create: (context) =>
+          ProviderSheetMenuOperation(operation, providerApp.finance.id),
       child: Consumer<ProviderSheetMenuOperation>(
         builder: (context, provider, child) {
-          return ListView(
+          return Wrap(
             children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        provider.titleSheet(),
-                        style: const TextStyle(
-                          fontSize: 24,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        provider.subtitleSheet(),
-                        style: const TextStyle(fontSize: 10),
-                      )
-                    ],
-                  ),
-                  const Divider(),
-                ],
-              ),
               ListTile(
-                title: Text(provider.titleCategoty()),
-                subtitle: const Text(
-                  'Категория',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-              ListTile(
-                title: Text(provider.titleSubCategory()),
-                subtitle: const Text(
-                  'Подкатегория',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-              ListTile(
-                title: Text(provider.titleNote()),
-                subtitle: const Text(
-                  'Заметка',
-                  style: TextStyle(fontSize: 10),
+                title: Text(provider.titleSheet()),
+                subtitle: Text(
+                  provider.subTitleSheet(),
+                  style: const TextStyle(fontSize: 12),
                 ),
               ),
               const Divider(),

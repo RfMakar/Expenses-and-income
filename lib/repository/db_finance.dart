@@ -733,12 +733,40 @@ abstract class DBFinance {
     ''', [newName, subCategory.id]);
   }
 
-  static Future<int> updateOperation(
-      double newValue, String newNote, Operation operation) async {
+  static Future<int> updateOperation(DateTime newDate, double newValue,
+      String newNote, Operation operation) async {
+    final db = await database;
+    return await db.rawUpdate(
+      '''
+    UPDATE ${TableDB.operations}
+    SET date = ?, 
+        year = ?,
+        month = ?,
+        day = ?,
+        value = ?,
+        note = ?
+    WHERE id = ?;
+    ''',
+      [
+        newDate.toString(),
+        newDate.year,
+        newDate.month,
+        newDate.day,
+        newValue,
+        newNote,
+        operation.id,
+      ],
+    );
+  }
+}
+
+/*
+static Future<int> updateOperation(DateTime newDate,
+      double newValue, String newNote, Operation operation,) async {
     final db = await database;
     return await db.rawUpdate('''
     UPDATE ${TableDB.operations}
-    SET value = ?, note = ?
+    SET date = ?, value = ?, note = ?, 
     WHERE id = ?;
     ''', [
       newValue,
@@ -746,4 +774,4 @@ abstract class DBFinance {
       operation.id,
     ]);
   }
-}
+*/

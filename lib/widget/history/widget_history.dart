@@ -2,6 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/sheets/app_finance/menu_operation/sheet_menu_operation.dart';
+import 'package:budget/sheets/app_finance/operation/sheet_operation.dart';
 import 'package:budget/widget/history/provider_widget_history.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,10 +69,26 @@ class WidgetHistory extends StatelessWidget {
                               final ActionsUpdate? actionsUpdate =
                                   await showModalBottomSheet(
                                 context: context,
+                                builder: (context) => SheetOperation(
+                                  operation: provider.operation(
+                                    indexHistory,
+                                    indexOperation,
+                                  ),
+                                ),
+                              );
+                              if (actionsUpdate == ActionsUpdate.updateScreen) {
+                                updateScreen();
+                              }
+                            },
+                            onLongPress: () async {
+                              final ActionsUpdate? actionsUpdate =
+                                  await showModalBottomSheet(
+                                context: context,
                                 builder: (context) => SheetMenuOperation(
                                   operation: provider.operation(
-                                      indexHistory, indexOperation),
-                                  finance: providerApp.finance.id,
+                                    indexHistory,
+                                    indexOperation,
+                                  ),
                                 ),
                               );
                               if (actionsUpdate == ActionsUpdate.updateScreen) {
@@ -107,7 +124,7 @@ class WidgetHistory extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        provider.subtitlegOperation(
+                                        provider.subTitleOperation(
                                             indexHistory, indexOperation),
                                         style: const TextStyle(
                                           color: Colors.grey,
