@@ -2,6 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_shop_list/add_record_list/dialog_add_record_list.dart';
 import 'package:budget/models/app_shop_list/shop_list.dart';
 import 'package:budget/screens/app_shop_list/record_list/provider_screen_record_list.dart';
+import 'package:budget/sheets/app_shop_list/menu_list/sheet_menu_list.dart';
 import 'package:budget/sheets/app_shop_list/menu_record_list/sheet_menu_record_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,25 @@ class ScreenRecordList extends StatelessWidget {
       builder: (context, child) {
         final provider = context.read<ProviderScreenRecordlist>();
         return Scaffold(
-          appBar: AppBar(title: Text(provider.titleAppBar())),
+          appBar: AppBar(
+            title: Text(provider.titleAppBar()),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  final ActionsUpdate? actionsUpdate =
+                      await showModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        SheetMenuList(shopList: provider.shopList),
+                  );
+                  if (actionsUpdate == ActionsUpdate.updateScreen) {
+                    provider.updateScreen();
+                  }
+                },
+                icon: const Icon(Icons.more_vert),
+              ),
+            ],
+          ),
           floatingActionButton: const ButtonAddNewRecordList(),
           body: const ListRecordList(),
         );

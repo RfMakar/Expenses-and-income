@@ -105,6 +105,27 @@ abstract class DBShopList {
     WHERE id = ?;
     ''', [selected, idRecordList]);
   }
+
+  static Future<int> markRecordList(int idShopList) async {
+    //Выбрать все RecordList
+    final db = await database;
+    return await db.rawUpdate('''
+    UPDATE ${TableDB.recordList} 
+    SET isselected = 1
+    WHERE idshoplist = ?;
+    ''', [idShopList]);
+  }
+
+  static Future<int> restoreRecordList(int idShopList) async {
+    //Снять выбраные RecordList
+    final db = await database;
+    return await db.rawUpdate('''
+    UPDATE ${TableDB.recordList} 
+    SET isselected = 0
+    WHERE idshoplist = ?;
+    ''', [idShopList]);
+  }
+
   //Удалить данные
 
   static Future<int> deleteShopList(int idShopList) async {
@@ -123,5 +144,25 @@ abstract class DBShopList {
       FROM ${TableDB.recordList} 
       WHERE id = ?;
     ''', [idRecordList]);
+  }
+
+  static Future<int> deleteSelecetRecordList(int idShopList) async {
+    //Удаляет выбранные recordlist из shoplist
+    final db = await database;
+    return await db.rawDelete('''
+    DELETE
+      FROM ${TableDB.recordList} 
+      WHERE isselected = 1 AND idshoplist = ?;
+    ''', [idShopList]);
+  }
+
+  static Future<int> clearShopList(int idShopList) async {
+    //Очистка recordlist в shoplist
+    final db = await database;
+    return await db.rawDelete('''
+    DELETE
+      FROM ${TableDB.recordList} 
+      WHERE idshoplist = ?;
+    ''', [idShopList]);
   }
 }

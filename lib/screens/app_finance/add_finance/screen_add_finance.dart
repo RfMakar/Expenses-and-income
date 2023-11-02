@@ -148,7 +148,8 @@ class WidgetCardCategory extends StatelessWidget {
                         .map(
                           (subCategories) => ListTile(
                             iconColor: provider.colorCategories(),
-                            leading: const Icon(Icons.navigate_next_outlined),
+                            leading: const Icon(
+                                Icons.subdirectory_arrow_right_outlined),
                             title: Text(
                               subCategories.name,
                               style: TextStyle(
