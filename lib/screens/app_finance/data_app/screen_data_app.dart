@@ -1,5 +1,6 @@
 import 'package:budget/dialogs/app_finance/data_storage/dialog_data_storage.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
+import 'package:budget/provider_app.dart';
 import 'package:budget/screens/app_finance/data_app/provider_screen_data_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ class ScreenDataApp extends StatelessWidget {
   const ScreenDataApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
       create: (context) => ProviderScreenDataApp(),
       child: Consumer<ProviderScreenDataApp>(
@@ -40,6 +42,7 @@ class ScreenDataApp extends StatelessWidget {
                     );
                     if (result == true) {
                       provider.onTapDeleteAllOperation();
+                      providerApp.updateApp();
                     }
                   },
                 ),
@@ -54,6 +57,7 @@ class ScreenDataApp extends StatelessWidget {
                     );
                     if (result == true) {
                       provider.onTapDeleteAll();
+                      providerApp.updateApp();
                     }
                   },
                 ),

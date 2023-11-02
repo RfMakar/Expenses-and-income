@@ -25,7 +25,12 @@ abstract class DBFinance {
       path,
       version: 3,
       onCreate: _onCreate,
+      onConfigure: _onConfigure,
     );
+  }
+
+  static Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
   static Future _onCreate(Database db, int version) async {

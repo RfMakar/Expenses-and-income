@@ -20,13 +20,18 @@ abstract class DBShopList {
       path,
       version: 1,
       onCreate: _onCreate,
+      onConfigure: _onConfigure,
     );
+  }
+
+  static Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
   static Future _onCreate(Database db, int version) async {
     await db.execute('''
     CREATE TABLE ${TableDB.shopList}(
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL
     );
     ''');
@@ -132,8 +137,8 @@ abstract class DBShopList {
     final db = await database;
     return await db.rawDelete('''
     DELETE
-      FROM ${TableDB.shopList} 
-      WHERE id = ?;
+    FROM ${TableDB.shopList} 
+    WHERE id = ?;
     ''', [idShopList]);
   }
 
@@ -141,8 +146,8 @@ abstract class DBShopList {
     final db = await database;
     return await db.rawDelete('''
     DELETE
-      FROM ${TableDB.recordList} 
-      WHERE id = ?;
+    FROM ${TableDB.recordList} 
+    WHERE id = ?;
     ''', [idRecordList]);
   }
 
@@ -151,8 +156,8 @@ abstract class DBShopList {
     final db = await database;
     return await db.rawDelete('''
     DELETE
-      FROM ${TableDB.recordList} 
-      WHERE isselected = 1 AND idshoplist = ?;
+    FROM ${TableDB.recordList} 
+    WHERE isselected = 1 AND idshoplist = ?;
     ''', [idShopList]);
   }
 
@@ -161,8 +166,8 @@ abstract class DBShopList {
     final db = await database;
     return await db.rawDelete('''
     DELETE
-      FROM ${TableDB.recordList} 
-      WHERE idshoplist = ?;
+    FROM ${TableDB.recordList} 
+    WHERE idshoplist = ?;
     ''', [idShopList]);
   }
 }
