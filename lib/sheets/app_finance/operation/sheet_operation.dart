@@ -18,20 +18,22 @@ class SheetOperation extends StatelessWidget {
         builder: (context, provider, child) {
           return Wrap(
             children: [
-              ListTile(
-                title: Text(
+              Center(
+                child: Text(
                   provider.titleSheet(),
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 22),
                 ),
-                subtitle: Text(
+              ),
+              const Divider(),
+              Center(
+                child: Text(
                   provider.subtitleSheet(),
                   style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
               ),
-              const Divider(),
               ListTile(
                 title: Text(provider.titleCategoty()),
                 subtitle: const Text(
