@@ -43,11 +43,6 @@ class DialogAddShopList extends StatelessWidget {
                       nameShopList: nameShopList));
                   Navigator.pop(context, StateUpdate.page);
                 }
-                // final validate = provider.onPressedButtonAddShopList();
-
-                // if (validate) {
-                //   Navigator.pop(context, StateUpdate.page);
-                // }
               },
             ),
             TextButton(
