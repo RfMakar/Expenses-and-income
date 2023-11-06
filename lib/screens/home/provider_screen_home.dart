@@ -3,6 +3,7 @@ import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/models/app_finance/subcategories.dart';
 import 'package:budget/repository/db_budget.dart';
 import 'package:budget/repository/db_finance.dart';
+import 'package:budget/screens/app_counter/screen_counter.dart';
 import 'package:budget/screens/app_finance/finance/screen_finance.dart';
 import 'package:budget/screens/app_shop_list/shop_list/screen_shop_list.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +16,13 @@ class ProviderScreenHome extends ChangeNotifier {
     loadDB(nameExptab, 0);
     loadDB(nameInctab, 1);
   }
-  int selectedIndex = 0;
+  int selectedIndex = 2;
   final List<Widget> _listWidgetScreen = const [
     ScreenFinance(),
     ScreenShopList(),
+    ScreenCounter(),
   ];
-  final List<String> _listNameAppBar = const [
-    'Финансы',
-    'Списки',
-  ];
+  final List<String> _listNameAppBar = const ['Финансы', 'Списки', 'Счетчик'];
 
   Widget widgetScreen() {
     return _listWidgetScreen[selectedIndex];
