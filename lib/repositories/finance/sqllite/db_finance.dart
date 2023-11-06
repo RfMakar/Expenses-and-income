@@ -1,8 +1,8 @@
-import 'package:budget/repositories/finanse/models/analitics.dart';
-import 'package:budget/repositories/finanse/models/categories.dart';
-import 'package:budget/repositories/finanse/models/operations.dart';
-import 'package:budget/repositories/finanse/models/subcategories.dart';
-import 'package:budget/repositories/finanse/models/switch_date.dart';
+import 'package:budget/repositories/finance/models/analitics.dart';
+import 'package:budget/repositories/finance/models/categories.dart';
+import 'package:budget/repositories/finance/models/operations.dart';
+import 'package:budget/repositories/finance/models/subcategories.dart';
+import 'package:budget/repositories/finance/models/switch_date.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

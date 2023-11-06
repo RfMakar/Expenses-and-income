@@ -1,6 +1,6 @@
 import 'package:budget/const/validator_text_field.dart';
 import 'package:budget/dialogs/app_finance/add_subcategory/provider_dialog_add_subcategories.dart';
-import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

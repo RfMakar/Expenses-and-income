@@ -1,5 +1,5 @@
-import 'package:budget/repositories/finanse/models/finance.dart';
-import 'package:budget/repositories/finanse/models/switch_date.dart';
+import 'package:budget/repositories/finance/models/finance.dart';
+import 'package:budget/repositories/finance/models/switch_date.dart';
 import 'package:flutter/material.dart';
 
 class ProviderApp extends ChangeNotifier {

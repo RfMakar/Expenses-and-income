@@ -1,4 +1,4 @@
-import 'package:budget/repositories/finanse/models/operations.dart';
+import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/widgets.dart';
 
 class ProviderSheetOperation extends ChangeNotifier {

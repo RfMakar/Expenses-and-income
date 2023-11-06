@@ -1,4 +1,4 @@
-import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
+import 'package:budget/repositories/finance/sqllite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenDataApp extends ChangeNotifier {

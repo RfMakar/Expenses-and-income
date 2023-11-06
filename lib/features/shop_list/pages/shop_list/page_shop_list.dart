@@ -1,5 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/features/shop_list/dialogs/add_shop_list/dialog_add_shop_list.dart';
+import 'package:budget/features/shop_list/pages/record_list/page_record_list.dart';
 import 'package:budget/features/shop_list/pages/shop_list/bloc/page_shop_list_bloc.dart';
 import 'package:budget/features/shop_list/sheets/menu_shop_list/sheets_menu_shop_list.dart';
 import 'package:flutter/material.dart';
@@ -59,14 +60,13 @@ class ListShopList extends StatelessWidget {
                     }
                   },
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ScreenRecordList(
-                    //       shopList: provider.shopList(index),
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PageRecordList(shopList: shopList),
+                      ),
+                    );
                   },
                 ),
               );
@@ -91,11 +91,11 @@ class ButtonAddShopList extends StatelessWidget {
         label: const Text('Список'),
         icon: const Icon(Icons.add),
         onPressed: () async {
-          final stateUpdateApp = await showDialog(
+          final stateUpdate = await showDialog(
             context: context,
             builder: (context) => const DialogAddShopList(),
           );
-          if (stateUpdateApp == StateUpdate.page) {
+          if (stateUpdate == StateUpdate.page) {
             bloc.add(PageShopListLoadingEvent());
           }
         },

@@ -73,7 +73,7 @@ abstract class DBShopList {
     SELECT id, name, isselected
     FROM ${TableDB.recordList}
     WHERE idshoplist = $idShopList 
-    ORDER BY isselected, id DESC;
+    ORDER BY id DESC;
     ''');
     return maps.isNotEmpty
         ? maps.map((e) => RecordList.fromMap(e)).toList()

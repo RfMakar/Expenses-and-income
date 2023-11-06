@@ -1,6 +1,6 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/provider_app.dart';
-import 'package:budget/repositories/finanse/models/operations.dart';
+import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:budget/sheets/app_finance/menu_operation/sheet_menu_operation.dart';
 import 'package:budget/sheets/app_finance/operation/sheet_operation.dart';
 import 'package:budget/widget/history/provider_widget_history.dart';

@@ -1,7 +1,7 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
 import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
-import 'package:budget/repositories/finanse/models/subcategories.dart';
+import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:budget/sheets/app_finance/menu_subcategory/provider_sheet_menu_subcategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

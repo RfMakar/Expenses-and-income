@@ -1,7 +1,7 @@
-import 'package:budget/repositories/finanse/models/categories.dart';
-import 'package:budget/repositories/finanse/models/operations.dart';
-import 'package:budget/repositories/finanse/models/switch_date.dart';
-import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
+import 'package:budget/repositories/finance/models/categories.dart';
+import 'package:budget/repositories/finance/models/operations.dart';
+import 'package:budget/repositories/finance/models/switch_date.dart';
+import 'package:budget/repositories/finance/sqllite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenFinance extends ChangeNotifier {

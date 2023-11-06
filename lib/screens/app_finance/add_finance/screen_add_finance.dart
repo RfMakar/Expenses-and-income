@@ -3,7 +3,7 @@ import 'package:budget/dialogs/app_finance/add_category/dialog_add_category.dart
 import 'package:budget/dialogs/app_finance/add_operation/dialog_add_operation.dart';
 import 'package:budget/dialogs/app_finance/add_subcategory/dialog_add_subcategory.dart';
 import 'package:budget/provider_app.dart';
-import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_widget_card_category.dart';
 import 'package:budget/sheets/app_finance/menu_category/sheet_menu_category.dart';

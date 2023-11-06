@@ -1,9 +1,9 @@
 import 'package:budget/features/shop_list/pages/shop_list/page_shop_list.dart';
-import 'package:budget/repositories/finanse/models/categories.dart';
-import 'package:budget/repositories/finanse/models/operations.dart';
-import 'package:budget/repositories/finanse/models/subcategories.dart';
-import 'package:budget/repositories/finanse/sqllite/db_budget.dart';
-import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
+import 'package:budget/repositories/finance/models/categories.dart';
+import 'package:budget/repositories/finance/models/operations.dart';
+import 'package:budget/repositories/finance/models/subcategories.dart';
+import 'package:budget/repositories/finance/sqllite/db_budget.dart';
+import 'package:budget/repositories/finance/sqllite/db_finance.dart';
 import 'package:budget/screens/app_finance/finance/screen_finance.dart';
 import 'package:flutter/material.dart';
 

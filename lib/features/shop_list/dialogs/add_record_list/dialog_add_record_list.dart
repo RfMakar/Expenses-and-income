@@ -1,9 +1,17 @@
-import 'package:budget/const/actions_update.dart';
-import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/dialogs/app_shop_list/add_record_list/provider_dialog_add_record_list.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+class DialogAddRecordList extends StatelessWidget {
+  const DialogAddRecordList({super.key, required this.shopList});
+  final ShopList shopList;
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+
+/*
 
 class DialogAddRecordList extends StatelessWidget {
   const DialogAddRecordList({super.key, required this.shopList});
@@ -52,3 +60,30 @@ class DialogAddRecordList extends StatelessWidget {
     );
   }
 }
+
+class ProviderDialogAddRecordList extends ChangeNotifier {
+  final ShopList shopList;
+  ProviderDialogAddRecordList(this.shopList);
+  final textEditingControllerName = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  bool onPressedButtonAddRecordList() {
+    if (!formKey.currentState!.validate()) {
+      return false;
+    } else {
+      insertDBRecordList();
+      return true;
+    }
+  }
+
+  void insertDBRecordList() {
+    final writeRecordList = WriteRecordList(
+      name: textEditingControllerName.text.trim(),
+      idshoplist: shopList.id,
+      isselected: 0,
+    );
+    DBShopList.insertRecordList(writeRecordList);
+  }
+}
+
+*/

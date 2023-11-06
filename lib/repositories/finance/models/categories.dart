@@ -1,4 +1,4 @@
-import 'package:budget/repositories/finanse/models/subcategories.dart';
+import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:intl/intl.dart';
 
 abstract class Categories {
