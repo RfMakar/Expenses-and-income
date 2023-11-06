@@ -1,11 +1,10 @@
-import 'package:budget/models/app_finance/categories.dart';
-import 'package:budget/models/app_finance/operations.dart';
-import 'package:budget/models/app_finance/subcategories.dart';
-import 'package:budget/repository/db_budget.dart';
-import 'package:budget/repository/db_finance.dart';
-import 'package:budget/screens/app_counter/screen_counter.dart';
+import 'package:budget/features/shop_list/pages/shop_list/page_shop_list.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
+import 'package:budget/repositories/finanse/models/subcategories.dart';
+import 'package:budget/repositories/finanse/sqllite/db_budget.dart';
+import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
 import 'package:budget/screens/app_finance/finance/screen_finance.dart';
-import 'package:budget/screens/app_shop_list/shop_list/screen_shop_list.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
@@ -16,13 +15,12 @@ class ProviderScreenHome extends ChangeNotifier {
     loadDB(nameExptab, 0);
     loadDB(nameInctab, 1);
   }
-  int selectedIndex = 2;
+  int selectedIndex = 1;
   final List<Widget> _listWidgetScreen = const [
     ScreenFinance(),
-    ScreenShopList(),
-    ScreenCounter(),
+    PageShopList(),
   ];
-  final List<String> _listNameAppBar = const ['Финансы', 'Списки', 'Счетчик'];
+  final List<String> _listNameAppBar = const ['Финансы', 'Списки'];
 
   Widget widgetScreen() {
     return _listWidgetScreen[selectedIndex];

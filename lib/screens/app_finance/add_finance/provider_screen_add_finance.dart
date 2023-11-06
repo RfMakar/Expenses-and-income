@@ -1,5 +1,5 @@
-import 'package:budget/models/app_finance/categories.dart';
-import 'package:budget/repository/db_finance.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenAddFinance extends ChangeNotifier {

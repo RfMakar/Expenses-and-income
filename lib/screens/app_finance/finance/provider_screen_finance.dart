@@ -1,7 +1,7 @@
-import 'package:budget/models/app_finance/categories.dart';
-import 'package:budget/models/app_finance/operations.dart';
-import 'package:budget/models/app_finance/switch_date.dart';
-import 'package:budget/repository/db_finance.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
+import 'package:budget/repositories/finanse/models/switch_date.dart';
+import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenFinance extends ChangeNotifier {
@@ -28,20 +28,6 @@ class ProviderScreenFinance extends ChangeNotifier {
     listGroupCategory =
         await DBFinance.getListGroupCategoryInPeriod(switchDate, finance);
   }
-
-  // Future getListHistoryAllOperation() async {
-  //   //Если период месяц, то история операций будет, если год то не будет
-  //   if (switchDate.state == 0) {
-  //     listHistoryOperation = await DBFinance.getListHistoryAllOperation(
-  //         switchDate.getDateTime(), finance);
-  //     for (var historyOperation in listHistoryOperation) {
-  //       historyOperation.listOperation = await DBFinance.getListAllOperation(
-  //           DateTime.tryParse(historyOperation.date)!, finance);
-  //     }
-  //   } else if (switchDate.state == 1) {
-  //     listHistoryOperation = [];
-  //   }
-  // }
 
   void onPressedButBackDate() {
     switchDate.backDate();

@@ -1,4 +1,1 @@
-enum ActionsUpdate {
-  updateScreen,
-  updateWidget,
-}
+enum StateUpdate { page, widget }

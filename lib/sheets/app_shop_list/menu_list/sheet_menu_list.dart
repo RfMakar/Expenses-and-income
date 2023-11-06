@@ -1,5 +1,5 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/models/app_shop_list/shop_list.dart';
+import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:budget/sheets/app_shop_list/menu_list/provider_menu_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +9,7 @@ class SheetMenuList extends StatelessWidget {
   final ShopList shopList;
   @override
   Widget build(BuildContext context) {
-    void navigatorUpdateScreen() =>
-        Navigator.pop(context, ActionsUpdate.updateScreen);
+    void navigatorUpdateScreen() => Navigator.pop(context, StateUpdate.page);
     return ChangeNotifierProvider(
       create: (context) => ProviderSheetMenuList(shopList),
       child: Consumer<ProviderSheetMenuList>(

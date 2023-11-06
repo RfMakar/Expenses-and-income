@@ -2,8 +2,8 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_finance/add_category/dialog_add_category.dart';
 import 'package:budget/dialogs/app_finance/add_operation/dialog_add_operation.dart';
 import 'package:budget/dialogs/app_finance/add_subcategory/dialog_add_subcategory.dart';
-import 'package:budget/models/app_finance/categories.dart';
 import 'package:budget/provider_app.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_screen_add_finance.dart';
 import 'package:budget/screens/app_finance/add_finance/provider_widget_card_category.dart';
 import 'package:budget/sheets/app_finance/menu_category/sheet_menu_category.dart';
@@ -104,16 +104,16 @@ class WidgetCardCategory extends StatelessWidget {
                 elevation: 0.5,
                 child: InkWell(
                   onLongPress: () async {
-                    final ActionsUpdate? actionsUpdate =
+                    final StateUpdate? actionsUpdate =
                         await showModalBottomSheet(
                       context: context,
                       builder: (context) => SheetMenuCategory(
                         category: provider.category,
                       ),
                     );
-                    if (actionsUpdate == ActionsUpdate.updateWidget) {
+                    if (actionsUpdate == StateUpdate.widget) {
                       provider.updateWidget();
-                    } else if (actionsUpdate == ActionsUpdate.updateScreen) {
+                    } else if (actionsUpdate == StateUpdate.page) {
                       providerScreen.updateScreen();
                     }
                   },
@@ -165,13 +165,13 @@ class WidgetCardCategory extends StatelessWidget {
                               );
                             },
                             onLongPress: () async {
-                              final ActionsUpdate? actionsUpdate =
+                              final StateUpdate? actionsUpdate =
                                   await showModalBottomSheet(
                                 context: context,
                                 builder: (context) => SheetMenuSubCategory(
                                     subCategory: subCategories),
                               );
-                              if (actionsUpdate == ActionsUpdate.updateWidget) {
+                              if (actionsUpdate == StateUpdate.widget) {
                                 provider.updateWidget();
                               }
                             },

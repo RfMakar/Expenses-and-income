@@ -1,5 +1,5 @@
-import 'package:budget/models/app_finance/operations.dart';
-import 'package:budget/repository/db_finance.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
+import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderSheetMenuOperation extends ChangeNotifier {

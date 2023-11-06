@@ -1,6 +1,6 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/models/app_finance/categories.dart';
 import 'package:budget/provider_app.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
 import 'package:budget/screens/app_finance/category/provider_screen_category.dart';
 import 'package:budget/screens/app_finance/subcategory/screen_subcategory.dart';
 import 'package:budget/sheets/app_finance/select_period/sheet_select_period.dart';
@@ -76,7 +76,7 @@ class WidgetInfo extends StatelessWidget {
           context: context,
           builder: (context) => const SheetSelectPeriod(),
         );
-        if (update == ActionsUpdate.updateScreen) {
+        if (update == StateUpdate.page) {
           provider.updateScreen();
         }
       },

@@ -96,7 +96,7 @@ class WidgetInfo extends StatelessWidget {
           context: context,
           builder: (context) => const SheetSelectPeriod(),
         );
-        if (update == ActionsUpdate.updateScreen) {
+        if (update == StateUpdate.page) {
           provider.updateScreen();
         }
       },

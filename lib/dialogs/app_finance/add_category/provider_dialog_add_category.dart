@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:budget/models/app_finance/categories.dart';
-import 'package:budget/models/app_finance/finance.dart';
-import 'package:budget/repository/db_finance.dart';
+import 'package:budget/repositories/finanse/models/categories.dart';
+import 'package:budget/repositories/finanse/models/finance.dart';
+import 'package:budget/repositories/finanse/sqllite/db_finance.dart';
 import 'package:budget/const/color.dart';
 import 'package:flutter/material.dart';
 

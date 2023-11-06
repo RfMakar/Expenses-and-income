@@ -1,5 +1,5 @@
-import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/provider_app.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
 import 'package:budget/sheets/app_finance/operation/provider_sheet_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

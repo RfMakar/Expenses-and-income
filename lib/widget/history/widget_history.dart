@@ -1,6 +1,6 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/provider_app.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
 import 'package:budget/sheets/app_finance/menu_operation/sheet_menu_operation.dart';
 import 'package:budget/sheets/app_finance/operation/sheet_operation.dart';
 import 'package:budget/widget/history/provider_widget_history.dart';
@@ -66,7 +66,7 @@ class WidgetHistory extends StatelessWidget {
                         itemBuilder: (context, indexOperation) {
                           return InkWell(
                             onTap: () async {
-                              final ActionsUpdate? actionsUpdate =
+                              final StateUpdate? actionsUpdate =
                                   await showModalBottomSheet(
                                 context: context,
                                 builder: (context) => SheetOperation(
@@ -76,12 +76,12 @@ class WidgetHistory extends StatelessWidget {
                                   ),
                                 ),
                               );
-                              if (actionsUpdate == ActionsUpdate.updateScreen) {
+                              if (actionsUpdate == StateUpdate.page) {
                                 updateScreen();
                               }
                             },
                             onLongPress: () async {
-                              final ActionsUpdate? actionsUpdate =
+                              final StateUpdate? actionsUpdate =
                                   await showModalBottomSheet(
                                 context: context,
                                 builder: (context) => SheetMenuOperation(
@@ -91,7 +91,7 @@ class WidgetHistory extends StatelessWidget {
                                   ),
                                 ),
                               );
-                              if (actionsUpdate == ActionsUpdate.updateScreen) {
+                              if (actionsUpdate == StateUpdate.page) {
                                 updateScreen();
                               }
                             },

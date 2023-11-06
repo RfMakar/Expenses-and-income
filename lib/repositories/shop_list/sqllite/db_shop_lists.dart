@@ -1,5 +1,5 @@
-import 'package:budget/models/app_shop_list/record_list.dart';
-import 'package:budget/models/app_shop_list/shop_list.dart';
+import 'package:budget/repositories/shop_list/models/record_list.dart';
+import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

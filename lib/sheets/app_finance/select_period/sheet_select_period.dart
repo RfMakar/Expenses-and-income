@@ -24,7 +24,7 @@ class SheetSelectPeriod extends StatelessWidget {
           trailing: stateApp == 0 ? const Icon(Icons.check) : null,
           onTap: () {
             if (stateApp == 1) {
-              Navigator.pop(context, ActionsUpdate.updateScreen);
+              Navigator.pop(context, StateUpdate.page);
               providerApp.switchDate.stateMonth();
             }
           },
@@ -34,7 +34,7 @@ class SheetSelectPeriod extends StatelessWidget {
           trailing: stateApp == 1 ? const Icon(Icons.check) : null,
           onTap: () {
             if (stateApp == 0) {
-              Navigator.pop(context, ActionsUpdate.updateScreen);
+              Navigator.pop(context, StateUpdate.page);
               providerApp.switchDate.stateYear();
             }
           },

@@ -1,8 +1,8 @@
 import 'package:budget/const/actions_update.dart';
 import 'package:budget/dialogs/app_finance/edit_operation/dialog_edit_operation.dart';
 import 'package:budget/dialogs/delete/dialog_delete.dart';
-import 'package:budget/models/app_finance/operations.dart';
 import 'package:budget/provider_app.dart';
+import 'package:budget/repositories/finanse/models/operations.dart';
 import 'package:budget/sheets/app_finance/menu_operation/provider_sheet_menu_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +12,7 @@ class SheetMenuOperation extends StatelessWidget {
   final Operation operation;
   @override
   Widget build(BuildContext context) {
-    void navigatorUpdateScreen() =>
-        Navigator.pop(context, ActionsUpdate.updateScreen);
+    void navigatorUpdateScreen() => Navigator.pop(context, StateUpdate.page);
     final providerApp = Provider.of<ProviderApp>(context);
     return ChangeNotifierProvider(
       create: (context) =>
