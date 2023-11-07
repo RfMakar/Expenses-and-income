@@ -3,14 +3,12 @@ part of 'sheet_menu_shop_list_bloc.dart';
 @immutable
 sealed class SheetMenuShopListEvent {}
 
-class SheetMenuShopListLoadedEvent extends SheetMenuShopListEvent {}
+class SheetMenuShopListInitialEvent extends SheetMenuShopListEvent {}
 
-class SheetMenuShopListOnPressedButtonRenameShopListEvent
-    extends SheetMenuShopListEvent {
+class SheetMenuShopListRenameEvent extends SheetMenuShopListEvent {
   final String newName;
 
-  SheetMenuShopListOnPressedButtonRenameShopListEvent(this.newName);
+  SheetMenuShopListRenameEvent(this.newName);
 }
 
-class SheetMenuShopListOnPressedButtonDeleteShopListEvent
-    extends SheetMenuShopListEvent {}
+class SheetMenuShopListDeleteEvent extends SheetMenuShopListEvent {}

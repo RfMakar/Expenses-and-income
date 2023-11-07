@@ -71,7 +71,7 @@ class ListRecordList extends StatelessWidget {
                     },
                   ),
                   onLongPress: () async {
-                    final StateUpdate stateUpdate = await showModalBottomSheet(
+                    final StateUpdate? stateUpdate = await showModalBottomSheet(
                       context: context,
                       builder: (context) =>
                           SheetMenuRecordList(recordList: recordList),
@@ -103,7 +103,7 @@ class ButtonMenuRecordList extends StatelessWidget {
     final bloc = BlocProvider.of<PageRecordListBloc>(context);
     return IconButton(
       onPressed: () async {
-        final StateUpdate stateUpdate = await showModalBottomSheet(
+        final StateUpdate? stateUpdate = await showModalBottomSheet(
           context: context,
           builder: (context) => SheetMenuList(shopList: bloc.shopList),
         );
@@ -126,7 +126,7 @@ class ButtonAddNewRecordList extends StatelessWidget {
       label: const Text('Запись'),
       icon: const Icon(Icons.add),
       onPressed: () async {
-        final stateUpdate = await showDialog(
+        final StateUpdate? stateUpdate = await showDialog(
           context: context,
           builder: (context) => DialogAddRecordList(shopList: bloc.shopList),
         );

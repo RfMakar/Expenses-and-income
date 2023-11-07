@@ -2,7 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/features/shop_list/dialogs/add_shop_list/dialog_add_shop_list.dart';
 import 'package:budget/features/shop_list/pages/record_list/page_record_list.dart';
 import 'package:budget/features/shop_list/pages/shop_list/bloc/page_shop_list_bloc.dart';
-import 'package:budget/features/shop_list/sheets/menu_shop_list/sheets_menu_shop_list.dart';
+import 'package:budget/features/shop_list/sheets/menu_shop_list/sheet_menu_shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,13 +49,13 @@ class ListShopList extends StatelessWidget {
                   title: Text(shopList.name),
                   trailing: const Icon(Icons.navigate_next_outlined),
                   onLongPress: () async {
-                    final stateUpdateApp = await showModalBottomSheet(
+                    final StateUpdate? stateUpdate = await showModalBottomSheet(
                       context: context,
                       builder: (context) => SheetMenuShopList(
                         shopList: shopList,
                       ),
                     );
-                    if (stateUpdateApp == StateUpdate.page) {
+                    if (stateUpdate == StateUpdate.page) {
                       bloc.add(PageShopListLoadingEvent());
                     }
                   },
@@ -91,7 +91,7 @@ class ButtonAddShopList extends StatelessWidget {
         label: const Text('Список'),
         icon: const Icon(Icons.add),
         onPressed: () async {
-          final stateUpdate = await showDialog(
+          final StateUpdate? stateUpdate = await showDialog(
             context: context,
             builder: (context) => const DialogAddShopList(),
           );

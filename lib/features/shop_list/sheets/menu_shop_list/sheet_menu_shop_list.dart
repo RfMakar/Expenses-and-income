@@ -22,31 +22,47 @@ class SheetMenuShopList extends StatelessWidget {
             Navigator.pop(context, StateUpdate.page);
           }
         },
-        child: const Wrap(
-          children: [
-            TitleDialog(),
-            Divider(),
-            ButtonRenameShopList(),
-            ButtonDeleteShopList(),
-          ],
-        ),
+        child: const SheetView(),
       ),
     );
   }
 }
 
-class TitleDialog extends StatelessWidget {
-  const TitleDialog({super.key});
+class SheetView extends StatelessWidget {
+  const SheetView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<SheetMenuShopListBloc>(context);
-    return ListTile(
-      title: Text(bloc.shopList.name),
-      subtitle: const Text(
-        'Список',
-        style: TextStyle(fontSize: 10),
-      ),
+    return const Wrap(
+      children: [
+        TitleSheet(),
+        Divider(),
+        ButtonRenameShopList(),
+        ButtonDeleteShopList(),
+      ],
+    );
+  }
+}
+
+class TitleSheet extends StatelessWidget {
+  const TitleSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SheetMenuShopListBloc, SheetMenuShopListState>(
+      builder: (context, state) {
+        if (state is SheetMenuShopListInitial) {
+          return ListTile(
+            title: Text(state.shopList.name),
+            subtitle: const Text(
+              'Список',
+              style: TextStyle(fontSize: 10),
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }
@@ -56,18 +72,25 @@ class ButtonRenameShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<SheetMenuShopListBloc>(context);
-    return ListTile(
-      leading: const Icon(Icons.edit),
-      title: const Text('Переименовать'),
-      onTap: () async {
-        final String? newName = await showDialog(
-          context: context,
-          builder: (context) => DialogEditName(name: bloc.shopList.name),
-        );
-        if (newName != null) {
-          bloc.add(
-              SheetMenuShopListOnPressedButtonRenameShopListEvent(newName));
+    return BlocBuilder<SheetMenuShopListBloc, SheetMenuShopListState>(
+      builder: (context, state) {
+        final bloc = BlocProvider.of<SheetMenuShopListBloc>(context);
+        if (state is SheetMenuShopListInitial) {
+          return ListTile(
+            leading: const Icon(Icons.edit),
+            title: const Text('Переименовать'),
+            onTap: () async {
+              final String? newName = await showDialog(
+                context: context,
+                builder: (context) => DialogEditName(name: state.shopList.name),
+              );
+              if (newName != null) {
+                bloc.add(SheetMenuShopListRenameEvent(newName));
+              }
+            },
+          );
+        } else {
+          return Container();
         }
       },
     );
@@ -89,7 +112,7 @@ class ButtonDeleteShopList extends StatelessWidget {
           builder: (context) => const DialodgDelete(),
         );
         if (result == true) {
-          bloc.add(SheetMenuShopListOnPressedButtonDeleteShopListEvent());
+          bloc.add(SheetMenuShopListDeleteEvent());
         }
       },
     );

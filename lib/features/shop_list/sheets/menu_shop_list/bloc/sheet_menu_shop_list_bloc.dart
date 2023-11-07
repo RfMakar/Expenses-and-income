@@ -8,18 +8,16 @@ part 'sheet_menu_shop_list_state.dart';
 
 class SheetMenuShopListBloc
     extends Bloc<SheetMenuShopListEvent, SheetMenuShopListState> {
-  SheetMenuShopListBloc(this.shopList)
-      : super(SheetMenuShopListInitial(shopList)) {
-    on<SheetMenuShopListOnPressedButtonRenameShopListEvent>(
-        (event, emit) async {
-      await DBShopList.updateShopListName(event.newName, shopList.id);
+  SheetMenuShopListBloc(this._shopList)
+      : super(SheetMenuShopListInitial(_shopList)) {
+    on<SheetMenuShopListRenameEvent>((event, emit) async {
+      await DBShopList.updateShopListName(event.newName, _shopList.id);
       emit(SheetMenuShopListRenameState());
     });
-    on<SheetMenuShopListOnPressedButtonDeleteShopListEvent>(
-        (event, emit) async {
-      await DBShopList.deleteShopList(shopList.id);
+    on<SheetMenuShopListDeleteEvent>((event, emit) async {
+      await DBShopList.deleteShopList(_shopList.id);
       emit(SheetMenuShopListDeleteState());
     });
   }
-  final ShopList shopList;
+  final ShopList _shopList;
 }
