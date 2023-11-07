@@ -1,16 +1,29 @@
 import 'package:bloc/bloc.dart';
+import 'package:budget/repositories/shop_list/models/record_list.dart';
+import 'package:budget/repositories/shop_list/models/shop_list.dart';
+import 'package:budget/repositories/shop_list/sqllite/db_shop_lists.dart';
 import 'package:meta/meta.dart';
-
 part 'dialog_add_record_list_event.dart';
 part 'dialog_add_record_list_state.dart';
 
 class DialogAddRecordListBloc
     extends Bloc<DialogAddRecordListEvent, DialogAddRecordListState> {
-  DialogAddRecordListBloc() : super(DialogAddRecordListInitial()) {
-    on<DialogAddRecordListEvent>((event, emit) {
-      // TODO: implement event handler
+  DialogAddRecordListBloc(this._shopList)
+      : super(DialogAddRecordListInitial(_shopList)) {
+    on<DialogAddRecordListAddEvent>((event, emit) {
+      final writeRecordList = WriteRecordList(
+        name: event.nameRecordList,
+        idshoplist: _shopList.id,
+        isselected: 0,
+      );
+      DBShopList.insertRecordList(writeRecordList);
+      emit(DialogAddRecordListAddState());
+    });
+    on<DialogAddRecordListCancelEvent>((event, emit) {
+      emit(DialogAddRecordListCancelState());
     });
   }
+  final ShopList _shopList;
 }
 
 
