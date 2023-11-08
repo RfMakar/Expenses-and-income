@@ -1,4 +1,4 @@
-import 'package:budget/screens/app_finance/analytics/provider_screen_analytics.dart';
+import 'package:budget/features/finanse/pages/analytics/provider_screen_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

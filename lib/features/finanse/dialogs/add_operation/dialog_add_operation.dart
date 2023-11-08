@@ -1,8 +1,8 @@
 import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/dialogs/app_finance/add_operation/provider_dialog_add_operation.dart';
+import 'package:budget/features/finanse/dialogs/add_operation/provider_dialog_add_operation.dart';
+import 'package:budget/features/finanse/widgets/buttons_date_time.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
-import 'package:budget/widget/buttons_date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

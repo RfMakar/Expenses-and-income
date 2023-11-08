@@ -1,6 +1,6 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/delete/dialog_delete.dart';
-import 'package:budget/dialogs/edit_name/dialog_edit_name.dart';
+import 'package:budget/features/app/dialogs/delete/dialog_delete.dart';
+import 'package:budget/features/app/dialogs/edit_name/dialog_edit_name.dart';
 import 'package:budget/features/shop_list/sheets/menu_shop_list/bloc/sheet_menu_shop_list_bloc.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';

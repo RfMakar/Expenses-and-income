@@ -1,11 +1,11 @@
 import 'package:budget/const/actions_update.dart';
+import 'package:budget/features/finanse/pages/subcategory/provider_screen_subcategory.dart';
+import 'package:budget/features/finanse/sheets/select_period/sheet_select_period.dart';
+import 'package:budget/features/finanse/widgets/history/widget_history.dart';
+import 'package:budget/features/finanse/widgets/no_data.dart';
+import 'package:budget/features/finanse/widgets/switch_date.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
-import 'package:budget/screens/app_finance/subcategory/provider_screen_subcategory.dart';
-import 'package:budget/sheets/app_finance/select_period/sheet_select_period.dart';
-import 'package:budget/widget/history/widget_history.dart';
-import 'package:budget/widget/no_data.dart';
-import 'package:budget/widget/switch_date.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

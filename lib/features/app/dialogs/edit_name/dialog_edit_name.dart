@@ -1,6 +1,6 @@
 import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/dialogs/edit_name/provider_dialog_edit_name.dart';
+import 'package:budget/features/app/dialogs/edit_name/provider_dialog_edit_name.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

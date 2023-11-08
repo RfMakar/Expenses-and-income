@@ -1,5 +1,5 @@
-import 'package:budget/screens/home/provider_screen_home.dart';
-import 'package:budget/sheets/app_finance/menu_finance/sheet_menu_finance.dart';
+import 'package:budget/features/finanse/sheets/menu_finance/sheet_menu_finance.dart';
+import 'package:budget/features/app/pages/home/provider_screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';

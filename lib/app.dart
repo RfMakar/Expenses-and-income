@@ -1,5 +1,5 @@
 import 'package:budget/provider_app.dart';
-import 'package:budget/screens/home/screen_home.dart';
+import 'package:budget/features/app/pages/home/screen_home.dart';
 import 'package:budget/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

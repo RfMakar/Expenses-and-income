@@ -1,6 +1,6 @@
-import 'package:budget/screens/app_finance/analytics/screen_analytics.dart';
-import 'package:budget/screens/app_finance/data_app/screen_data_app.dart';
-import 'package:budget/sheets/app_finance/menu_finance/provider_sheet_menu_finance.dart';
+import 'package:budget/features/finanse/pages/analytics/screen_analytics.dart';
+import 'package:budget/features/finanse/pages/data_app/screen_data_app.dart';
+import 'package:budget/features/finanse/sheets/menu_finance/provider_sheet_menu_finance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

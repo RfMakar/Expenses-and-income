@@ -1,14 +1,14 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/dialogs/app_finance/add_category/dialog_add_category.dart';
-import 'package:budget/dialogs/app_finance/add_operation/dialog_add_operation.dart';
-import 'package:budget/dialogs/app_finance/add_subcategory/dialog_add_subcategory.dart';
+import 'package:budget/features/finanse/dialogs/add_category/dialog_add_category.dart';
+import 'package:budget/features/finanse/dialogs/add_operation/dialog_add_operation.dart';
+import 'package:budget/features/finanse/dialogs/add_subcategory/dialog_add_subcategory.dart';
+import 'package:budget/features/finanse/pages/add_finance/provider_screen_add_finance.dart';
+import 'package:budget/features/finanse/pages/add_finance/provider_widget_card_category.dart';
+import 'package:budget/features/finanse/sheets/menu_category/sheet_menu_category.dart';
+import 'package:budget/features/finanse/sheets/menu_subcategory/sheet_menu_subcategory.dart';
+import 'package:budget/features/finanse/widgets/switch_finance.dart';
 import 'package:budget/provider_app.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
-import 'package:budget/screens/app_finance/add_finance/provider_screen_add_finance.dart';
-import 'package:budget/screens/app_finance/add_finance/provider_widget_card_category.dart';
-import 'package:budget/sheets/app_finance/menu_category/sheet_menu_category.dart';
-import 'package:budget/sheets/app_finance/menu_subcategory/sheet_menu_subcategory.dart';
-import 'package:budget/widget/switch_finance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
