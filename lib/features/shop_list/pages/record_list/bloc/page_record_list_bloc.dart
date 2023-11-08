@@ -27,3 +27,28 @@ class PageRecordListBloc
   final ShopList shopList;
   late List<RecordList> _listRecordList;
 }
+
+
+/*
+class PageRecordListBloc
+    extends Bloc<PageRecordListEvent, PageRecordListState> {
+  PageRecordListBloc(this.shopList) : super(PageRecordListInitial()) {
+    on<PageRecordListLoadingEvent>((event, emit) async {
+      emit(PageRecordListLoadingState());
+      _listRecordList = await DBShopList.getListRecordList(shopList.id);
+      emit(PageRecordListLoadedState(_listRecordList));
+    });
+
+    on<PageRecordListOnTapEvent>((event, emit) async {
+      final selected = event.select == true ? 1 : 0;
+      final idRecordList = event.recordList.id;
+      DBShopList.updateSelectedRecordList(selected, idRecordList);
+      _listRecordList = await DBShopList.getListRecordList(shopList.id);
+      emit(PageRecordListLoadedState(_listRecordList));
+    });
+  }
+  final ShopList shopList;
+  late List<RecordList> _listRecordList;
+}
+
+*/

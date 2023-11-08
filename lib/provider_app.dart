@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class ProviderApp extends ChangeNotifier {
   final finance = Finance();
   final switchDate = SwitchDate();
-  late bool themeDart;
 
   void onPressedButFinance(int index) {
     finance.onPressed(index);

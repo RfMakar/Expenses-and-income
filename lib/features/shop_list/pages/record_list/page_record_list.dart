@@ -3,6 +3,7 @@ import 'package:budget/features/shop_list/dialogs/add_record_list/dialog_add_rec
 import 'package:budget/features/shop_list/pages/record_list/bloc/page_record_list_bloc.dart';
 import 'package:budget/features/shop_list/sheets/menu_list/sheet_menu_list.dart';
 import 'package:budget/features/shop_list/sheets/menu_record_list/sheet_menu_record_list.dart';
+import 'package:budget/repositories/shop_list/models/record_list.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 
 import 'package:flutter/material.dart';
@@ -14,20 +15,16 @@ class PageRecordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PageRecordListBloc(shopList),
-      child: Builder(builder: (context) {
-        final bloc = BlocProvider.of<PageRecordListBloc>(context);
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(bloc.shopList.name),
-            actions: const [
-              ButtonMenuRecordList(),
-            ],
-          ),
-          floatingActionButton: const ButtonAddNewRecordList(),
-          body: const ListRecordList(),
-        );
-      }),
+      create: (context) =>
+          PageRecordListBloc(shopList)..add(PageRecordListLoadingEvent()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(shopList.name),
+          actions: const [ButtonMenuRecordList()],
+        ),
+        floatingActionButton: const ButtonAddNewRecordList(),
+        body: const ListRecordList(),
+      ),
     );
   }
 }
@@ -37,61 +34,68 @@ class ListRecordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<PageRecordListBloc>(context);
     return BlocBuilder<PageRecordListBloc, PageRecordListState>(
-      bloc: bloc..add(PageRecordListLoadingEvent()),
       builder: (context, state) {
         if (state is PageRecordListLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is PageRecordListLoadedState) {
-          final listRecordList = state.listRecordList;
           return ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: listRecordList.length,
+            itemCount: state.listRecordList.length,
             itemBuilder: (context, index) {
-              final recordList = listRecordList[index];
-              return Card(
-                elevation: 0.5,
-                child: ListTile(
-                  title: Text(
-                    recordList.name,
-                    style: TextStyle(
-                      decoration: recordList.isselected == 0
-                          ? TextDecoration.none
-                          : TextDecoration.lineThrough,
-                    ),
-                  ),
-                  trailing: Checkbox(
-                    value: recordList.isselected == 0 ? false : true,
-                    onChanged: (select) {
-                      if (select != null) {
-                        bloc.add(PageRecordListOnTapEvent(recordList, select));
-                      }
-                    },
-                  ),
-                  onLongPress: () async {
-                    final StateUpdate? stateUpdate = await showModalBottomSheet(
-                      context: context,
-                      builder: (context) =>
-                          SheetMenuRecordList(recordList: recordList),
-                    );
-                    if (stateUpdate == StateUpdate.page) {
-                      bloc.add(PageRecordListLoadingEvent());
-                    }
-                  },
-                  onTap: () {
-                    final select = recordList.isselected == 0 ? true : false;
-                    bloc.add(PageRecordListOnTapEvent(recordList, select));
-                  },
-                ),
-              );
+              return WidgetCardRecordList(
+                  recordList: state.listRecordList[index]);
             },
           );
+        } else {
+          return Container();
         }
-        return Container();
       },
+    );
+  }
+}
+
+class WidgetCardRecordList extends StatelessWidget {
+  const WidgetCardRecordList({super.key, required this.recordList});
+  final RecordList recordList;
+  @override
+  Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<PageRecordListBloc>(context);
+    return Card(
+      elevation: 0.5,
+      child: ListTile(
+        title: Text(
+          recordList.name,
+          style: TextStyle(
+            decoration: recordList.isselected == 0
+                ? TextDecoration.none
+                : TextDecoration.lineThrough,
+          ),
+        ),
+        trailing: Checkbox(
+          value: recordList.isselected == 0 ? false : true,
+          onChanged: (select) {
+            if (select != null) {
+              bloc.add(PageRecordListOnTapEvent(recordList, select));
+            }
+          },
+        ),
+        onLongPress: () async {
+          final StateUpdate? stateUpdate = await showModalBottomSheet(
+            context: context,
+            builder: (context) => SheetMenuRecordList(recordList: recordList),
+          );
+          if (stateUpdate == StateUpdate.page) {
+            bloc.add(PageRecordListLoadingEvent());
+          }
+        },
+        onTap: () {
+          final select = recordList.isselected == 0 ? true : false;
+          bloc.add(PageRecordListOnTapEvent(recordList, select));
+        },
+      ),
     );
   }
 }
