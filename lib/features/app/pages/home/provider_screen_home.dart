@@ -1,10 +1,10 @@
-import 'package:budget/features/finanse/pages/finance/screen_finance.dart';
+import 'package:budget/features/finanse/pages/finance/page_finance.dart';
 import 'package:budget/features/shop_list/pages/shop_list/page_shop_list.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
-import 'package:budget/repositories/finance/sqllite/db_budget.dart';
-import 'package:budget/repositories/finance/sqllite/db_finance.dart';
+import 'package:budget/repositories/finance/sqlite/db_budget.dart';
+import 'package:budget/repositories/finance/sqlite/db_finance.dart';
 import 'package:flutter/material.dart';
 
 class ProviderScreenHome extends ChangeNotifier {
@@ -15,9 +15,9 @@ class ProviderScreenHome extends ChangeNotifier {
     loadDB(nameExptab, 0);
     loadDB(nameInctab, 1);
   }
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   final List<Widget> _listWidgetScreen = const [
-    ScreenFinance(),
+    PageFinance(),
     PageShopList(),
   ];
   final List<String> _listNameAppBar = const ['Финансы', 'Списки'];
@@ -69,11 +69,11 @@ class ProviderScreenHome extends ChangeNotifier {
 
     //Получаем список подкатегорий для каждой категории
     for (var category in listCategory) {
-      category.listSubCategories = await DBFinance.getListSubCategory(category);
+      category.listSubCategory = await DBFinance.getListSubCategory(category);
     }
 
     for (var cat in listCategory) {
-      for (var subcat in cat.listSubCategories!) {
+      for (var subcat in cat.listSubCategory!) {
         //Получаем список старых операций
         final listOper =
             await DBBudget.getListOper(cat.name, subcat.name, nameTable);

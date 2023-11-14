@@ -82,7 +82,8 @@ class ButtonRenameShopList extends StatelessWidget {
             onTap: () async {
               final String? newName = await showDialog(
                 context: context,
-                builder: (context) => DialogEditName(name: state.shopList.name),
+                builder: (context) =>
+                    DialogEditName(nameEdit: state.shopList.name),
               );
               if (newName != null) {
                 bloc.add(SheetMenuShopListRenameEvent(newName));

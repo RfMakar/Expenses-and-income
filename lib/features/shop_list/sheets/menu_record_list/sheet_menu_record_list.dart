@@ -82,7 +82,7 @@ class ButtonRenameRecordList extends StatelessWidget {
               final String? newName = await showDialog(
                 context: context,
                 builder: (context) =>
-                    DialogEditName(name: state.recordList.name),
+                    DialogEditName(nameEdit: state.recordList.name),
               );
               if (newName != null) {
                 bloc.add(SheetMenuRecordListRenameEvent(newName));

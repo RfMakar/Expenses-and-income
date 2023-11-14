@@ -2,10 +2,18 @@ import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:intl/intl.dart';
 
 abstract class Categories {
-  final String name;
-  final String color;
+  String name;
+  String color;
 
   Categories({required this.name, required this.color});
+
+  void rename(String name) {
+    this.name = name;
+  }
+
+  void changeColor(String color) {
+    this.color = color;
+  }
 }
 
 //Column table -> |id|idfinace|name|color|
@@ -37,12 +45,12 @@ class ReadCategory extends Categories {
 
 //Column table -> |id|name|color| + Column table -> |id|name|
 class Category extends ReadCategory {
-  List<SubCategory>? listSubCategories;
+  List<SubCategory>? listSubCategory;
   Category({
     required super.id,
     required super.name,
     required super.color,
-    this.listSubCategories,
+    this.listSubCategory,
   });
   //Чтение БД
   factory Category.fromMap(Map<String, dynamic> json) => Category(

@@ -19,6 +19,14 @@ class SwitchDate {
     return _dateTime;
   }
 
+  void switchState() {
+    if (state == 1) {
+      stateMonth();
+    } else {
+      stateYear();
+    }
+  }
+
   //Устанавльвается текущая дата и меняется период
   void stateYear() {
     _dateTime = DateTime.now();

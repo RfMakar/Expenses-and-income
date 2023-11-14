@@ -1,6 +1,7 @@
+import 'package:budget/const/actions_update.dart';
 import 'package:budget/const/snack_bar.dart';
 import 'package:budget/const/validator_text_field.dart';
-import 'package:budget/features/finanse/dialogs/edit_operation/provider_dialog_edit_operation.dart';
+import 'package:budget/features/finanse/dialogs/edit_operation/model_dialog_edit_operation.dart';
 import 'package:budget/features/finanse/widgets/buttons_date_time.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
@@ -11,64 +12,94 @@ class DialogEditOperation extends StatelessWidget {
   final Operation operation;
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProviderDialogEditOperation(operation),
-      child: Consumer<ProviderDialogEditOperation>(
-        builder: (context, provider, child) {
-          return AlertDialog(
-            title: const Center(child: Text('Изменить')),
-            content: Form(
-                key: provider.formKey,
-                child: Wrap(
-                  children: [
-                    TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.number,
-                      controller: provider.textEditingControllerValue,
-                      autovalidateMode: AutovalidateMode.always,
-                      validator: ValidatorTextField.value,
-                      decoration: const InputDecoration(
-                        hintText: 'Значение',
-                      ),
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.sentences,
-                      controller: provider.textEditingControllerNote,
-                      autovalidateMode: AutovalidateMode.always,
-                      validator: ValidatorTextField.textNote,
-                      decoration: const InputDecoration(
-                        hintText: 'Заметка',
-                        suffixIcon: Icon(Icons.comment),
-                      ),
-                    ),
-                    WidgetButtonsDateTime(
-                      dateTime: provider.dateTime,
-                      onChangedDateTime: provider.onChangedDate,
-                    ),
-                  ],
-                )),
-            actions: [
-              TextButton(
-                child: const Text('Изменить'),
-                onPressed: () {
-                  final validate = provider.onPressedButtonEditOperation();
+    return Provider(
+      create: (context) => ModelDialogEditOperation(operation),
+      child: const ViewDialog(),
+    );
+  }
+}
 
-                  if (validate) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBarApp.snackBarEdit);
-                    Navigator.pop(context, validate);
-                  }
-                },
+class ViewDialog extends StatefulWidget {
+  const ViewDialog({super.key});
+
+  @override
+  State<ViewDialog> createState() => _ViewDialogState();
+}
+
+class _ViewDialogState extends State<ViewDialog> {
+  final _formKey = GlobalKey<FormState>();
+  final _textEditingControllerValue = TextEditingController();
+  final _textEditingControllerNote = TextEditingController();
+
+  @override
+  void dispose() {
+    _textEditingControllerValue.dispose();
+    _textEditingControllerNote.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final model = context.read<ModelDialogEditOperation>();
+    _textEditingControllerValue.text = model.value();
+    _textEditingControllerNote.text = model.note();
+    _textEditingControllerValue.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _textEditingControllerValue.text.length,
+    );
+    return AlertDialog(
+      title: const Center(child: Text('Изменить')),
+      content: Form(
+          key: _formKey,
+          child: Wrap(
+            children: [
+              TextFormField(
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                controller: _textEditingControllerValue,
+                autovalidateMode: AutovalidateMode.always,
+                validator: ValidatorTextField.value,
+                decoration: const InputDecoration(
+                  hintText: 'Значение',
+                ),
               ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('Отмена'),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
+                controller: _textEditingControllerNote,
+                autovalidateMode: AutovalidateMode.always,
+                validator: ValidatorTextField.textNote,
+                decoration: const InputDecoration(
+                  hintText: 'Заметка',
+                  suffixIcon: Icon(Icons.comment),
+                ),
+              ),
+              WidgetButtonsDateTime(
+                dateTime: model.dateTime(),
+                onChangedDateTime: model.onChangedDate,
               ),
             ],
-          );
-        },
-      ),
+          )),
+      actions: [
+        TextButton(
+          child: const Text('Изменить'),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              final newValue =
+                  double.parse(_textEditingControllerValue.text.trim());
+              final newNote = _textEditingControllerNote.text.trim();
+              model.onPressedButtonEditOperation(newValue, newNote);
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBarApp.snackBarEdit);
+              Navigator.pop(context, StateUpdate.page);
+            }
+          },
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Отмена'),
+        ),
+      ],
     );
   }
 }

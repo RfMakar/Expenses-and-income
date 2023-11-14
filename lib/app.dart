@@ -1,4 +1,4 @@
-import 'package:budget/provider_app.dart';
+import 'package:budget/model_app.dart';
 import 'package:budget/features/app/pages/home/screen_home.dart';
 import 'package:budget/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +12,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderApp(),
-      child: Consumer<ProviderApp>(
-        builder: (context, provider, child) {
+      create: (context) => ModelApp(),
+      child: Consumer<ModelApp>(
+        builder: (context, model, child) {
           return MaterialApp(
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,

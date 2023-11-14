@@ -1,5 +1,5 @@
 import 'package:budget/const/actions_update.dart';
-import 'package:budget/provider_app.dart';
+import 'package:budget/model_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ class SheetSelectPeriod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ProviderApp>(context);
+    final providerApp = Provider.of<ModelApp>(context);
     final stateApp = providerApp.switchDate.state;
     return Wrap(
       children: [
@@ -25,7 +25,7 @@ class SheetSelectPeriod extends StatelessWidget {
           onTap: () {
             if (stateApp == 1) {
               Navigator.pop(context, StateUpdate.page);
-              providerApp.switchDate.stateMonth();
+              providerApp.switchDate.switchState();
             }
           },
         ),
@@ -35,7 +35,7 @@ class SheetSelectPeriod extends StatelessWidget {
           onTap: () {
             if (stateApp == 0) {
               Navigator.pop(context, StateUpdate.page);
-              providerApp.switchDate.stateYear();
+              providerApp.switchDate.switchState();
             }
           },
         ),

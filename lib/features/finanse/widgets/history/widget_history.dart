@@ -2,7 +2,7 @@ import 'package:budget/const/actions_update.dart';
 import 'package:budget/features/finanse/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:budget/features/finanse/sheets/operation/sheet_operation.dart';
 import 'package:budget/features/finanse/widgets/history/provider_widget_history.dart';
-import 'package:budget/provider_app.dart';
+import 'package:budget/model_app.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class WidgetHistory extends StatelessWidget {
   final void Function() updateScreen;
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ProviderApp>(context);
+    final providerApp = Provider.of<ModelApp>(context);
 
     return ChangeNotifierProvider(
       create: (context) =>

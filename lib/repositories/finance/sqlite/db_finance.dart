@@ -705,18 +705,16 @@ abstract class DBFinance {
 
   //Обновить данные
 
-  static Future<int> updateCategoryName(
-      String newName, Category category) async {
+  static Future<int> updateCategoryName(String newName, int id) async {
     final db = await database;
     return await db.rawUpdate('''
     UPDATE ${TableDB.categories} 
     SET name = ?
     WHERE id = ?;
-    ''', [newName, category.id]);
+    ''', [newName, id]);
   }
 
-  static Future<int> updateCategoryColor(
-      String color, Category category) async {
+  static Future<int> updateCategoryColor(String color, int id) async {
     final db = await database;
     return await db.rawUpdate(
       '''
@@ -724,7 +722,7 @@ abstract class DBFinance {
     SET color = ?
     WHERE id = ?;
     ''',
-      [color, category.id],
+      [color, id],
     );
   }
 
