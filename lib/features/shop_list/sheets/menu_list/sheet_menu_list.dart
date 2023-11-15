@@ -1,4 +1,4 @@
-import 'package:budget/const/actions_update.dart';
+import 'package:budget/features/app/const/actions_update.dart';
 import 'package:budget/features/shop_list/sheets/menu_list/bloc/sheet_menu_list_bloc.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';

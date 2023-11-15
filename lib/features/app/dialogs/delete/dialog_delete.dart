@@ -1,4 +1,4 @@
-import 'package:budget/const/snack_bar.dart';
+import 'package:budget/features/app/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 
 class DialodgDelete extends StatelessWidget {

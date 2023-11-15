@@ -1,4 +1,4 @@
-import 'package:budget/const/color.dart';
+import 'package:budget/features/app/const/color.dart';
 import 'package:flutter/material.dart';
 
 class SheetColors extends StatelessWidget {

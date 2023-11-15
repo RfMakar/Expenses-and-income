@@ -1,6 +1,6 @@
-import 'package:budget/const/actions_update.dart';
-import 'package:budget/const/snack_bar.dart';
-import 'package:budget/const/validator_text_field.dart';
+import 'package:budget/features/app/const/actions_update.dart';
+import 'package:budget/features/app/widgets/snack_bar.dart';
+import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/finance/dialogs/edit_operation/model_dialog_edit_operation.dart';
 import 'package:budget/features/finance/widgets/buttons_date_time.dart';
 import 'package:budget/repositories/finance/models/operations.dart';

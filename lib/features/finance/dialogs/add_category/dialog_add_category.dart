@@ -1,5 +1,5 @@
-import 'package:budget/const/actions_update.dart';
-import 'package:budget/const/validator_text_field.dart';
+import 'package:budget/features/app/const/actions_update.dart';
+import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/app/pages/material_app/model_material_app.dart';
 import 'package:budget/features/finance/dialogs/add_category/model_dialog_add_category.dart';
 import 'package:budget/features/finance/sheets/colors/sheet_colors.dart';

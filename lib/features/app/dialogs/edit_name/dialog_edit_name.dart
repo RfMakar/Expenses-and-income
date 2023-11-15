@@ -1,5 +1,5 @@
-import 'package:budget/const/snack_bar.dart';
-import 'package:budget/const/validator_text_field.dart';
+import 'package:budget/features/app/widgets/snack_bar.dart';
+import 'package:budget/features/app/const/validator_text_field.dart';
 
 import 'package:flutter/material.dart';
 

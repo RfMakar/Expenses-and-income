@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:budget/repositories/finance/models/finance.dart';
 import 'package:budget/repositories/finance/sqlite/db_finance.dart';
-import 'package:budget/const/color.dart';
+import 'package:budget/features/app/const/color.dart';
 import 'package:flutter/material.dart';
 
 class ModelDialogAddCategory extends ChangeNotifier {

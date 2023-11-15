@@ -1,5 +1,5 @@
-import 'package:budget/const/actions_update.dart';
-import 'package:budget/const/validator_text_field.dart';
+import 'package:budget/features/app/const/actions_update.dart';
+import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/finance/dialogs/add_subcategory/model_dialog_add_subcategories.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:flutter/material.dart';

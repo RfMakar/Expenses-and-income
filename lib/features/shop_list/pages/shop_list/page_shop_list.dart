@@ -1,4 +1,4 @@
-import 'package:budget/const/actions_update.dart';
+import 'package:budget/features/app/const/actions_update.dart';
 import 'package:budget/features/shop_list/dialogs/add_shop_list/dialog_add_shop_list.dart';
 import 'package:budget/features/shop_list/pages/record_list/page_record_list.dart';
 import 'package:budget/features/shop_list/pages/shop_list/bloc/page_shop_list_bloc.dart';

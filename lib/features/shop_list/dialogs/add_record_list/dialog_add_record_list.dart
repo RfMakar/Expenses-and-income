@@ -1,5 +1,5 @@
-import 'package:budget/const/actions_update.dart';
-import 'package:budget/const/validator_text_field.dart';
+import 'package:budget/features/app/const/actions_update.dart';
+import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/shop_list/dialogs/add_record_list/bloc/dialog_add_record_list_bloc.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
