@@ -1,0 +1,21 @@
+{
+    "@@locale": "en",
+    "finance": "Finance",
+    "lists": "Lists",
+    "expense":"Expense",
+    "income":"Income",
+    "navigation": "Navigation",
+    "aboutTheApp": "About the app",
+    "version": "Version",
+    "privacyPolicy": "Privacy policy",
+    "leaveAReview": "Leave a review",
+    "dateFormat" : "{date}",
+    "@dateFormat": {
+        "placeholders": {
+          "date": {
+            "type": "DateTime",
+            "format": "yMMMd"
+          }
+        }
+      }
+}

@@ -11,6 +11,7 @@ import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageAddFinance extends StatelessWidget {
   const PageAddFinance({super.key});
@@ -62,6 +63,7 @@ class WidgetSwitchFinance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final modelApp = context.read<ModelMaterialApp>();
     final model = context.watch<ModelPageAddFinance>();
     final widthToggle = MediaQuery.of(context).size.width * (0.8 / 2.0);
@@ -74,8 +76,8 @@ class WidgetSwitchFinance extends StatelessWidget {
           model.updatePage();
         },
         children: [
-          Center(child: Text(modelApp.finance.expense)),
-          Center(child: Text(modelApp.finance.income)),
+          Center(child: Text(localeApp.expense)),
+          Center(child: Text(localeApp.income)),
         ],
       ),
     );

@@ -8,7 +8,6 @@ class ModelPageHome extends ChangeNotifier {
     PageFinance(),
     PageShopList(),
   ];
-  final List<String> _listNameAppBar = const ['Финансы', 'Списки'];
 
   Widget widgetPage() {
     return _listWidgetScreen[selectedIndex];
@@ -16,10 +15,6 @@ class ModelPageHome extends ChangeNotifier {
 
   void updateScreen() {
     notifyListeners();
-  }
-
-  String titleAppBar() {
-    return _listNameAppBar[selectedIndex];
   }
 
   void onItemTapped(int index) {

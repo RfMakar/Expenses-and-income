@@ -4,5 +4,5 @@ import 'package:intl/intl.dart';
 
 void main() {
   runApp(const PageMaterialApp());
-  Intl.defaultLocale = 'ru';
+  // Intl.defaultLocale = 'en';
 }

@@ -19,7 +19,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       expenses += analiticsMonth.expense;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(expenses);
+    return NumberFormat.compact().format(expenses);
   }
 
   //Сумма доходов за месяц
@@ -28,7 +28,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       income += analiticsMonth.income;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(income);
+    return NumberFormat.compact().format(income);
   }
 
   //Сумма итого за год
@@ -37,7 +37,7 @@ class Analitics {
     for (var analiticsMonth in listAnaliticsMonth) {
       total += analiticsMonth.total;
     }
-    return NumberFormat.compact(locale: 'ru-RU').format(total);
+    return NumberFormat.compact().format(total);
   }
 }
 
@@ -67,15 +67,15 @@ class AnaliticsMonth {
   }
 
   String getExpence() {
-    return NumberFormat.compact(locale: 'ru-RU').format(expense);
+    return NumberFormat.compact().format(expense);
   }
 
   String getIncome() {
-    return NumberFormat.compact(locale: 'ru-RU').format(income);
+    return NumberFormat.compact().format(income);
   }
 
   String getTotal() {
-    return NumberFormat.compact(locale: 'ru-RU').format(total);
+    return NumberFormat.compact().format(total);
   }
 }
 
@@ -95,7 +95,7 @@ class AnaliticsAVGMonth {
         avgcategory: json['avgcategory'],
       );
   String getAVGCategory() {
-    return NumberFormat.compact(locale: 'ru-RU').format(avgcategory);
+    return NumberFormat.compact().format(avgcategory);
   }
 }
 

@@ -1,0 +1,12 @@
+{
+    "@@locale": "ru",
+    "finance": "Финансы",
+    "lists": "Списки",
+    "expense":"Расходы",
+    "income":"Доходы",
+    "navigation": "Навигация",
+    "aboutTheApp": "О приложении",
+    "version": "Версия",
+    "privacyPolicy": "Политика конфиденциальности",
+    "leaveAReview": "Оставить отзыв"
+}

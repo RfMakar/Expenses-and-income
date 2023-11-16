@@ -3,20 +3,33 @@ import 'package:budget/features/app/pages/home/model_page_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageHome extends StatelessWidget {
   const PageHome({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String titleAppBar(int index) {
+      final localeApp = AppLocalizations.of(context)!;
+      switch (index) {
+        case 0:
+          return localeApp.finance;
+        case 1:
+          return localeApp.lists;
+        default:
+          return '';
+      }
+    }
+
     return ChangeNotifierProvider(
       create: (context) => ModelPageHome(),
       child: Consumer<ModelPageHome>(
-        builder: (context, provider, _) {
+        builder: (context, model, _) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(provider.titleAppBar()),
-              actions: provider.selectedIndex == 0
+              title: Text(titleAppBar(model.selectedIndex)),
+              actions: model.selectedIndex == 0
                   ? [
                       IconButton(
                         onPressed: () {
@@ -31,7 +44,7 @@ class PageHome extends StatelessWidget {
                   : null,
             ),
             drawer: const WidgetDrawer(),
-            body: provider.widgetPage(),
+            body: model.widgetPage(),
           );
         },
       ),
@@ -44,16 +57,17 @@ class WidgetDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final provider = Provider.of<ModelPageHome>(context);
     return Drawer(
       child: ListView(
         children: [
           const SizedBox(height: 20),
-          const Center(child: Text('Навигация')),
+          Center(child: Text(localeApp.navigation)),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.monetization_on_outlined),
-            title: const Text('Финансы'),
+            title: Text(localeApp.finance),
             onTap: () {
               Navigator.pop(context);
               provider.onItemTapped(0);
@@ -61,22 +75,22 @@ class WidgetDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.receipt_long_outlined),
-            title: const Text('Списки'),
+            title: Text(localeApp.lists),
             onTap: () {
               Navigator.pop(context);
               provider.onItemTapped(1);
             },
           ),
-          const Center(child: Text('О приложении')),
+          Center(child: Text(localeApp.aboutTheApp)),
           const Divider(),
-          const ListTile(
-            leading: Icon(Icons.app_shortcut_outlined),
-            title: Text('Версия'),
-            subtitle: Text('1.0.12'),
+          ListTile(
+            leading: const Icon(Icons.app_shortcut_outlined),
+            title: Text(localeApp.version),
+            subtitle: const Text('1.0.12'),
           ),
           ListTile(
             leading: const Icon(Icons.security_outlined),
-            title: const Text('Политика конфиденциальности'),
+            title: Text(localeApp.privacyPolicy),
             onTap: () async {
               final Uri url = Uri.parse(
                   'https://sites.google.com/view/ideamight/budget/privacypolicy');
@@ -91,7 +105,7 @@ class WidgetDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.grade_outlined, color: Colors.yellow),
-            title: const Text('Оставить отзыв'),
+            title: Text(localeApp.leaveAReview),
             onTap: () async {
               final Uri url = Uri.parse(
                   'https://play.google.com/store/apps/details?id=ru.ideamight.budget');

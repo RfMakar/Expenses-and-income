@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageMaterialApp extends StatelessWidget {
   const PageMaterialApp({Key? key}) : super(key: key);
@@ -16,15 +17,15 @@ class PageMaterialApp extends StatelessWidget {
       child: Consumer<ModelMaterialApp>(
         builder: (context, model, child) {
           return MaterialApp(
+            title: 'Финансы',
             localizationsDelegates: const [
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
               FormBuilderLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('ru', 'RU'),
-            ],
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: themeLight,
             darkTheme: themeDark,
             themeMode: themeMode,

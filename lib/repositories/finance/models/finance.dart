@@ -1,8 +1,8 @@
 //0 - расходы, 1 - доходы
 
 class Finance {
-  final String expense = 'Расход';
-  final String income = 'Доход';
+  final String _expense = 'Расход';
+  final String _income = 'Доход';
   List<bool> isSelected = [true, false];
 
   int get id => isSelected[0] == true ? 0 : 1;
@@ -19,17 +19,17 @@ class Finance {
 
   String titleFinance() {
     if (id == 0) {
-      return expense;
+      return _expense;
     } else {
-      return income;
+      return _income;
     }
   }
 
   String titleAddFinance() {
     if (id == 0) {
-      return 'Добавить ${expense.toLowerCase()}';
+      return 'Добавить ${_expense.toLowerCase()}';
     } else {
-      return 'Добавить ${income.toLowerCase()}';
+      return 'Добавить ${_income.toLowerCase()}';
     }
   }
 }
