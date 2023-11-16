@@ -10,7 +10,7 @@ class ModelSheetMenuOperation {
   String titleSheet() =>
       '${_operation.nameCategory} / ${_operation.nameSubCategory}';
 
-  String subTitleSheet() => 'Операция от ${_operation.getDateFormat()}';
+  DateTime dateTime() => DateTime.tryParse(_operation.date)!;
 
   void onTapDeletedOperation() {
     DBFinance.deleteOperation(_operation);

@@ -3,17 +3,9 @@ state = 0 -> период месяц
 state = 1 -> период год
 */
 
-import 'package:intl/intl.dart';
-
 class SwitchDate {
   var _dateTime = DateTime.now();
   var state = 0;
-
-  String getDate() {
-    return state == 0
-        ? DateFormat.yMMMM().format(_dateTime)
-        : DateFormat.y().format(_dateTime);
-  }
 
   DateTime getDateTime() {
     return _dateTime;

@@ -61,10 +61,11 @@ class AnaliticsMonth {
         income: json['income'],
         total: json['total'],
       );
-  String getMonth(int year) {
-    final dateTime = DateTime(year, month);
-    return DateFormat.MMMM().format(dateTime);
-  }
+  // String getMonth(int year) {
+  //   final dateTime = DateTime(year, month);
+
+  //   return DateFormat.MMMM().format(dateTime);
+  // }
 
   String getExpence() {
     return NumberFormat.compact().format(expense);

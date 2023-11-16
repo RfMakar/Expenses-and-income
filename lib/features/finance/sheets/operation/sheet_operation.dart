@@ -3,6 +3,7 @@ import 'package:budget/features/finance/sheets/operation/model_sheet_operation.d
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetOperation extends StatelessWidget {
   const SheetOperation({super.key, required this.operation});
@@ -23,6 +24,7 @@ class ViewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelSheetOperation>();
     return Wrap(
       children: [
@@ -38,7 +40,8 @@ class ViewSheet extends StatelessWidget {
         const Divider(),
         Center(
           child: Text(
-            model.titleDateTime(),
+            localeApp.dateTimeFormatOperationFrom(
+                model.dateTime(), model.dateTime()),
             style: const TextStyle(
               fontSize: 12,
             ),

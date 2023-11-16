@@ -24,7 +24,7 @@ class ModelPageFinance extends ChangeNotifier {
 
   void updatePage() => notifyListeners();
 
-  String titleDateTime() => _switchDate.getDate();
+  // String titleDateTime() => _switchDate.getDate();
   String titleSumOperation() => _sumOperation.getValue(_finance.id);
 
   Color colorGroupCategory(int index) =>

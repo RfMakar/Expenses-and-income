@@ -2,11 +2,80 @@
     "@@locale": "ru",
     "finance": "Финансы",
     "lists": "Списки",
-    "expense":"Расходы",
-    "income":"Доходы",
+    "expense": "Расходы",
+    "income": "Доходы",
     "navigation": "Навигация",
     "aboutTheApp": "О приложении",
     "version": "Версия",
     "privacyPolicy": "Политика конфиденциальности",
-    "leaveAReview": "Оставить отзыв"
+    "leaveAReview": "Оставить отзыв",
+    "dateFormatPeriodMonth": "{date}",
+    "@dateFormatPeriodMonth": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMM"
+            }
+        }
+    },
+    "dateFormatPeriodYear": "{date}",
+    "@dateFormatPeriodYear": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "y"
+            }
+        }
+    },
+    "dateFormat": "{date}",
+    "@dateFormat": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            }
+        }
+    },
+    "timeFormat": "{date}",
+    "@timeFormat": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "Hm"
+            }
+        }
+    },
+    "dateTimeFormatOperationFrom": "Операция от {date} в {time} ",
+    "@dateTimeFormatOperationFrom": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "time": {
+                "type": "DateTime",
+                "format": "Hm"
+            }
+        }
+    },
+    "dateHistory": "{date}",
+    "@dateHistory": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "MMMd"
+            }
+           
+        }
+    },
+    "dateMonth": "{date}",
+    "@dateMonth": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "MMMM"
+            }
+           
+        }
+    }   
 }

@@ -10,9 +10,7 @@ class ModelSheetOperation {
     return _operation.getValue(_finance.id);
   }
 
-  String titleDateTime() {
-    return 'Операция от ${_operation.getDateFormat()}';
-  }
+  DateTime dateTime() => DateTime.tryParse(_operation.date)!;
 
   String titleCategoty() {
     return _operation.nameCategory;

@@ -104,7 +104,7 @@ class WidgetInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.read<ModelPageFinance>();
-    final providerApp = context.read<ModelMaterialApp>();
+    final modelApp = context.read<ModelMaterialApp>();
     return Card(
       child: Column(
         children: [
@@ -146,21 +146,36 @@ class WidgetInfo extends StatelessWidget {
                     color: Colors.grey,
                     icon: const Icon(Icons.navigate_before),
                     onPressed: () {
-                      providerApp.switchDate.backDate();
+                      modelApp.switchDate.backDate();
                       model.updatePage();
                     },
                   ),
-                  Builder(builder: (context) {
-                    final model = context.watch<ModelPageFinance>();
-                    return Text(
-                      model.titleDateTime(),
-                      style: const TextStyle(color: Colors.grey),
-                    );
-                  }),
+                  Consumer<ModelPageFinance>(
+                    builder: (context, value, child) {
+                      final localeApp = AppLocalizations.of(context)!;
+                      String titleDateTime() {
+                        switch (modelApp.switchDate.state) {
+                          case 0:
+                            return localeApp.dateFormatPeriodMonth(
+                                modelApp.switchDate.getDateTime());
+                          case 1:
+                            return localeApp.dateFormatPeriodYear(
+                                modelApp.switchDate.getDateTime());
+                          default:
+                            return '';
+                        }
+                      }
+
+                      return Text(
+                        titleDateTime(),
+                        style: const TextStyle(color: Colors.grey),
+                      );
+                    },
+                  ),
                   IconButton(
                     color: Colors.grey,
                     onPressed: () {
-                      providerApp.switchDate.nextDate();
+                      modelApp.switchDate.nextDate();
                       model.updatePage();
                     },
                     icon: const Icon(Icons.navigate_next),

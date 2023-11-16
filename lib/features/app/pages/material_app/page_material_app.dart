@@ -17,6 +17,7 @@ class PageMaterialApp extends StatelessWidget {
       child: Consumer<ModelMaterialApp>(
         builder: (context, model, child) {
           return MaterialApp(
+            locale: const Locale('en'),
             title: 'Финансы',
             localizationsDelegates: const [
               AppLocalizations.delegate,

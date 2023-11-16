@@ -46,7 +46,7 @@ class ModelPageCategory extends ChangeNotifier {
 
   String titleSumOperation() => _sumOperation.getValue(_finance.id);
 
-  String titleDateTime() => _switchDate.getDate();
+  //String titleDateTime() => _switchDate.getDate();
 
   Color colorGroupSubCategory(int index) =>
       Color(int.parse(_groupCategory.color));

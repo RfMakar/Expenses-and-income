@@ -6,6 +6,7 @@ import 'package:budget/features/finance/widgets/history_operations/model_widget_
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WidgetHistoryOperations extends StatelessWidget {
   const WidgetHistoryOperations({
@@ -50,6 +51,7 @@ class ListHistoryOperations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final idFinance = context.read<ModelMaterialApp>().finance.id;
     final model = context.read<ModelWidgetHistoryOperations>();
     return ListView.builder(
@@ -67,7 +69,8 @@ class ListHistoryOperations extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    operationHistory.getDateFormat(),
+                    localeApp
+                        .dateHistory(DateTime.parse(operationHistory.date)),
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),

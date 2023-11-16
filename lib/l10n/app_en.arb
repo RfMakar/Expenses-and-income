@@ -2,20 +2,81 @@
     "@@locale": "en",
     "finance": "Finance",
     "lists": "Lists",
-    "expense":"Expense",
-    "income":"Income",
+    "expense": "Expense",
+    "income": "Income",
     "navigation": "Navigation",
     "aboutTheApp": "About the app",
     "version": "Version",
     "privacyPolicy": "Privacy policy",
     "leaveAReview": "Leave a review",
-    "dateFormat" : "{date}",
+    
+    "dateFormatPeriodMonth": "{date}",
+    "@dateFormatPeriodMonth": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMM"
+            }
+        }
+    },
+    "dateFormatPeriodYear": "{date}",
+    "@dateFormatPeriodYear": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "y"
+            }
+        }
+    },
+    "dateFormat": "{date}",
     "@dateFormat": {
         "placeholders": {
-          "date": {
-            "type": "DateTime",
-            "format": "yMMMd"
-          }
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            }
         }
-      }
+    },
+    "timeFormat": "{date}",
+    "@timeFormat": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "Hm"
+            }
+        }
+    } ,
+    "dateTimeFormatOperationFrom": "Operation from {date} at {time} ",
+    "@dateTimeFormatOperationFrom": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "time": {
+                "type": "DateTime",
+                "format": "Hm"
+            }
+        }
+    },
+    "dateHistory": "{date}",
+    "@dateHistory": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "MMMd"
+            }
+           
+        }
+    },
+    "dateMonth": "{date}",
+    "@dateMonth": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "MMMM"
+            }
+           
+        }
+    }     
 }

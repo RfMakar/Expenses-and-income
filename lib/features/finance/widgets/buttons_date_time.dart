@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WidgetButtonsDateTime extends StatefulWidget {
   const WidgetButtonsDateTime({
@@ -25,12 +25,12 @@ class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
 
   @override
   Widget build(BuildContext context) {
-    var timeOfDay = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+    final localeApp = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          child: Text(DateFormat.yMMMd().format(dateTime)),
+          child: Text(localeApp.dateFormat(dateTime)),
           onPressed: () async {
             final picked = await showDatePicker(
               context: context,
@@ -51,17 +51,21 @@ class _WidgetButtonsDateTimeState extends State<WidgetButtonsDateTime> {
           },
         ),
         TextButton(
-          child: Text(timeOfDay.format(context)),
+          child: Text(localeApp.timeFormat(dateTime)),
           onPressed: () async {
-            final picked = await showTimePicker(
+            final timeOfDay = await showTimePicker(
               context: context,
-              initialTime: timeOfDay,
+              initialTime: TimeOfDay(
+                hour: dateTime.hour,
+                minute: dateTime.minute,
+              ),
             );
-            if (picked != null) {
+            if (timeOfDay != null) {
               setState(() {
-                timeOfDay = picked;
                 dateTime = dateTime.copyWith(
-                    hour: timeOfDay.hour, minute: timeOfDay.minute);
+                  hour: timeOfDay.hour,
+                  minute: timeOfDay.minute,
+                );
                 widget.onChangedDateTime(dateTime);
               });
             }

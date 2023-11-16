@@ -1,6 +1,7 @@
 import 'package:budget/features/finance/pages/analytics/provider_screen_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScreenAnalytics extends StatelessWidget {
   const ScreenAnalytics({super.key});
@@ -57,6 +58,7 @@ class WidgetTableAnaliticsMonth extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final provider = Provider.of<ProviderScreenAnalytics>(context);
     final listTableRow = provider
         .getListAnaliticsMonth(index)
@@ -64,7 +66,9 @@ class WidgetTableAnaliticsMonth extends StatelessWidget {
           (analiticsMonth) => TableRow(
             children: [
               WidgetTextRowTable(
-                text: analiticsMonth.getMonth(provider.year(index)),
+                text: localeApp.dateMonth(
+                    DateTime(provider.year(index), analiticsMonth.month)),
+                //text: analiticsMonth.getMonth(provider.year(index)),
               ),
               WidgetTextRowTable(text: analiticsMonth.getExpence()),
               WidgetTextRowTable(text: analiticsMonth.getIncome()),
