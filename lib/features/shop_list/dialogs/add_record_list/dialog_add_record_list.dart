@@ -1,9 +1,9 @@
 import 'package:budget/features/app/const/actions_update.dart';
-import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/shop_list/dialogs/add_record_list/bloc/dialog_add_record_list_bloc.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DialogAddRecordList extends StatelessWidget {
   const DialogAddRecordList({super.key, required this.shopList});
@@ -44,13 +44,26 @@ class DialogView extends StatelessWidget {
           textCapitalization: TextCapitalization.sentences,
           controller: textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
-          validator: ValidatorTextField.text,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(
+              1,
+              errorText: 'Введите название',
+            ),
+            FormBuilderValidators.maxLength(
+              50,
+              errorText: 'Длинное название',
+            ),
+          ]),
           decoration: const InputDecoration(
             hintText: 'Новая запись',
           ),
         ),
       ),
       actions: [
+        TextButton(
+          onPressed: () => bloc.add(DialogAddRecordListCancelEvent()),
+          child: const Text('Отмена'),
+        ),
         TextButton(
           child: const Text('Добавить'),
           onPressed: () {
@@ -61,10 +74,6 @@ class DialogView extends StatelessWidget {
               bloc.add(DialogAddRecordListAddEvent(nameRecordList));
             }
           },
-        ),
-        TextButton(
-          onPressed: () => bloc.add(DialogAddRecordListCancelEvent()),
-          child: const Text('Отмена'),
         ),
       ],
     );

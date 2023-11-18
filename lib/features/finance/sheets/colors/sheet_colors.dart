@@ -1,18 +1,24 @@
 import 'package:budget/features/app/const/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetColors extends StatelessWidget {
   const SheetColors({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     const listColors = ColorApp.listColor;
     return Wrap(
       children: [
-        const SizedBox(
+        SizedBox(
           height: 50,
           child: Center(
-              child: Text('Выберите цвет', style: TextStyle(fontSize: 16))),
+            child: Text(
+              localeApp.chooseAColor,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
         ),
         const Divider(),
         GridView.builder(

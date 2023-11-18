@@ -35,6 +35,13 @@
     "save": "Сохранить",
     "rename": "Переименовать",
     "editColor": "Изменить цвет",
+    "chooseAColor":"Выберите цвет",
+    "enterAName": "Введите название",
+    "newName": "Новое название",
+    "longName": "Длинное название",
+    "enterAValue": "Введите значение",
+    "invalidValue": "Неверное значение",
+    "longValue": "Длинное значение",
     "dateFormatPeriodMonth": "{date}",
     "@dateFormatPeriodMonth": {
         "placeholders": {

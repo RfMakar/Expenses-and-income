@@ -35,6 +35,13 @@
     "save":"Save",
     "rename": "Rename",
     "editColor": "Edit color",
+    "chooseAColor":"Choose a color",
+    "enterAName": "Enter a name",
+    "newName": "New name",
+    "longName": "Long name",
+    "enterAValue": "Enter a value",
+    "invalidValue": "Invalid value",
+    "longValue": "Long value",
     "dateFormatPeriodMonth": "{date}",
     "@dateFormatPeriodMonth": {
         "placeholders": {

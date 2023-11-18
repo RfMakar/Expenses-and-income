@@ -1,9 +1,9 @@
 import 'package:budget/features/app/const/actions_update.dart';
-import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/finance/dialogs/add_subcategory/model_dialog_add_subcategories.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -52,13 +52,23 @@ class _ViewDialogState extends State<ViewDialog> {
           textCapitalization: TextCapitalization.sentences,
           controller: _textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
-          validator: ValidatorTextField.text,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(
+              1,
+              errorText: localeApp.enterAName,
+            ),
+            FormBuilderValidators.maxLength(
+              50,
+              errorText: localeApp.longName,
+            ),
+          ]),
           decoration: InputDecoration(
             hintText: localeApp.newSubCategory,
           ),
         ),
       ),
       actions: [
+        const WidgetButtonCancel(),
         TextButton(
           child: Text(localeApp.add),
           onPressed: () {
@@ -69,7 +79,6 @@ class _ViewDialogState extends State<ViewDialog> {
             }
           },
         ),
-        const WidgetButtonCancel(),
       ],
     );
   }

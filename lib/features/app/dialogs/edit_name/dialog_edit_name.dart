@@ -1,8 +1,8 @@
 import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/app/widgets/snack_bar.dart';
-import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DialogEditName extends StatefulWidget {
   const DialogEditName({super.key, required this.nameEdit});
@@ -46,13 +46,23 @@ class _DialogEditNameState extends State<DialogEditName> {
           textCapitalization: TextCapitalization.sentences,
           controller: _textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
-          validator: ValidatorTextField.text,
-          decoration: const InputDecoration(
-            hintText: 'Новое название',
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(
+              1,
+              errorText: localeApp.enterAName,
+            ),
+            FormBuilderValidators.maxLength(
+              50,
+              errorText: localeApp.longName,
+            ),
+          ]),
+          decoration: InputDecoration(
+            hintText: localeApp.newName,
           ),
         ),
       ),
       actions: [
+        const WidgetButtonCancel(),
         TextButton(
           child: Text(
             localeApp.save,
@@ -66,7 +76,6 @@ class _DialogEditNameState extends State<DialogEditName> {
             }
           },
         ),
-        const WidgetButtonCancel(),
       ],
     );
   }

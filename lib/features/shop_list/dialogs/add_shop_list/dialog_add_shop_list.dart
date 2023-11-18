@@ -1,8 +1,8 @@
 import 'package:budget/features/app/const/actions_update.dart';
-import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/shop_list/dialogs/add_shop_list/bloc/dialog_add_shop_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DialogAddShopList extends StatelessWidget {
   const DialogAddShopList({super.key});
@@ -43,13 +43,27 @@ class DialogView extends StatelessWidget {
           textCapitalization: TextCapitalization.sentences,
           controller: textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
-          validator: ValidatorTextField.text,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(
+              1,
+              errorText: 'Введите название',
+            ),
+            FormBuilderValidators.maxLength(
+              50,
+              errorText: 'Длинное название',
+            ),
+          ]),
           decoration: const InputDecoration(
             hintText: 'Новый список',
           ),
         ),
       ),
       actions: [
+        TextButton(
+          onPressed: () =>
+              bloc.add(DialogAddShopListOnPressedButtonCancelEvent()),
+          child: const Text('Отмена'),
+        ),
         TextButton(
           child: const Text('Добавить'),
           onPressed: () {
@@ -61,11 +75,6 @@ class DialogView extends StatelessWidget {
                   nameShopList: nameShopList));
             }
           },
-        ),
-        TextButton(
-          onPressed: () =>
-              bloc.add(DialogAddShopListOnPressedButtonCancelEvent()),
-          child: const Text('Отмена'),
         ),
       ],
     );

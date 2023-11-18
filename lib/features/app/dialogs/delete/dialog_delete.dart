@@ -14,6 +14,7 @@ class DialodgDelete extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const WidgetButtonCancel(),
             TextButton(
               onPressed: () {
                 ScaffoldMessenger.of(context)
@@ -22,7 +23,6 @@ class DialodgDelete extends StatelessWidget {
               },
               child: Text(localeApp.delete),
             ),
-            const WidgetButtonCancel(),
           ],
         ),
       ],
