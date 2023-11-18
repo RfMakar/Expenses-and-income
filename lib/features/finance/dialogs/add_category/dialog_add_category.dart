@@ -1,10 +1,12 @@
 import 'package:budget/features/app/const/actions_update.dart';
 import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/app/pages/material_app/model_material_app.dart';
+import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/finance/dialogs/add_category/model_dialog_add_category.dart';
 import 'package:budget/features/finance/sheets/colors/sheet_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogAddCategory extends StatelessWidget {
   const DialogAddCategory({super.key});
@@ -38,9 +40,23 @@ class _ViewDialogState extends State<ViewDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelDialogAddCategory>();
+    String titleAppBar() {
+      final modelApp = context.read<ModelMaterialApp>();
+
+      switch (modelApp.finance.id) {
+        case 0:
+          return localeApp.expense;
+        case 1:
+          return localeApp.income;
+        default:
+          return '';
+      }
+    }
+
     return AlertDialog(
-      title: Center(child: Text(model.titleDialog())),
+      title: Center(child: Text(titleAppBar())),
       content: Form(
         key: _formKey,
         child: TextFormField(
@@ -50,15 +66,15 @@ class _ViewDialogState extends State<ViewDialog> {
           controller: _textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
           validator: ValidatorTextField.text,
-          decoration: const InputDecoration(
-            hintText: 'Новая категория',
-            suffixIcon: IconButtomUpdateColor(),
+          decoration: InputDecoration(
+            hintText: localeApp.newCategory,
+            suffixIcon: const IconButtomUpdateColor(),
           ),
         ),
       ),
       actions: [
         TextButton(
-          child: const Text('Добавить'),
+          child: Text(localeApp.add),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               model.onPressedButtonAddCategory(
@@ -67,10 +83,7 @@ class _ViewDialogState extends State<ViewDialog> {
             }
           },
         ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
-        ),
+        const WidgetButtonCancel(),
       ],
     );
   }

@@ -77,8 +77,8 @@ class ButtonAddFinance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modelApp = context.watch<ModelMaterialApp>();
     final model = context.watch<ModelPageFinance>();
+    final localeApp = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FloatingActionButton.extended(
@@ -91,7 +91,7 @@ class ButtonAddFinance extends StatelessWidget {
           );
           model.updatePage();
         },
-        label: Text(modelApp.finance.titleFinance()),
+        label: Text(localeApp.operation),
         icon: const Icon(Icons.add),
       ),
     );
@@ -207,6 +207,7 @@ class WidgetListGroupCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.watch<ModelPageFinance>();
     return FutureBuilder(
       future: model.getListGroupCategory(),
@@ -222,9 +223,10 @@ class WidgetListGroupCategory extends StatelessWidget {
             : Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Text(
-                    'Категории',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Text(
+                    localeApp.categories,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   const SizedBox(height: 10),
                   ListView.builder(

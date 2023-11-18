@@ -1,4 +1,5 @@
 import 'package:budget/features/app/const/actions_update.dart';
+import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/app/widgets/snack_bar.dart';
 import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/finance/dialogs/edit_operation/model_dialog_edit_operation.dart';
@@ -6,6 +7,7 @@ import 'package:budget/features/finance/widgets/buttons_date_time.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogEditOperation extends StatelessWidget {
   const DialogEditOperation({super.key, required this.operation});
@@ -40,6 +42,7 @@ class _ViewDialogState extends State<ViewDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelDialogEditOperation>();
     _textEditingControllerValue.text = model.value();
     _textEditingControllerNote.text = model.note();
@@ -48,7 +51,7 @@ class _ViewDialogState extends State<ViewDialog> {
       extentOffset: _textEditingControllerValue.text.length,
     );
     return AlertDialog(
-      title: const Center(child: Text('Изменить')),
+      title: Center(child: Text(localeApp.edit)),
       content: Form(
           key: _formKey,
           child: Wrap(
@@ -69,9 +72,9 @@ class _ViewDialogState extends State<ViewDialog> {
                 controller: _textEditingControllerNote,
                 autovalidateMode: AutovalidateMode.always,
                 validator: ValidatorTextField.textNote,
-                decoration: const InputDecoration(
-                  hintText: 'Заметка',
-                  suffixIcon: Icon(Icons.comment),
+                decoration: InputDecoration(
+                  hintText: localeApp.note,
+                  suffixIcon: const Icon(Icons.comment),
                 ),
               ),
               WidgetButtonsDateTime(
@@ -82,7 +85,7 @@ class _ViewDialogState extends State<ViewDialog> {
           )),
       actions: [
         TextButton(
-          child: const Text('Изменить'),
+          child: Text(localeApp.edit),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final newValue =
@@ -95,10 +98,7 @@ class _ViewDialogState extends State<ViewDialog> {
             }
           },
         ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
-        ),
+        const WidgetButtonCancel(),
       ],
     );
   }

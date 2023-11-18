@@ -4,6 +4,7 @@ import 'package:budget/features/finance/dialogs/data_storage/dialog_data_storage
 import 'package:budget/features/finance/pages/data_app/model_page_data_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageDataApp extends StatelessWidget {
   const PageDataApp({super.key});
@@ -21,17 +22,18 @@ class ViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ModelMaterialApp>(context);
+    final localeApp = AppLocalizations.of(context)!;
+    final modelApp = Provider.of<ModelMaterialApp>(context);
     final model = context.read<ModelPageDataApp>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Данные'),
+        title: Text(localeApp.data),
       ),
       body: ListView(
         children: [
           ListTile(
             leading: const Icon(Icons.cloud_outlined),
-            title: const Text('Хранение данных'),
+            title: Text(localeApp.dataStorage),
             onTap: () {
               showDialog(
                 context: context,
@@ -41,9 +43,7 @@ class ViewPage extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.delete_outline),
-            title: const Text(
-              'Удалить все операции',
-            ),
+            title: Text(localeApp.deleteAllOperations),
             onTap: () async {
               final bool? result = await showDialog(
                 context: context,
@@ -51,14 +51,14 @@ class ViewPage extends StatelessWidget {
               );
               if (result == true) {
                 model.onTapDeleteAllOperation();
-                providerApp.updateApp();
+                modelApp.updateApp();
               }
             },
           ),
           ListTile(
             leading: const Icon(Icons.delete_outline, color: Colors.red),
             textColor: Colors.red,
-            title: const Text('Удалить все данные'),
+            title: Text(localeApp.deleteAllData),
             onTap: () async {
               final bool? result = await showDialog(
                 context: context,
@@ -66,7 +66,7 @@ class ViewPage extends StatelessWidget {
               );
               if (result == true) {
                 model.onTapDeleteAll();
-                providerApp.updateApp();
+                modelApp.updateApp();
               }
             },
           ),

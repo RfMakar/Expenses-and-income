@@ -1,3 +1,4 @@
+import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/app/widgets/snack_bar.dart';
 import 'package:budget/features/app/const/validator_text_field.dart';
 import 'package:budget/features/finance/dialogs/add_operation/model_dialog_add_operation.dart';
@@ -5,6 +6,7 @@ import 'package:budget/features/finance/widgets/buttons_date_time.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogAddOperation extends StatelessWidget {
   const DialogAddOperation({super.key, required this.subCategory});
@@ -38,6 +40,7 @@ class _ViewDialogState extends State<ViewDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelDialogAddOperation>();
     return AlertDialog(
       title: Center(child: Text(model.titleDialog())),
@@ -61,9 +64,9 @@ class _ViewDialogState extends State<ViewDialog> {
               controller: _textEditingControllerNote,
               autovalidateMode: AutovalidateMode.always,
               validator: ValidatorTextField.textNote,
-              decoration: const InputDecoration(
-                hintText: 'Заметка',
-                suffixIcon: Icon(Icons.comment),
+              decoration: InputDecoration(
+                hintText: localeApp.note,
+                suffixIcon: const Icon(Icons.comment),
               ),
             ),
             WidgetButtonsDateTime(
@@ -75,7 +78,7 @@ class _ViewDialogState extends State<ViewDialog> {
       ),
       actions: [
         TextButton(
-          child: const Text('Добавить'),
+          child: Text(localeApp.add),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final note = _textEditingControllerNote.text.trim();
@@ -88,10 +91,7 @@ class _ViewDialogState extends State<ViewDialog> {
             }
           },
         ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
-        ),
+        const WidgetButtonCancel(),
       ],
     );
   }

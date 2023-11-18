@@ -1,9 +1,11 @@
 import 'package:budget/features/app/const/actions_update.dart';
 import 'package:budget/features/app/const/validator_text_field.dart';
+import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/finance/dialogs/add_subcategory/model_dialog_add_subcategories.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogAddSubCategory extends StatelessWidget {
   const DialogAddSubCategory({super.key, required this.category});
@@ -36,6 +38,7 @@ class _ViewDialogState extends State<ViewDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelDialogAddSubCategory>();
     return AlertDialog(
       title: Center(
@@ -50,14 +53,14 @@ class _ViewDialogState extends State<ViewDialog> {
           controller: _textEditingControllerName,
           autovalidateMode: AutovalidateMode.always,
           validator: ValidatorTextField.text,
-          decoration: const InputDecoration(
-            hintText: 'Новая подкатегория',
+          decoration: InputDecoration(
+            hintText: localeApp.newSubCategory,
           ),
         ),
       ),
       actions: [
         TextButton(
-          child: const Text('Добавить'),
+          child: Text(localeApp.add),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final nameSubCategory = _textEditingControllerName.text.trim();
@@ -66,10 +69,7 @@ class _ViewDialogState extends State<ViewDialog> {
             }
           },
         ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
-        ),
+        const WidgetButtonCancel(),
       ],
     );
   }

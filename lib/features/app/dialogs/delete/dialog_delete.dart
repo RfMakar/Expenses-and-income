@@ -1,12 +1,15 @@
+import 'package:budget/features/app/widgets/button_cancel.dart';
 import 'package:budget/features/app/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialodgDelete extends StatelessWidget {
   const DialodgDelete({super.key});
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Center(child: Text('Удалить?')),
+      title: Center(child: Text('${localeApp.delete} ?')),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -17,12 +20,9 @@ class DialodgDelete extends StatelessWidget {
                     .showSnackBar(SnackBarApp.snackBarDelete);
                 Navigator.pop(context, true);
               },
-              child: const Text('Да'),
+              child: Text(localeApp.delete),
             ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Нет'),
-            ),
+            const WidgetButtonCancel(),
           ],
         ),
       ],

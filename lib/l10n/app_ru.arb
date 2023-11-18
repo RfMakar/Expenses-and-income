@@ -9,6 +9,32 @@
     "version": "Версия",
     "privacyPolicy": "Политика конфиденциальности",
     "leaveAReview": "Оставить отзыв",
+    "category": "Категория",
+    "categories": "Категории",
+    "newCategory": "Новая категория",
+    "subcategory": "Подкатегория",
+    "subcategories": "Подкатегории",
+    "newSubCategory": "Новая подкатегория",
+    "operation": "Операция",
+    "note": "Заметка",
+    "historyOfOperations": "История операций",
+    "listOfCategories": "Список категорий",
+    "selectAPeriod": "Выберите период",
+    "month": "Месяц",
+    "year": "Год",
+    "analytics": "Аналитика",
+    "data": "Данные",
+    "dataStorage": "Хранение данных",
+    "descriptionOfDataStorage": "Все данные (расходы, доходы, операции) хранятся в телефоне локально, при удаление приложения они автоматически удалятся. При обновление приложения данные сохраняются",
+    "deleteAllOperations": "Удалить все операции",
+    "deleteAllData": "Удалить все данные",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "add": "Добавить",
+    "edit": "Редактировать",
+    "save": "Сохранить",
+    "rename": "Переименовать",
+    "editColor": "Изменить цвет",
     "dateFormatPeriodMonth": "{date}",
     "@dateFormatPeriodMonth": {
         "placeholders": {
@@ -65,7 +91,6 @@
                 "type": "DateTime",
                 "format": "MMMd"
             }
-           
         }
     },
     "dateMonth": "{date}",
@@ -75,7 +100,6 @@
                 "type": "DateTime",
                 "format": "MMMM"
             }
-           
         }
-    }   
+    }
 }

@@ -42,7 +42,7 @@ class ViewSheet extends StatelessWidget {
         const Divider(),
         ListTile(
           leading: const Icon(Icons.edit),
-          title: const Text('Изменить'),
+          title: Text(localeApp.edit),
           onTap: () async {
             final StateUpdate? stateUpdate = await showDialog(
                 context: context,
@@ -55,7 +55,7 @@ class ViewSheet extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.delete),
-          title: const Text('Удалить'),
+          title: Text(localeApp.delete),
           onTap: () async {
             final bool? result = await showDialog(
               context: context,

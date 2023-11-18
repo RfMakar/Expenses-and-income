@@ -13,7 +13,7 @@ class ModelDialogAddCategory extends ChangeNotifier {
   final Finance _finance;
   late Color _colorCategory;
 
-  String titleDialog() => _finance.titleFinance();
+  //String titleDialog() => _finance.titleFinance();
 
   Color colorIconDialog() {
     return _colorCategory;

@@ -33,14 +33,15 @@ class ViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final localeApp = AppLocalizations.of(context)!;
+    return Column(
       children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
-          'История операций',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          localeApp.historyOfOperations,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        ListHistoryOperations(),
+        const ListHistoryOperations(),
       ],
     );
   }

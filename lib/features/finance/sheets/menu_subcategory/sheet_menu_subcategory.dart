@@ -5,6 +5,7 @@ import 'package:budget/features/finance/sheets/menu_subcategory/model_sheet_menu
 import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetMenuSubCategory extends StatelessWidget {
   const SheetMenuSubCategory({super.key, required this.subCategory});
@@ -24,21 +25,22 @@ class ViewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelSheetMenuSubCategory>();
     void navigatorUpdateWidget() => Navigator.pop(context, StateUpdate.widget);
     return Wrap(
       children: [
         ListTile(
           title: Text(model.titleSheet()),
-          subtitle: const Text(
-            'Подкатегория',
-            style: TextStyle(fontSize: 10),
+          subtitle: Text(
+            localeApp.subcategory,
+            style: const TextStyle(fontSize: 10),
           ),
         ),
         const Divider(),
         ListTile(
           leading: const Icon(Icons.edit),
-          title: const Text('Переименовать'),
+          title: Text(localeApp.rename),
           onTap: () async {
             final String? newName = await showDialog(
               context: context,
@@ -53,7 +55,7 @@ class ViewSheet extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.delete),
-          title: const Text('Удалить'),
+          title: Text(localeApp.delete),
           onTap: () async {
             final bool? result = await showDialog(
               context: context,

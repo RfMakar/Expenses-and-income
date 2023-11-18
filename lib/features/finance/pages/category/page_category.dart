@@ -159,6 +159,7 @@ class WidgetListGroupSubCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<ModelPageCategory>();
+    final localeApp = AppLocalizations.of(context)!;
     return FutureBuilder(
       future: model.getListGroupSubCategory(),
       builder: (context, snapshot) {
@@ -173,9 +174,10 @@ class WidgetListGroupSubCategory extends StatelessWidget {
             : Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Text(
-                    'Подкатегории',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Text(
+                    localeApp.subcategories,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   const SizedBox(height: 10),
                   ListView.builder(

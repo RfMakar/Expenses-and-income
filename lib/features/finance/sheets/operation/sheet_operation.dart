@@ -49,23 +49,23 @@ class ViewSheet extends StatelessWidget {
         ),
         ListTile(
           title: Text(model.titleCategoty()),
-          subtitle: const Text(
-            'Категория',
-            style: TextStyle(fontSize: 12),
+          subtitle: Text(
+            localeApp.category,
+            style: const TextStyle(fontSize: 12),
           ),
         ),
         ListTile(
           title: Text(model.titleSubCategory()),
-          subtitle: const Text(
-            'Подкатегория',
-            style: TextStyle(fontSize: 12),
+          subtitle: Text(
+            localeApp.subcategory,
+            style: const TextStyle(fontSize: 12),
           ),
         ),
         ListTile(
           title: Text(model.titleNote()),
-          subtitle: const Text(
-            'Заметка',
-            style: TextStyle(fontSize: 12),
+          subtitle: Text(
+            localeApp.note,
+            style: const TextStyle(fontSize: 12),
           ),
         ),
       ],

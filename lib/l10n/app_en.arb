@@ -9,7 +9,32 @@
     "version": "Version",
     "privacyPolicy": "Privacy policy",
     "leaveAReview": "Leave a review",
-    
+    "category": "Category",
+    "categories": "Categories",
+    "newCategory": "New category",
+    "subcategory": "Subcategory",
+    "subcategories": "Subcategories",
+    "newSubCategory": "New subcategory",
+    "operation": "Operation",
+    "note": "Note",
+    "historyOfOperations": "History of operations",
+    "listOfCategories": "List of categories",
+    "selectAPeriod": "Select a period",
+    "month": "Month",
+    "year": "Year",
+    "analytics": "Analytics",
+    "data": "Data",
+    "dataStorage": "Data storage",
+    "descriptionOfDataStorage": "All data (expenses, income, operations) are stored locally in the phone, when you delete the application, they will be automatically deleted. When updating the application, the data is saved",
+    "deleteAllOperations": "Delete all operations",
+    "deleteAllData": "Delete all data",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "save":"Save",
+    "rename": "Rename",
+    "editColor": "Edit color",
     "dateFormatPeriodMonth": "{date}",
     "@dateFormatPeriodMonth": {
         "placeholders": {
@@ -45,7 +70,7 @@
                 "format": "Hm"
             }
         }
-    } ,
+    },
     "dateTimeFormatOperationFrom": "Operation from {date} at {time} ",
     "@dateTimeFormatOperationFrom": {
         "placeholders": {
@@ -66,7 +91,6 @@
                 "type": "DateTime",
                 "format": "MMMd"
             }
-           
         }
     },
     "dateMonth": "{date}",
@@ -76,7 +100,6 @@
                 "type": "DateTime",
                 "format": "MMMM"
             }
-           
         }
-    }     
+    }
 }

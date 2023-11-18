@@ -18,6 +18,7 @@ final themeLight = ThemeData(
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
+    dragHandleColor: colorTheme,
     showDragHandle: true,
   ),
   snackBarTheme: const SnackBarThemeData(
@@ -42,6 +43,7 @@ final themeDark = ThemeData(
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
+    dragHandleColor: colorTheme,
     showDragHandle: true,
   ),
   snackBarTheme: const SnackBarThemeData(
