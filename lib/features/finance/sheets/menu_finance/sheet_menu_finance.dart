@@ -1,4 +1,4 @@
-import 'package:budget/features/finance/pages/analytics/screen_analytics.dart';
+import 'package:budget/features/finance/pages/analytics/page_analytics.dart';
 import 'package:budget/features/finance/pages/data_app/page_data_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +19,7 @@ class SheetMenuFinance extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenAnalytics(),
+                builder: (context) => const PageAnalytics(),
               ),
             );
           },

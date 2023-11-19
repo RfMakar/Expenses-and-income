@@ -1,15 +1,134 @@
-import 'package:budget/features/finance/pages/analytics/provider_screen_analytics.dart';
+import 'package:budget/features/finance/pages/analytics/model_page_analytics.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class PageAnalytics extends StatelessWidget {
+  const PageAnalytics({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => ModelPageAnalytics(),
+      child: const PageView(),
+    );
+  }
+}
+
+class PageView extends StatelessWidget {
+  const PageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Аналитика'),
+      ),
+      body: ListView(
+        children: const [
+          WidgetButtonSwitchYear(),
+          WidgetTableFromMonth(),
+        ],
+      ),
+    );
+  }
+}
+
+class WidgetButtonSwitchYear extends StatelessWidget {
+  const WidgetButtonSwitchYear({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
+    final model = context.watch<ModelPageAnalytics>();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          color: Colors.grey,
+          icon: const Icon(Icons.navigate_before),
+          onPressed: model.onPressedButSwitchDateBack,
+        ),
+        Text(
+          localeApp.dateFormatPeriodYear(model.dateTime),
+          style: const TextStyle(color: Colors.grey),
+        ),
+        IconButton(
+          color: Colors.grey,
+          onPressed: model.onPressedButSwitchDateNext,
+          icon: const Icon(Icons.navigate_next),
+        ),
+      ],
+    );
+  }
+}
+
+class WidgetTableFromMonth extends StatelessWidget {
+  const WidgetTableFromMonth({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WidgetTextTitleTable(
+          text: 'По месяцам:',
+        )
+      ],
+    );
+  }
+}
+
+class WidgetTextRowTable extends StatelessWidget {
+  const WidgetTextRowTable({super.key, required this.text});
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text(text));
+  }
+}
+
+class WidgetTextColumnTable extends StatelessWidget {
+  const WidgetTextColumnTable({super.key, required this.text});
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ));
+  }
+}
+
+class WidgetTextTitleTable extends StatelessWidget {
+  const WidgetTextTitleTable({super.key, required this.text});
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        text,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}
+/*
+import 'package:budget/features/finance/pages/analytics/model_page_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ScreenAnalytics extends StatelessWidget {
-  const ScreenAnalytics({super.key});
+class PageAnalytics extends StatelessWidget {
+  const PageAnalytics({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ProviderScreenAnalytics(),
-      child: Consumer<ProviderScreenAnalytics>(
+      create: (context) => ModelPageAnalytics(),
+      child: Consumer<ModelPageAnalytics>(
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
@@ -53,13 +172,14 @@ class ScreenAnalytics extends StatelessWidget {
   }
 }
 
+
 class WidgetTableAnaliticsMonth extends StatelessWidget {
   const WidgetTableAnaliticsMonth({super.key, required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     final localeApp = AppLocalizations.of(context)!;
-    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final provider = Provider.of<ModelPageAnalytics>(context);
     final listTableRow = provider
         .getListAnaliticsMonth(index)
         .map(
@@ -119,7 +239,7 @@ class WidgetTableAnaliticsAVGMonthExp extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final provider = Provider.of<ModelPageAnalytics>(context);
     final listTableRow = provider
         .getListAnaliticsAVGMonthExp(index)
         .map(
@@ -165,7 +285,7 @@ class WidgetTableAnaliticsAVGMonthInc extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderScreenAnalytics>(context);
+    final provider = Provider.of<ModelPageAnalytics>(context);
     final listTableRow = provider
         .getListAnaliticsAVGMonthInc(index)
         .map(
@@ -244,3 +364,5 @@ class WidgetTextTitleTable extends StatelessWidget {
     );
   }
 }
+
+*/

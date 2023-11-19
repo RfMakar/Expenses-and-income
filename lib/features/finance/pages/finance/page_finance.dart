@@ -15,10 +15,10 @@ class PageFinance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = context.read<ModelMaterialApp>();
+    final modelApp = context.read<ModelMaterialApp>();
     return ChangeNotifierProvider(
       create: (context) =>
-          ModelPageFinance(providerApp.finance, providerApp.switchDate),
+          ModelPageFinance(modelApp.finance, modelApp.switchDate),
       child: const ViewPage(),
     );
   }

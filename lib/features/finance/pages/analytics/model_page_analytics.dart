@@ -2,8 +2,33 @@ import 'package:budget/repositories/finance/models/analitics.dart';
 import 'package:budget/repositories/finance/sqlite/db_finance.dart';
 import 'package:flutter/material.dart';
 
-class ProviderScreenAnalytics extends ChangeNotifier {
-  List<Analitics> listAnalitics = [];
+class ModelPageAnalytics extends ChangeNotifier {
+  var _dateTime = DateTime.now();
+
+  DateTime get dateTime => _dateTime;
+
+  void onPressedButSwitchDateBack() {
+    //Если год 2021 то дата переключится на год назад
+    var enabledButton = (_dateTime.year == 2021);
+    if (!enabledButton) {
+      _dateTime = DateTime(_dateTime.year - 1);
+    }
+    notifyListeners();
+  }
+
+  void onPressedButSwitchDateNext() {
+    //Если год не текущий то прибавь год
+    final enabledButton = (_dateTime.year == DateTime.now().year);
+    if (!enabledButton) {
+      _dateTime = DateTime(_dateTime.year + 1);
+    }
+    notifyListeners();
+  }
+}
+
+
+/*
+List<Analitics> listAnalitics = [];
 
   Future getListAnalitics() async {
     //Список всех лет
@@ -81,4 +106,4 @@ class ProviderScreenAnalytics extends ChangeNotifier {
   String totalTotal(int index) {
     return analitics(index).totalTotal(index);
   }
-}
+*/
