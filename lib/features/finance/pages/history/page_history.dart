@@ -34,8 +34,14 @@ class PageView extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(4),
         children: const [
-          WidgetSwitchFinance(),
-          WidgetButtonSwitchMonth(),
+          Card(
+            child: Column(
+              children: [
+                WidgetSwitchFinance(),
+                WidgetButtonSwitchMonth(),
+              ],
+            ),
+          ),
           WidgetHistory(),
         ],
       ),

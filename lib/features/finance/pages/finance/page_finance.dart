@@ -36,8 +36,14 @@ class ViewPage extends StatelessWidget {
         ListView(
           padding: const EdgeInsets.fromLTRB(4, 4, 4, 50),
           children: const [
-            WidgetSwitchFinance(),
-            WidgetInfo(),
+            Card(
+              child: Column(
+                children: [
+                  WidgetSwitchFinance(),
+                  WidgetInfo(),
+                ],
+              ),
+            ),
             WidgetListGroupCategory(),
           ],
         ),
@@ -107,106 +113,103 @@ class WidgetInfo extends StatelessWidget {
     final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelPageFinance>();
     final modelApp = context.read<ModelMaterialApp>();
-    return Card(
-      child: Column(
-        children: [
-          const SizedBox(height: 10),
-          Builder(builder: (context) {
-            final model = context.watch<ModelPageFinance>();
-            return FutureBuilder(
-              future: model.getSumAllOperation(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Center(
-                      child: Text(
-                    '',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ));
-                }
-                if (snapshot.hasError) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return Text(
-                  localeApp
-                      .valueFormatSimpleCurrency(model.titleSumOperation()),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Builder(builder: (context) {
+          final model = context.watch<ModelPageFinance>();
+          return FutureBuilder(
+            future: model.getSumAllOperation(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                    child: Text(
+                  '',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ));
+              }
+              if (snapshot.hasError) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Text(
+                localeApp.valueFormatSimpleCurrency(model.titleSumOperation()),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
+          );
+        }),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () async {
+                await showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SheetMenuFinance(),
                 );
+                model.updatePage();
               },
-            );
-          }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () async {
-                  await showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SheetMenuFinance(),
-                  );
-                  model.updatePage();
-                },
-                icon: const Icon(Icons.widgets_outlined),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    color: Colors.grey,
-                    icon: const Icon(Icons.navigate_before),
-                    onPressed: () {
-                      modelApp.switchDate.backDate();
-                      model.updatePage();
-                    },
-                  ),
-                  Consumer<ModelPageFinance>(
-                    builder: (context, value, child) {
-                      String titleDateTime() {
-                        switch (modelApp.switchDate.state) {
-                          case 0:
-                            return localeApp.dateFormatPeriodMonth(
-                                modelApp.switchDate.getDateTime());
-                          case 1:
-                            return localeApp.dateFormatPeriodYear(
-                                modelApp.switchDate.getDateTime());
-                          default:
-                            return '';
-                        }
-                      }
-
-                      return Text(
-                        titleDateTime(),
-                        style: const TextStyle(color: Colors.grey),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    color: Colors.grey,
-                    onPressed: () {
-                      modelApp.switchDate.nextDate();
-                      model.updatePage();
-                    },
-                    icon: const Icon(Icons.navigate_next),
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: () async {
-                  final update = await showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SheetSelectPeriod(),
-                  );
-                  if (update == StateUpdate.page) {
+              icon: const Icon(Icons.widgets_outlined),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  color: Colors.grey,
+                  icon: const Icon(Icons.navigate_before),
+                  onPressed: () {
+                    modelApp.switchDate.backDate();
                     model.updatePage();
-                  }
-                },
-                icon: const Icon(Icons.date_range_outlined),
-              ),
-            ],
-          ),
-        ],
-      ),
+                  },
+                ),
+                Consumer<ModelPageFinance>(
+                  builder: (context, value, child) {
+                    String titleDateTime() {
+                      switch (modelApp.switchDate.state) {
+                        case 0:
+                          return localeApp.dateFormatPeriodMonth(
+                              modelApp.switchDate.getDateTime());
+                        case 1:
+                          return localeApp.dateFormatPeriodYear(
+                              modelApp.switchDate.getDateTime());
+                        default:
+                          return '';
+                      }
+                    }
+
+                    return Text(
+                      titleDateTime(),
+                      style: const TextStyle(color: Colors.grey),
+                    );
+                  },
+                ),
+                IconButton(
+                  color: Colors.grey,
+                  onPressed: () {
+                    modelApp.switchDate.nextDate();
+                    model.updatePage();
+                  },
+                  icon: const Icon(Icons.navigate_next),
+                ),
+              ],
+            ),
+            IconButton(
+              onPressed: () async {
+                final update = await showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SheetSelectPeriod(),
+                );
+                if (update == StateUpdate.page) {
+                  model.updatePage();
+                }
+              },
+              icon: const Icon(Icons.date_range_outlined),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
