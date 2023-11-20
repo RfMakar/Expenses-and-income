@@ -6,6 +6,7 @@ import 'package:budget/features/shop_list/sheets/menu_shop_list/sheet_menu_shop_
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageShopList extends StatelessWidget {
   const PageShopList({super.key});
@@ -91,11 +92,12 @@ class ButtonAddShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<PageShopListBloc>(context);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FloatingActionButton.extended(
-        label: const Text('Список'),
+        label: Text(localeApp.list),
         icon: const Icon(Icons.add),
         onPressed: () async {
           final StateUpdate? stateUpdate = await showDialog(

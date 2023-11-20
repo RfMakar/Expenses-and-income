@@ -44,7 +44,7 @@ class ModelPageCategory extends ChangeNotifier {
 
   String titleAppBar() => _groupCategory.name;
 
-  String titleSumOperation() => _sumOperation.getValue(_finance.id);
+  double titleSumOperation() => _sumOperation.value;
 
   //String titleDateTime() => _switchDate.getDate();
 
@@ -56,8 +56,7 @@ class ModelPageCategory extends ChangeNotifier {
   double percentGroupSubCategory(int index) =>
       listGroupSubCategory[index].percent;
 
-  String valueGroupSubCategory(int index) =>
-      listGroupSubCategory[index].getValue(_finance.id);
+  double valueGroupSubCategory(int index) => listGroupSubCategory[index].value;
 
   GroupSubCategory groupSubCategory(int index) => listGroupSubCategory[index];
 }

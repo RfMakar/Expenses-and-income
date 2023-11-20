@@ -2,6 +2,8 @@
     "@@locale": "ru",
     "finance": "Финансы",
     "lists": "Списки",
+    "list": "Список",
+    "newList": "Новый список",
     "expense": "Расходы",
     "income": "Доходы",
     "navigation": "Навигация",
@@ -23,6 +25,8 @@
     "month": "Месяц",
     "year": "Год",
     "analytics": "Аналитика",
+    "total": "Итого",
+    "byMonth": "По месяцам:",
     "data": "Данные",
     "dataStorage": "Хранение данных",
     "descriptionOfDataStorage": "Все данные (расходы, доходы, операции) хранятся в телефоне локально, при удаление приложения они автоматически удалятся. При обновление приложения данные сохраняются",
@@ -35,13 +39,37 @@
     "save": "Сохранить",
     "rename": "Переименовать",
     "editColor": "Изменить цвет",
-    "chooseAColor":"Выберите цвет",
+    "chooseAColor": "Выберите цвет",
     "enterAName": "Введите название",
     "newName": "Новое название",
     "longName": "Длинное название",
     "enterAValue": "Введите значение",
     "invalidValue": "Неверное значение",
     "longValue": "Длинное значение",
+    "record": "Запись",
+    "newRecord": "Новая запись",
+    "markAll": "Отметить все",
+    "restoreEverything": "Восстановить все",
+    "deleteSelected": "Удалить выбранные",
+    "clearTheList": "Очистить список",
+    "valueFormatCompact": "{value}",
+    "@valueFormatCompact": {
+        "placeholders": {
+            "value": {
+                "type": "double",
+                "format": "compact"
+            }
+        }
+    },
+    "valueFormatSimpleCurrency": "{value}",
+    "@valueFormatSimpleCurrency": {
+        "placeholders": {
+            "value": {
+                "type": "double",
+                "format": "simpleCurrency"
+            }
+        }
+    },
     "dateFormatPeriodMonth": "{date}",
     "@dateFormatPeriodMonth": {
         "placeholders": {

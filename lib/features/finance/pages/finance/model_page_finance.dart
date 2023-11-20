@@ -25,7 +25,7 @@ class ModelPageFinance extends ChangeNotifier {
   void updatePage() => notifyListeners();
 
   // String titleDateTime() => _switchDate.getDate();
-  String titleSumOperation() => _sumOperation.getValue(_finance.id);
+  double titleSumOperation() => _sumOperation.value;
 
   Color colorGroupCategory(int index) =>
       Color(int.parse(listGroupCategory[index].color));
@@ -34,8 +34,7 @@ class ModelPageFinance extends ChangeNotifier {
 
   double percentGroupCategory(int index) => listGroupCategory[index].percent;
 
-  String valueGroupCategory(int index) =>
-      listGroupCategory[index].getValue(_finance.id);
+  double valueGroupCategory(int index) => listGroupCategory[index].value;
 
   GroupCategory groupCategory(int index) => listGroupCategory[index];
 }

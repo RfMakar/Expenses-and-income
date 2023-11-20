@@ -1,5 +1,4 @@
 import 'package:budget/features/app/const/actions_update.dart';
-import 'package:budget/features/app/pages/material_app/model_material_app.dart';
 import 'package:budget/features/finance/sheets/menu_operation/sheet_menu_operation.dart';
 import 'package:budget/features/finance/sheets/operation/sheet_operation.dart';
 import 'package:budget/features/finance/widgets/history_operations/model_widget_history_operations.dart';
@@ -53,7 +52,6 @@ class ListHistoryOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localeApp = AppLocalizations.of(context)!;
-    final idFinance = context.read<ModelMaterialApp>().finance.id;
     final model = context.read<ModelWidgetHistoryOperations>();
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -77,7 +75,7 @@ class ListHistoryOperations extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    operationHistory.getValue(idFinance),
+                    localeApp.valueFormatSimpleCurrency(operationHistory.value),
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
@@ -101,9 +99,8 @@ class ListOperations extends StatelessWidget {
   final List<Operation> listOperations;
   @override
   Widget build(BuildContext context) {
-    final idFinance = context.read<ModelMaterialApp>().finance.id;
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelWidgetHistoryOperations>();
-
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -147,7 +144,7 @@ class ListOperations extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      operation.getValue(idFinance),
+                      localeApp.valueFormatSimpleCurrency(operation.value),
                       style: const TextStyle(color: Colors.grey),
                     ),
                   ],

@@ -4,6 +4,7 @@ import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogAddRecordList extends StatelessWidget {
   const DialogAddRecordList({super.key, required this.shopList});
@@ -31,6 +32,7 @@ class DialogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final textEditingControllerName = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final bloc = BlocProvider.of<DialogAddRecordListBloc>(context);
@@ -47,25 +49,25 @@ class DialogView extends StatelessWidget {
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(
               1,
-              errorText: 'Введите название',
+              errorText: localeApp.enterAName,
             ),
             FormBuilderValidators.maxLength(
               50,
-              errorText: 'Длинное название',
+              errorText: localeApp.localeName,
             ),
           ]),
-          decoration: const InputDecoration(
-            hintText: 'Новая запись',
+          decoration: InputDecoration(
+            hintText: localeApp.newRecord,
           ),
         ),
       ),
       actions: [
         TextButton(
           onPressed: () => bloc.add(DialogAddRecordListCancelEvent()),
-          child: const Text('Отмена'),
+          child: Text(localeApp.cancel),
         ),
         TextButton(
-          child: const Text('Добавить'),
+          child: Text(localeApp.add),
           onPressed: () {
             if (!formKey.currentState!.validate()) {
               return;

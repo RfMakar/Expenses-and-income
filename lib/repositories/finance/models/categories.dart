@@ -1,5 +1,4 @@
 import 'package:budget/repositories/finance/models/subcategories.dart';
-import 'package:intl/intl.dart';
 
 abstract class Categories {
   String name;
@@ -81,9 +80,4 @@ class GroupCategory extends ReadCategory {
         percent: json['percent'],
         value: json['value'],
       );
-  String getValue(int finance) {
-    return finance == 0
-        ? '-${NumberFormat.simpleCurrency(decimalDigits: 2).format(value)}'
-        : NumberFormat.simpleCurrency(decimalDigits: 2).format(value);
-  }
 }

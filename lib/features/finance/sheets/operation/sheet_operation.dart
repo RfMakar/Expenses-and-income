@@ -1,4 +1,3 @@
-import 'package:budget/features/app/pages/material_app/model_material_app.dart';
 import 'package:budget/features/finance/sheets/operation/model_sheet_operation.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +10,8 @@ class SheetOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ModelMaterialApp>(context);
     return Provider(
-      create: (context) => ModelSheetOperation(operation, providerApp.finance),
+      create: (context) => ModelSheetOperation(operation),
       child: const ViewSheet(),
     );
   }
@@ -30,7 +28,7 @@ class ViewSheet extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            model.titleSheet(),
+            localeApp.valueFormatSimpleCurrency(model.titleSheet()),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22,

@@ -49,6 +49,7 @@ class WidgetInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelPageSubCategory>();
     final modelApp = context.read<ModelMaterialApp>();
     return Card(
@@ -71,7 +72,8 @@ class WidgetInfo extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return Text(
-                  model.titleSumOperation(),
+                  localeApp
+                      .valueFormatSimpleCurrency(model.titleSumOperation()),
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -98,7 +100,6 @@ class WidgetInfo extends StatelessWidget {
                   ),
                   Consumer<ModelPageSubCategory>(
                     builder: (context, value, child) {
-                      final localeApp = AppLocalizations.of(context)!;
                       String titleDateTime() {
                         switch (modelApp.switchDate.state) {
                           case 0:

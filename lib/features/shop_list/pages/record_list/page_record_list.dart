@@ -5,7 +5,7 @@ import 'package:budget/features/shop_list/sheets/menu_list/sheet_menu_list.dart'
 import 'package:budget/features/shop_list/sheets/menu_record_list/sheet_menu_record_list.dart';
 import 'package:budget/repositories/shop_list/models/record_list.dart';
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -126,9 +126,10 @@ class ButtonAddNewRecordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<PageRecordListBloc>(context);
     return FloatingActionButton.extended(
-      label: const Text('Запись'),
+      label: Text(localeApp.record),
       icon: const Icon(Icons.add),
       onPressed: () async {
         final StateUpdate? stateUpdate = await showDialog(

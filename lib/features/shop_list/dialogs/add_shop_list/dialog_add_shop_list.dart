@@ -3,6 +3,7 @@ import 'package:budget/features/shop_list/dialogs/add_shop_list/bloc/dialog_add_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogAddShopList extends StatelessWidget {
   const DialogAddShopList({super.key});
@@ -32,9 +33,10 @@ class DialogView extends StatelessWidget {
   Widget build(BuildContext context) {
     final textEditingControllerName = TextEditingController();
     final formKey = GlobalKey<FormState>();
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<DialogAddShopListBloc>(context);
     return AlertDialog(
-      title: const Center(child: Text('Список')),
+      title: Center(child: Text(localeApp.list)),
       content: Form(
         key: formKey,
         child: TextFormField(
@@ -46,15 +48,15 @@ class DialogView extends StatelessWidget {
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(
               1,
-              errorText: 'Введите название',
+              errorText: localeApp.enterAName,
             ),
             FormBuilderValidators.maxLength(
               50,
-              errorText: 'Длинное название',
+              errorText: localeApp.longName,
             ),
           ]),
-          decoration: const InputDecoration(
-            hintText: 'Новый список',
+          decoration: InputDecoration(
+            hintText: localeApp.newList,
           ),
         ),
       ),
@@ -62,10 +64,10 @@ class DialogView extends StatelessWidget {
         TextButton(
           onPressed: () =>
               bloc.add(DialogAddShopListOnPressedButtonCancelEvent()),
-          child: const Text('Отмена'),
+          child: Text(localeApp.cancel),
         ),
         TextButton(
-          child: const Text('Добавить'),
+          child: Text(localeApp.add),
           onPressed: () {
             if (!formKey.currentState!.validate()) {
               return;

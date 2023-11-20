@@ -5,6 +5,7 @@ import 'package:budget/features/shop_list/sheets/menu_shop_list/bloc/sheet_menu_
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetMenuShopList extends StatelessWidget {
   const SheetMenuShopList({super.key, required this.shopList});
@@ -49,14 +50,15 @@ class TitleSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     return BlocBuilder<SheetMenuShopListBloc, SheetMenuShopListState>(
       builder: (context, state) {
         if (state is SheetMenuShopListInitial) {
           return ListTile(
             title: Text(state.shopList.name),
-            subtitle: const Text(
-              'Список',
-              style: TextStyle(fontSize: 10),
+            subtitle: Text(
+              localeApp.list,
+              style: const TextStyle(fontSize: 10),
             ),
           );
         } else {
@@ -72,13 +74,14 @@ class ButtonRenameShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     return BlocBuilder<SheetMenuShopListBloc, SheetMenuShopListState>(
       builder: (context, state) {
         final bloc = BlocProvider.of<SheetMenuShopListBloc>(context);
         if (state is SheetMenuShopListInitial) {
           return ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Переименовать'),
+            title: Text(localeApp.rename),
             onTap: () async {
               final String? newName = await showDialog(
                 context: context,
@@ -103,10 +106,11 @@ class ButtonDeleteShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<SheetMenuShopListBloc>(context);
     return ListTile(
       leading: const Icon(Icons.delete),
-      title: const Text('Удалить'),
+      title: Text(localeApp.delete),
       onTap: () async {
         final bool? result = await showDialog(
           context: context,

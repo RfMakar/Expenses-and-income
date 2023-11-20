@@ -5,6 +5,7 @@ import 'package:budget/features/shop_list/sheets/menu_record_list/bloc/sheet_men
 import 'package:budget/repositories/shop_list/models/record_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetMenuRecordList extends StatelessWidget {
   const SheetMenuRecordList({super.key, required this.recordList});
@@ -48,14 +49,15 @@ class TitleSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     return BlocBuilder<SheetMenuRecordListBloc, SheetMenuRecordListState>(
       builder: (context, state) {
         if (state is SheetMenuRecordListInitial) {
           return ListTile(
             title: Text(state.recordList.name),
-            subtitle: const Text(
-              'Запись',
-              style: TextStyle(fontSize: 10),
+            subtitle: Text(
+              localeApp.record,
+              style: const TextStyle(fontSize: 10),
             ),
           );
         } else {
@@ -71,13 +73,14 @@ class ButtonRenameRecordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     return BlocBuilder<SheetMenuRecordListBloc, SheetMenuRecordListState>(
       builder: (context, state) {
         final bloc = BlocProvider.of<SheetMenuRecordListBloc>(context);
         if (state is SheetMenuRecordListInitial) {
           return ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Переименовать'),
+            title: Text(localeApp.rename),
             onTap: () async {
               final String? newName = await showDialog(
                 context: context,
@@ -102,10 +105,11 @@ class ButtonDeleteRecordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<SheetMenuRecordListBloc>(context);
     return ListTile(
       leading: const Icon(Icons.delete),
-      title: const Text('Удалить'),
+      title: Text(localeApp.delete),
       onTap: () async {
         final bool? result = await showDialog(
           context: context,

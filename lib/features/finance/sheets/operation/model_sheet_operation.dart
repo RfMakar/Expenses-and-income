@@ -1,13 +1,11 @@
-import 'package:budget/repositories/finance/models/finance.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 
 class ModelSheetOperation {
-  ModelSheetOperation(this._operation, this._finance);
+  ModelSheetOperation(this._operation);
   final Operation _operation;
-  final Finance _finance;
 
-  String titleSheet() {
-    return _operation.getValue(_finance.id);
+  double titleSheet() {
+    return _operation.value;
   }
 
   DateTime dateTime() => DateTime.tryParse(_operation.date)!;

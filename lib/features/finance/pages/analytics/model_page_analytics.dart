@@ -4,8 +4,36 @@ import 'package:flutter/material.dart';
 
 class ModelPageAnalytics extends ChangeNotifier {
   var _dateTime = DateTime.now();
+  late List<AnaliticsByMonth> listAnaliticsByMonth;
 
   DateTime get dateTime => _dateTime;
+
+  //Сумма расходов за месяц
+  double totalExpencec() {
+    var expenses = 0.0;
+    for (var analiticsMonth in listAnaliticsByMonth) {
+      expenses += analiticsMonth.expense;
+    }
+    return expenses;
+  }
+
+  //Сумма доходов за месяц
+  double totalIncome() {
+    var income = 0.0;
+    for (var analiticsMonth in listAnaliticsByMonth) {
+      income += analiticsMonth.income;
+    }
+    return income;
+  }
+
+  //Сумма итого за год
+  double totalTotal() {
+    var total = 0.0;
+    for (var analiticsMonth in listAnaliticsByMonth) {
+      total += analiticsMonth.total;
+    }
+    return total;
+  }
 
   void onPressedButSwitchDateBack() {
     //Если год 2021 то дата переключится на год назад
@@ -13,6 +41,8 @@ class ModelPageAnalytics extends ChangeNotifier {
     if (!enabledButton) {
       _dateTime = DateTime(_dateTime.year - 1);
     }
+    listAnaliticsByMonth.clear;
+
     notifyListeners();
   }
 
@@ -22,88 +52,19 @@ class ModelPageAnalytics extends ChangeNotifier {
     if (!enabledButton) {
       _dateTime = DateTime(_dateTime.year + 1);
     }
+    listAnaliticsByMonth.clear;
+
     notifyListeners();
   }
-}
 
-
-/*
-List<Analitics> listAnalitics = [];
-
-  Future getListAnalitics() async {
-    //Список всех лет
-    final listYear = await DBFinance.getListAnaliticsYear();
-
-    for (var year in listYear) {
-      final analitics = Analitics(
-          year: year.year,
-          listAnaliticsMonth: [],
-          listAnaliticsAVGMonthExp: [],
-          listAnaliticsAVGMonthInc: []);
-
-      for (var i = 1; i <= 12; i++) {
-        //Для каждого месяца получаем лист аналитики
-        final listAnalitics =
-            await DBFinance.getListAnaliticsMonth(year.year, i);
-        //Добавить в analitics
-        if (listAnalitics.isNotEmpty) {
-          analitics.listAnaliticsMonth.add(listAnalitics.first);
-        }
-      }
-
-      //Получаем лист аналитики средних значений по категориям за год и добавдяем в аналитику
-      analitics.listAnaliticsAVGMonthExp.addAll(
-        await DBFinance.getListAnaliticsAVGMonth(year.year, 0),
-      );
-      analitics.listAnaliticsAVGMonthInc.addAll(
-        await DBFinance.getListAnaliticsAVGMonth(year.year, 1),
-      );
-      //Добавляем аналитику в лист Аналитики
-      listAnalitics.add(analitics);
+  Future<void> load() async {
+    listAnaliticsByMonth = [];
+    for (var i = 1; i <= 12; i++) {
+      //Для каждого месяца получаем лист аналитики
+      final listAnalitics =
+          await DBFinance.getListAnaliticsByMonth(_dateTime.year, i);
+      //Добавляем в listAnaliticsByMonth
+      listAnaliticsByMonth.add(listAnalitics.first);
     }
   }
-
-  String titleTableMonth(int index) {
-    return 'Финансы';
-  }
-
-  String titleTableAVGMonthExp(int index) {
-    return 'Средний расход в месяц';
-  }
-
-  String titleTableAVGMonthInc(int index) {
-    return 'Средний доход в месяц';
-  }
-
-  List<AnaliticsMonth> getListAnaliticsMonth(int index) {
-    return listAnalitics[index].listAnaliticsMonth;
-  }
-
-  List<AnaliticsAVGMonth> getListAnaliticsAVGMonthExp(int index) {
-    return listAnalitics[index].listAnaliticsAVGMonthExp;
-  }
-
-  List<AnaliticsAVGMonth> getListAnaliticsAVGMonthInc(int index) {
-    return listAnalitics[index].listAnaliticsAVGMonthInc;
-  }
-
-  int year(int index) {
-    return listAnalitics[index].year;
-  }
-
-  Analitics analitics(int index) {
-    return listAnalitics[index];
-  }
-
-  String totalExpencec(int index) {
-    return analitics(index).totalExpencec(index);
-  }
-
-  String totalIncome(int index) {
-    return analitics(index).totalIncome(index);
-  }
-
-  String totalTotal(int index) {
-    return analitics(index).totalTotal(index);
-  }
-*/
+}

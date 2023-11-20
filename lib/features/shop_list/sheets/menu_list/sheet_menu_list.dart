@@ -3,6 +3,7 @@ import 'package:budget/features/shop_list/sheets/menu_list/bloc/sheet_menu_list_
 import 'package:budget/repositories/shop_list/models/shop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SheetMenuList extends StatelessWidget {
   const SheetMenuList({super.key, required this.shopList});
@@ -36,33 +37,34 @@ class SheetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final bloc = BlocProvider.of<SheetMenuListBloc>(context);
     return Wrap(
       children: [
         ListTile(
           leading: const Icon(Icons.check_box_outlined),
-          title: const Text('Отметить все'),
+          title: Text(localeApp.markAll),
           onTap: () {
             bloc.add(SheetMenuListOnPresButMarkEvent());
           },
         ),
         ListTile(
           leading: const Icon(Icons.check_box_outline_blank),
-          title: const Text('Восстановить все'),
+          title: Text(localeApp.restoreEverything),
           onTap: () {
             bloc.add(SheetMenuListOnPresButRestoreEvent());
           },
         ),
         ListTile(
           leading: const Icon(Icons.delete_outline),
-          title: const Text('Удалить выбранные'),
+          title: Text(localeApp.deleteSelected),
           onTap: () {
             bloc.add(SheetMenuListOnPresButDeleteEvent());
           },
         ),
         ListTile(
           leading: const Icon(Icons.delete_forever_outlined),
-          title: const Text('Очистить список'),
+          title: Text(localeApp.clearTheList),
           onTap: () {
             bloc.add(SheetMenuListOnPresButClearEvent());
           },

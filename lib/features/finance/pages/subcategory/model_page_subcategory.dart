@@ -38,7 +38,7 @@ class ModelPageSubCategory extends ChangeNotifier {
 
   String titleAppBar() => _groupSubCategory.name;
 
-  String titleSumOperation() => _sumOperation.getValue(_finance.id);
+  double titleSumOperation() => _sumOperation.value;
 
   // String titleDateTime() => _switchDate.getDate();
 }

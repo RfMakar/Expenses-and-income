@@ -1,14 +1,7 @@
-import 'package:intl/intl.dart';
-
 abstract class Operations {
   final double value;
 
   Operations({required this.value});
-  String getValue(int finance) {
-    return finance == 0
-        ? '-${NumberFormat.simpleCurrency(decimalDigits: 2).format(value)}'
-        : NumberFormat.simpleCurrency(decimalDigits: 2).format(value);
-  }
 }
 
 //Column table -> |idsubcategory|date|year|month|day|note|value|
@@ -59,23 +52,6 @@ class HistoryOperation extends ReadOperation {
         date: json['date'],
         value: json['value'],
       );
-  // String getDateFormat() {
-  //   final curentDate = DateTime.now();
-  //   final historyDate = DateTime.tryParse(super.date)!;
-  //   final today = (curentDate.day == historyDate.day) &&
-  //       (curentDate.month == historyDate.month) &&
-  //       (curentDate.year == historyDate.year);
-  //   final yesterday = (curentDate.day - 1 == historyDate.day) &&
-  //       (curentDate.month == historyDate.month) &&
-  //       (curentDate.year == historyDate.year);
-  //   if (today) {
-  //     return 'Сегодня';
-  //   } else if (yesterday) {
-  //     return 'Вчера';
-  //   } else {
-  //     return DateFormat.MMMd().format(historyDate);
-  //   }
-  // }
 }
 
 //Column table -> |id|namecategory|namesubcategory|note|date|value|
@@ -103,12 +79,6 @@ class Operation extends ReadOperation {
         date: json['date'],
         value: json['value'],
       );
-
-  // String getDateFormat() {
-  //   final date = DateFormat.yMd().format(DateTime.tryParse(super.date)!);
-  //   final time = DateFormat.jm().format(DateTime.tryParse(super.date)!);
-  //   return '$date $time';
-  // }
 
   String getNote() {
     return note == '' ? '-' : note;
