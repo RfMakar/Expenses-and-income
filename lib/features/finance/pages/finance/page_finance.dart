@@ -37,7 +37,7 @@ class ViewPage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(4, 4, 4, 50),
           children: const [
             Card(
-              child: Column(
+              child: Wrap(
                 children: [
                   WidgetSwitchFinance(),
                   WidgetInfo(),
