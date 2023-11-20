@@ -13,7 +13,6 @@ class ModelPageCategory extends ChangeNotifier {
   final GroupCategory _groupCategory;
   late SumOperation _sumOperation;
   late List<GroupSubCategory> listGroupSubCategory;
-  late List<HistoryOperation> listHistoryOperation;
 
   Future getSumOperationCategory() async {
     _sumOperation = await DBFinance.getSumOperationCategoryInPeriod(
@@ -25,28 +24,11 @@ class ModelPageCategory extends ChangeNotifier {
         _switchDate, _finance.id, _groupCategory.id);
   }
 
-  Future getListHistoryOperationCategory() async {
-    listHistoryOperation = await DBFinance.getListHistoryOperationCategory(
-      _switchDate,
-      _switchDate.getDateTime(),
-      _finance.id,
-      _groupCategory.id,
-    );
-    for (var historyOperation in listHistoryOperation) {
-      historyOperation.listOperation = await DBFinance.getListOperationCategory(
-          DateTime.tryParse(historyOperation.date)!,
-          _finance.id,
-          _groupCategory.id);
-    }
-  }
-
   void updatePage() => notifyListeners();
 
   String titleAppBar() => _groupCategory.name;
 
   double titleSumOperation() => _sumOperation.value;
-
-  //String titleDateTime() => _switchDate.getDate();
 
   Color colorGroupSubCategory(int index) =>
       Color(int.parse(_groupCategory.color));

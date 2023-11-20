@@ -4,8 +4,6 @@ import 'package:budget/features/finance/pages/category/model_page_category.dart'
 import 'package:budget/features/finance/pages/subcategory/page_subcategory.dart';
 import 'package:budget/features/finance/sheets/select_period/sheet_select_period.dart';
 import 'package:budget/features/finance/widgets/group_categories.dart';
-import 'package:budget/features/finance/widgets/history_operations/widget_history_operations.dart';
-import 'package:budget/features/finance/widgets/no_data.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,10 +16,10 @@ class PageCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerApp = Provider.of<ModelMaterialApp>(context);
+    final modelApp = Provider.of<ModelMaterialApp>(context);
     return ChangeNotifierProvider(
       create: (context) => ModelPageCategory(
-          providerApp.finance, providerApp.switchDate, groupCategory),
+          modelApp.finance, modelApp.switchDate, groupCategory),
       child: const ViewPage(),
     );
   }
@@ -42,7 +40,6 @@ class ViewPage extends StatelessWidget {
         children: const [
           WidgetInfo(),
           WidgetListGroupSubCategory(),
-          WidHistory(),
         ],
       ),
     );
@@ -207,32 +204,6 @@ class WidgetListGroupSubCategory extends StatelessWidget {
                     },
                   ),
                 ],
-              );
-      },
-    );
-  }
-}
-
-class WidHistory extends StatelessWidget {
-  const WidHistory({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final model = context.watch<ModelPageCategory>();
-    return FutureBuilder(
-      future: model.getListHistoryOperationCategory(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Center(child: Container());
-        }
-        if (snapshot.hasError) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return model.listHistoryOperation.isEmpty
-            ? const WidgetNoData()
-            : WidgetHistoryOperations(
-                listHistoryOperation: model.listHistoryOperation,
-                updateScreen: model.updatePage,
               );
       },
     );

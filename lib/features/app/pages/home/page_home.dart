@@ -1,4 +1,3 @@
-import 'package:budget/features/finance/sheets/menu_finance/sheet_menu_finance.dart';
 import 'package:budget/features/app/pages/home/model_page_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,19 +28,6 @@ class PageHome extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(titleAppBar(model.selectedIndex)),
-              actions: model.selectedIndex == 0
-                  ? [
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => const SheetMenuFinance(),
-                          );
-                        },
-                        icon: const Icon(Icons.more_vert),
-                      )
-                    ]
-                  : null,
             ),
             drawer: const WidgetDrawer(),
             body: model.widgetPage(),

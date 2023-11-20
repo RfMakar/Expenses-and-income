@@ -1,5 +1,5 @@
 import 'package:budget/features/app/dialogs/delete/dialog_delete.dart';
-import 'package:budget/features/app/pages/material_app/model_material_app.dart';
+//import 'package:budget/features/app/pages/material_app/model_material_app.dart';
 import 'package:budget/features/finance/dialogs/data_storage/dialog_data_storage.dart';
 import 'package:budget/features/finance/pages/data_app/model_page_data_app.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class ViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localeApp = AppLocalizations.of(context)!;
-    final modelApp = Provider.of<ModelMaterialApp>(context);
+    //final modelApp = Provider.of<ModelMaterialApp>(context);
     final model = context.read<ModelPageDataApp>();
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +51,7 @@ class ViewPage extends StatelessWidget {
               );
               if (result == true) {
                 model.onTapDeleteAllOperation();
-                modelApp.updateApp();
+                //modelApp.updateApp();
               }
             },
           ),
@@ -66,7 +66,7 @@ class ViewPage extends StatelessWidget {
               );
               if (result == true) {
                 model.onTapDeleteAll();
-                modelApp.updateApp();
+                //modelApp.updateApp();
               }
             },
           ),

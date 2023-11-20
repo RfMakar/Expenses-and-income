@@ -3,6 +3,7 @@ import 'package:budget/features/app/pages/material_app/model_material_app.dart';
 import 'package:budget/features/finance/pages/add_finance/page_add_finance.dart';
 import 'package:budget/features/finance/pages/category/page_category.dart';
 import 'package:budget/features/finance/pages/finance/model_page_finance.dart';
+import 'package:budget/features/finance/sheets/menu_finance/sheet_menu_finance.dart';
 import 'package:budget/features/finance/sheets/select_period/sheet_select_period.dart';
 import 'package:budget/features/finance/widgets/group_categories.dart';
 import 'package:budget/features/finance/widgets/no_data.dart';
@@ -139,8 +140,15 @@ class WidgetInfo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(
-                width: 40,
+              IconButton(
+                onPressed: () async {
+                  await showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SheetMenuFinance(),
+                  );
+                  model.updatePage();
+                },
+                icon: const Icon(Icons.widgets_outlined),
               ),
               Row(
                 children: [

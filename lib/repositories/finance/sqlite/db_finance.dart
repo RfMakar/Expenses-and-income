@@ -1,5 +1,6 @@
 import 'package:budget/repositories/finance/models/analitics.dart';
 import 'package:budget/repositories/finance/models/categories.dart';
+import 'package:budget/repositories/finance/models/finance.dart';
 import 'package:budget/repositories/finance/models/operations.dart';
 import 'package:budget/repositories/finance/models/subcategories.dart';
 import 'package:budget/repositories/finance/models/switch_date.dart';
@@ -225,17 +226,12 @@ abstract class DBFinance {
         : [];
   }
 
-  //Возращает лист HistoryOperation определенной категории
-  static Future<List<HistoryOperation>> getListHistoryOperationCategory(
-    SwitchDate switchDate,
-    DateTime dateTime,
-    int finance,
-    int idCategory,
-  ) async {
+  //Возращает лист HistoryOperation за месяц
+  static Future<List<HistoryOperation>> getListHistoryOperationByMonth(
+      Finance finance, DateTime dateTime) async {
     final db = await database;
     late List<Map<String, Object?>> maps;
-    if (switchDate.state == 0) {
-      maps = await db.rawQuery('''
+    maps = await db.rawQuery('''
       SELECT date,
       ROUND(SUM(value),2) AS value
       FROM ${TableDB.operations}
@@ -244,28 +240,11 @@ abstract class DBFinance {
         JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
       WHERE year = ${dateTime.year} 
         AND month = ${dateTime.month} 
-        AND ${TableDB.finance}.id = $finance 
-        AND ${TableDB.categories}.id = $idCategory 
+        AND ${TableDB.finance}.id = ${finance.id} 
       GROUP BY day
       ORDER BY day DESC
       ;
         ''');
-    } else if (switchDate.state == 1) {
-      maps = await db.rawQuery('''
-      SELECT date,
-      ROUND(SUM(value),2) AS value
-      FROM ${TableDB.operations}
-        JOIN ${TableDB.finance} ON ${TableDB.finance}.id = ${TableDB.categories}.idfinance
-        JOIN ${TableDB.categories} ON ${TableDB.categories}.id = ${TableDB.subcategories}.idcategory
-        JOIN ${TableDB.subcategories} ON ${TableDB.subcategories}.id = ${TableDB.operations}.idsubcategory
-      WHERE year = ${dateTime.year} 
-        AND ${TableDB.finance}.id = $finance 
-        AND ${TableDB.categories}.id = $idCategory 
-      GROUP BY day, month
-      ORDER BY month DESC,day DESC
-      ;
-        ''');
-    }
 
     return maps.isNotEmpty
         ? maps.map((e) => HistoryOperation.fromMap(e)).toList()
@@ -320,9 +299,9 @@ abstract class DBFinance {
         : [];
   }
 
-  //Возращает лист операций определенной категории и даты
-  static Future<List<Operation>> getListOperationCategory(
-      DateTime dateTime, int finance, int idCategory) async {
+  //Возращает лист операций определенной даты
+  static Future<List<Operation>> getListOperationByMonth(
+      DateTime dateTime, Finance finance) async {
     final db = await database;
     var maps = await db.rawQuery('''
       SELECT ${TableDB.operations}.id AS id,
@@ -338,8 +317,8 @@ abstract class DBFinance {
       WHERE year = ${dateTime.year} 
         AND month = ${dateTime.month} 
         AND day = ${dateTime.day} 
-        AND ${TableDB.finance}.id = $finance
-        AND ${TableDB.categories}.id = $idCategory 
+        AND ${TableDB.finance}.id = ${finance.id}
+        
       ORDER BY date DESC
       ;
         ''');

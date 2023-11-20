@@ -22,26 +22,7 @@ class WidgetHistoryOperations extends StatelessWidget {
         listHistoryOperation,
         updateScreen,
       ),
-      child: const ViewWidget(),
-    );
-  }
-}
-
-class ViewWidget extends StatelessWidget {
-  const ViewWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final localeApp = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        Text(
-          localeApp.historyOfOperations,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        const ListHistoryOperations(),
-      ],
+      child: const ListHistoryOperations(),
     );
   }
 }

@@ -154,6 +154,7 @@ class WidHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeApp = AppLocalizations.of(context)!;
     final model = context.watch<ModelPageSubCategory>();
     return FutureBuilder(
       future: model.getListHistoryOperationSubCategory(),
@@ -166,9 +167,19 @@ class WidHistory extends StatelessWidget {
         }
         return model.listHistoryOperation.isEmpty
             ? const WidgetNoData()
-            : WidgetHistoryOperations(
-                listHistoryOperation: model.listHistoryOperation,
-                updateScreen: model.updatePage,
+            : Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    localeApp.historyOfOperations,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  WidgetHistoryOperations(
+                    listHistoryOperation: model.listHistoryOperation,
+                    updateScreen: model.updatePage,
+                  ),
+                ],
               );
       },
     );
