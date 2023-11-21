@@ -43,21 +43,21 @@ class SheetView extends StatelessWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.check_box_outlined),
-          title: Text(localeApp.markAll),
+          title: Text(localeApp.selectAll),
           onTap: () {
             bloc.add(SheetMenuListOnPresButMarkEvent());
           },
         ),
         ListTile(
           leading: const Icon(Icons.check_box_outline_blank),
-          title: Text(localeApp.restoreEverything),
+          title: Text(localeApp.restoreAll),
           onTap: () {
             bloc.add(SheetMenuListOnPresButRestoreEvent());
           },
         ),
         ListTile(
           leading: const Icon(Icons.delete_outline),
-          title: Text(localeApp.deleteSelected),
+          title: Text(localeApp.removeSelected),
           onTap: () {
             bloc.add(SheetMenuListOnPresButDeleteEvent());
           },

@@ -71,7 +71,7 @@ class WidgetSwitchFinance extends StatelessWidget {
           model.updatePage();
         },
         children: [
-          Center(child: Text(localeApp.expense)),
+          Center(child: Text(localeApp.expenses)),
           Center(child: Text(localeApp.income)),
         ],
       ),

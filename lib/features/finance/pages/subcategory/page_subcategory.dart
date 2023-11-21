@@ -171,7 +171,7 @@ class WidHistory extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
                   Text(
-                    localeApp.historyOfOperations,
+                    localeApp.operationsHistory,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16),
                   ),

@@ -69,7 +69,7 @@ class ViewSheet extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.color_lens),
-          title: Text(localeApp.editColor),
+          title: Text(localeApp.changeColor),
           onTap: () async {
             final Color? newColor = await showModalBottomSheet(
               context: context,

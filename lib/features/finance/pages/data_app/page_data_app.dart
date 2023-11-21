@@ -43,7 +43,7 @@ class ViewPage extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.delete_outline),
-            title: Text(localeApp.deleteAllOperations),
+            title: Text(localeApp.deleteAllTransactions),
             onTap: () async {
               final bool? result = await showDialog(
                 context: context,

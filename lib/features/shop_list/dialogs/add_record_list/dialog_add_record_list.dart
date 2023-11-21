@@ -49,7 +49,7 @@ class DialogView extends StatelessWidget {
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(
               1,
-              errorText: localeApp.enterAName,
+              errorText: localeApp.enterTheTitle,
             ),
             FormBuilderValidators.maxLength(
               50,
@@ -57,7 +57,7 @@ class DialogView extends StatelessWidget {
             ),
           ]),
           decoration: InputDecoration(
-            hintText: localeApp.newRecord,
+            hintText: localeApp.newEntry,
           ),
         ),
       ),

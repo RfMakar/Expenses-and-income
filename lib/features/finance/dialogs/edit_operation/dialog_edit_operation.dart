@@ -67,7 +67,7 @@ class _ViewDialogState extends State<ViewDialog> {
                   ),
                   FormBuilderValidators.minLength(
                     1,
-                    errorText: localeApp.enterAValue,
+                    errorText: localeApp.enterTheTitle,
                   ),
                   FormBuilderValidators.maxLength(
                     10,
@@ -79,7 +79,7 @@ class _ViewDialogState extends State<ViewDialog> {
                   ),
                 ]),
                 decoration: InputDecoration(
-                  hintText: localeApp.enterAValue,
+                  hintText: localeApp.enterTheTitle,
                 ),
               ),
               TextFormField(
@@ -92,7 +92,7 @@ class _ViewDialogState extends State<ViewDialog> {
                   errorText: localeApp.longValue,
                 ),
                 decoration: InputDecoration(
-                  hintText: localeApp.note,
+                  hintText: localeApp.theNote,
                   suffixIcon: const Icon(Icons.comment),
                 ),
               ),

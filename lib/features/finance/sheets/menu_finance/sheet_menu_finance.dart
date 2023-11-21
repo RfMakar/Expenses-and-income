@@ -14,7 +14,7 @@ class SheetMenuFinance extends StatelessWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.history_outlined),
-          title: Text(localeApp.historyOfOperations),
+          title: Text(localeApp.operationsHistory),
           onTap: () {
             // Navigator.pop(context);
             Navigator.push(

@@ -29,7 +29,7 @@ class PageView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localeApp.historyOfOperations),
+        title: Text(localeApp.operationsHistory),
       ),
       body: ListView(
         padding: const EdgeInsets.all(4),
@@ -67,7 +67,7 @@ class WidgetSwitchFinance extends StatelessWidget {
           model.updatePage();
         },
         children: [
-          Center(child: Text(localeApp.expense)),
+          Center(child: Text(localeApp.expenses)),
           Center(child: Text(localeApp.income)),
         ],
       ),

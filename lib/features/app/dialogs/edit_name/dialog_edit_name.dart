@@ -49,15 +49,15 @@ class _DialogEditNameState extends State<DialogEditName> {
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(
               1,
-              errorText: localeApp.enterAName,
+              errorText: localeApp.enterTheTitle,
             ),
             FormBuilderValidators.maxLength(
               50,
-              errorText: localeApp.longName,
+              errorText: localeApp.longTitle,
             ),
           ]),
           decoration: InputDecoration(
-            hintText: localeApp.newName,
+            hintText: localeApp.newTitle,
           ),
         ),
       ),

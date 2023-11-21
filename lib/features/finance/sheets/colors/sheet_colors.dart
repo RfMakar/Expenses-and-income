@@ -15,7 +15,7 @@ class SheetColors extends StatelessWidget {
           height: 50,
           child: Center(
             child: Text(
-              localeApp.chooseAColor,
+              localeApp.selectColor,
               style: const TextStyle(fontSize: 16),
             ),
           ),

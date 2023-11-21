@@ -62,7 +62,7 @@ class ViewSheet extends StatelessWidget {
         ListTile(
           title: Text(model.titleNote()),
           subtitle: Text(
-            localeApp.note,
+            localeApp.theNote,
             style: const TextStyle(fontSize: 12),
           ),
         ),

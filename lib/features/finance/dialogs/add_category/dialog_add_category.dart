@@ -47,7 +47,7 @@ class _ViewDialogState extends State<ViewDialog> {
 
       switch (modelApp.finance.id) {
         case 0:
-          return localeApp.expense;
+          return localeApp.expenses;
         case 1:
           return localeApp.income;
         default:
@@ -68,11 +68,11 @@ class _ViewDialogState extends State<ViewDialog> {
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(
               1,
-              errorText: localeApp.enterAName,
+              errorText: localeApp.enterTheTitle,
             ),
             FormBuilderValidators.maxLength(
               50,
-              errorText: localeApp.longName,
+              errorText: localeApp.longTitle,
             ),
           ]),
           decoration: InputDecoration(

@@ -16,7 +16,7 @@ class SheetSelectPeriod extends StatelessWidget {
       children: [
         ListTile(
             title: Text(
-          localeApp.selectAPeriod,
+          localeApp.selectPeriod,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),

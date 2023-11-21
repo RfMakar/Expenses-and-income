@@ -110,7 +110,7 @@ class WidgetTableByMonth extends StatelessWidget {
       TableRow(
         children: [
           WidgetTextColumnTable(text: localeApp.month),
-          WidgetTextColumnTable(text: localeApp.expense),
+          WidgetTextColumnTable(text: localeApp.expenses),
           WidgetTextColumnTable(text: localeApp.income),
           WidgetTextColumnTable(text: localeApp.total),
         ],
