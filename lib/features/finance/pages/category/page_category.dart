@@ -74,8 +74,8 @@ class WidgetInfo extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return Text(
-                  localeApp
-                      .valueFormatSimpleCurrency(model.titleSumOperation()),
+                  localeApp.valueFormatDecimalPatternDigits(
+                      model.titleSumOperation()),
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -185,7 +185,7 @@ class WidgetListGroupSubCategory extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return WidgetGroupCategories(
                         name: model.titleGroupSubCategory(index),
-                        value: localeApp.valueFormatSimpleCurrency(
+                        value: localeApp.valueFormatDecimalPatternDigits(
                             model.valueGroupSubCategory(index)),
                         percent: model.percentGroupSubCategory(index),
                         color: model.colorGroupSubCategory(index),

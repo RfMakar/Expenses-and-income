@@ -56,7 +56,8 @@ class ListHistoryOperations extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    localeApp.valueFormatSimpleCurrency(operationHistory.value),
+                    localeApp.valueFormatDecimalPatternDigits(
+                        operationHistory.value),
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
@@ -125,7 +126,8 @@ class ListOperations extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      localeApp.valueFormatSimpleCurrency(operation.value),
+                      localeApp
+                          .valueFormatDecimalPatternDigits(operation.value),
                       style: const TextStyle(color: Colors.grey),
                     ),
                   ],

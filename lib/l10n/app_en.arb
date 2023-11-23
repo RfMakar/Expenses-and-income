@@ -61,12 +61,15 @@
             }
         }
     },
-    "valueFormatSimpleCurrency": "{value}",
-    "@valueFormatSimpleCurrency": {
+    "valueFormatDecimalPatternDigits": "{value}",
+    "@valueFormatDecimalPatternDigits": {
         "placeholders": {
             "value": {
                 "type": "double",
-                "format": "simpleCurrency"
+                "format": "decimalPatternDigits",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
             }
         }
     },

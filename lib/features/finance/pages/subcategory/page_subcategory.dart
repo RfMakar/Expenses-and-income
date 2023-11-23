@@ -72,8 +72,8 @@ class WidgetInfo extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return Text(
-                  localeApp
-                      .valueFormatSimpleCurrency(model.titleSumOperation()),
+                  localeApp.valueFormatDecimalPatternDigits(
+                      model.titleSumOperation()),
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

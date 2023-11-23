@@ -28,7 +28,7 @@ class ViewSheet extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            localeApp.valueFormatSimpleCurrency(model.titleSheet()),
+            localeApp.valueFormatDecimalPatternDigits(model.titleSheet()),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22,
