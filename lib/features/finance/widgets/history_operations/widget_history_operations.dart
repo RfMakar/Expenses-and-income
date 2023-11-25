@@ -35,7 +35,7 @@ class ListHistoryOperations extends StatelessWidget {
     final localeApp = AppLocalizations.of(context)!;
     final model = context.read<ModelWidgetHistoryOperations>();
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: model.listHistoryOperation.length,
@@ -44,7 +44,7 @@ class ListHistoryOperations extends StatelessWidget {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -52,14 +52,16 @@ class ListHistoryOperations extends StatelessWidget {
                     localeApp
                         .dateHistory(DateTime.parse(operationHistory.date)),
                     style: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
                     ),
                   ),
                   Text(
                     localeApp.valueFormatDecimalPatternDigits(
                         operationHistory.value),
                     style: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
+                       color: Colors.grey,
                     ),
                   ),
                 ],
@@ -128,7 +130,7 @@ class ListOperations extends StatelessWidget {
                     Text(
                       localeApp
                           .valueFormatDecimalPatternDigits(operation.value),
-                      style: const TextStyle(color: Colors.grey),
+                      
                     ),
                   ],
                 ),
@@ -138,7 +140,7 @@ class ListOperations extends StatelessWidget {
                     Text(
                       operation.nameSubCategory,
                       style: const TextStyle(
-                        color: Colors.grey,
+                        //color: Colors.grey,
                         fontSize: 12,
                       ),
                       overflow: TextOverflow.ellipsis,
