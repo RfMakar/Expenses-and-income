@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageMaterialApp extends StatelessWidget {
-  const PageMaterialApp({Key? key}) : super(key: key);
+  const PageMaterialApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PageMaterialApp extends StatelessWidget {
       child: Consumer<ModelMaterialApp>(
         builder: (context, model, child) {
           return MaterialApp(
-            locale: const Locale('en'),
+            locale: const Locale('ru'),
             onGenerateTitle: (context) => AppLocalizations.of(context)!.finance,
             localizationsDelegates: const [
               AppLocalizations.delegate,
